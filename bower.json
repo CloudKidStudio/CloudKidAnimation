@@ -1,7 +1,7 @@
 {
     "name": "cloudkid-animation",
     "version": "1.0.0",
-    "main": "deploy/cloudkid-animation.min.js",
+    "main": "dist/cloudkid-animation.min.js",
     "dependencies": {
         "tweenjs" : "https://github.com/CloudKidStudio/TweenJS.git",
         "cloudkid-os" : "*"
