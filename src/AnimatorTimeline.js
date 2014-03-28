@@ -128,11 +128,74 @@
 		if(this.instance)
 		{
 			if(pause)
+			{
 				this.instance.stop();
+				if(this.soundInst)
+					this.soundInst.pause();
+			}
 			else
+			{
 				this.instance.play();
+				if(this.soundInst)
+					this.soundInst.unpause();
+			}
 		}
 	};
+
+	/**
+	* The animation startTime in seconds on the movieclip's timeline.
+	* @property {Number} startTime
+	* @public
+	*/
+	p.startTime = 0;
+	/**
+	* The animation duration in seconds.
+	* @property {Number} duration
+	* @public
+	*/
+	p.duration = 0;
+	/**
+	* The animation speed. Default is 1.
+	* @property {Number} speed
+	* @public
+	*/
+	p.speed = 1;
+	/**
+	* The position of the animation in seconds.
+	* @property {Number} time
+	* @public
+	*/
+	this.time = 0;
+	/**
+	* Sound alias to sync to during the animation.
+	* @property {String} soundAlias
+	* @public
+	*/
+	this.soundAlias = null;
+	/**
+	* A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.
+	* @property {Object} soundInst
+	* @public
+	*/
+	this.soundInst = null;
+	/**
+	* If the timeline will, but has yet to play a sound.
+	* @property {bool} playSound
+	* @public
+	*/
+	this.playSound = false;
+	/**
+	* The time (seconds) into the animation that the sound starts.
+	* @property {Number} soundStart
+	* @public
+	*/
+	this.soundStart = 0;
+	/**
+	* The time (seconds) into the animation that the sound ends
+	* @property {Number} soundEnd
+	* @public
+	*/
+	this.soundEnd = 0;
 	
 	// Assign to the name space
 	namespace('cloudkid').AnimatorTimeline = AnimatorTimeline;

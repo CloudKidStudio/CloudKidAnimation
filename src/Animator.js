@@ -109,18 +109,18 @@
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
 	*   @param {function} onComplete The function to callback when we're done
 	*   @param {function} onCompleteParams Parameters to pass to onComplete function
-	*   @param {bool} dropFrames If Animator should check this for frame dropping, if frame dropping is allowed
-	*   @param {int} frameOffset The number of frames into the animation to start
+	*	@param {int} startTime The time in milliseconds into the animation to start.
+	*	@param {Number} speed The speed at which to play the animation
 	*   @param {bool} doCancelledCallback Should an overridden animation's callback function still run?
 	*   @return {cloudkid.AnimatorTimeline} The Timeline object
 	*   @static
 	*/
-	Animator.play = function(instance, event, onComplete, onCompleteParams, dropFrames, frameOffset, doCancelledCallback)
+	Animator.play = function(instance, event, onComplete, onCompleteParams, startTime, speed, soundData, doCancelledCallback)
 	{
 		onComplete = onComplete || null;
 		onCompleteParams = onCompleteParams || null;
-		dropFrames = dropFrames || true;
-		frameOffset = frameOffset || 0;
+		startTime = startTime ? startTime * 0.001 : 0;//convert into seconds, as that is what the time uses internally
+		speed = speed || 1;
 		doCancelledCallback = doCancelledCallback || false;
 		
 		if (!_timelines) 
@@ -131,11 +131,11 @@
 			Animator.stop(instance, doCancelledCallback);
 		}
 				
-		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, dropFrames);
+		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, speed, soundData);
 		
 		if (timeline.firstFrame > -1 && timeline.lastFrame > -1)//if the animation is present and complete
 		{
-			timeline.realStartFrame = timeline.firstFrame + frameOffset;
+			timeline.time = startTime;
 			
 			instance.gotoAndPlay(timeline.realStartFrame);
 			
@@ -228,12 +228,13 @@
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
 	*   @param {function} onComplete The function to callback when we're done
 	*   @param {function} onCompleteParams Parameters to pass to onComplete function
-	*   @param {bool} dropFrames If Animator should check this for frame dropping, if frame dropping is allowed
+	*   @param {Number} speed The speed at which to play the animation.
+	*	@param {Object} soundData Data about sound to sync the animation to.
 	*   @return {cloudkid.AnimatorTimeline} The Timeline object
 	*   @private
 	*   @static
 	*/
-	Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, dropFrames)
+	Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, speed, soundData)
 	{
 		var timeline = new AnimatorTimeline();
 		if(instance instanceof MovieClip === false)//not a movieclip
@@ -244,7 +245,10 @@
 		timeline.event = event;
 		timeline.onComplete = onComplete;
 		timeline.onCompleteParams = onCompleteParams;
-		timeline.dropFrames = dropFrames;
+		timeline.speed = speed;
+		timeline.playSound = true;
+		timeline.soundStart = soundData.start;//seconds
+		timeline.soundAlias = soundData.alias;
 				
 		var startTime = instance.timeline.resolve(event); 
 		var stopTime = instance.timeline.resolve(event + "_stop");
