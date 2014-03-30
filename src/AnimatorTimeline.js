@@ -63,20 +63,6 @@
 	p.isLooping = false;
 	
 	/**
-	* The time passed in milliseconds, used to calculate frame dropping, if needed
-	* 
-	* @property {int} timePassed
-	*/
-	p.timePassed = 0;
-	
-	/**
-	* The actual frame started on, if the animation started on a different frame for some reason 
-	* 
-	* @property {int} realStartFrame
-	*/
-	p.realStartFrame = 0;
-	
-	/**
 	* Ensure we show the last frame before looping
 	* 
 	* @property {bool} isLastFrame
@@ -89,13 +75,6 @@
 	* @property {int} length
 	*/
 	p.length = 0;
-	
-	/** 
-	* If this animation is valid for frame dropping - flash will already do it because of audio, etc
-	* 
-	* @property {bool} dropFrames
-	*/
-	p.dropFrames = false;
 	
 	/**
 	* If the timeline is paused 
@@ -143,7 +122,7 @@
 	};
 
 	/**
-	* The animation startTime in seconds on the movieclip's timeline.
+	* The animation start time in seconds on the movieclip's timeline.
 	* @property {Number} startTime
 	* @public
 	*/
@@ -165,37 +144,37 @@
 	* @property {Number} time
 	* @public
 	*/
-	this.time = 0;
+	p.time = 0;
 	/**
 	* Sound alias to sync to during the animation.
 	* @property {String} soundAlias
 	* @public
 	*/
-	this.soundAlias = null;
+	p.soundAlias = null;
 	/**
 	* A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.
 	* @property {Object} soundInst
 	* @public
 	*/
-	this.soundInst = null;
+	p.soundInst = null;
 	/**
 	* If the timeline will, but has yet to play a sound.
 	* @property {bool} playSound
 	* @public
 	*/
-	this.playSound = false;
+	p.playSound = false;
 	/**
 	* The time (seconds) into the animation that the sound starts.
 	* @property {Number} soundStart
 	* @public
 	*/
-	this.soundStart = 0;
+	p.soundStart = 0;
 	/**
 	* The time (seconds) into the animation that the sound ends
 	* @property {Number} soundEnd
 	* @public
 	*/
-	this.soundEnd = 0;
+	p.soundEnd = 0;
 	
 	// Assign to the name space
 	namespace('cloudkid').AnimatorTimeline = AnimatorTimeline;
