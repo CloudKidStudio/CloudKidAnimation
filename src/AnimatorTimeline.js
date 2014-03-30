@@ -77,49 +77,28 @@
 	p.length = 0;
 	
 	/**
-	* If the timeline is paused 
+	* If the timeline is paused.
 	* 
-	* @property {bool} _isPaused
+	* @property {bool} _paused
 	* @private
 	*/
-	p._isPaused = false;
+	p._paused = false;
 	
 	/**
-	* If this timeline is paused
+	* Sets and gets the animation's paused status.
 	* 
-	* @function getPaused
-	* @return {bool} Whether the timeline is paused
+	* @property {bool} paused
+	* @public
 	*/
-	p.getPaused = function()
-	{
-		return this._isPaused;
-	};
-	
-	/**
-	* Set is paused
-	* 
-	* @function setPaused
-	* @param {bool} pause Whether to pause or unPause
-	*/
-	p.setPaused = function(pause)
-	{
-		this._isPaused = pause;
-		if(this.instance)
-		{
-			if(pause)
-			{
-				this.instance.stop();
-				if(this.soundInst)
-					this.soundInst.pause();
-			}
-			else
-			{
-				this.instance.play();
-				if(this.soundInst)
-					this.soundInst.unpause();
-			}
+	Object.defineProperty(AnimTimeline.prototype, "paused", {
+		get: function() { return this._paused; },
+		set: function(value) {
+			if(value == this._paused) return;
+			this._paused == !!value;
+			if(this.soundInst)
+				this._paused ? this.soundInst.pause() : this.soundInst.unpause();
 		}
-	};
+	});
 
 	/**
 	* The animation start time in seconds on the movieclip's timeline.

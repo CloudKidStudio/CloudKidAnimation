@@ -19,6 +19,7 @@
 	* The current version of the Animator class 
 	* 
 	* @property {String} VERSION
+	* @public
 	* @static
 	*/
 	Animator.VERSION = "${version}";
@@ -27,6 +28,8 @@
 	* If we fire debug statements 
 	* 
 	* @property {bool} debug
+	* @public
+	* @static
 	*/
 	Animator.debug = false;
 	
@@ -34,6 +37,8 @@
 	* The instance of cloudkid.Audio or cloudkid.Sound for playing audio along with animations.
 	* 
 	* @property {cloudkid.Audio|cloudkid.Sound} soundLib
+	* @public
+	* @static
 	*/
 	Animator.soundLib = null;
 	
@@ -400,7 +405,7 @@
 		
 		for(var i = 0; i < _timelines.length; i++)
 		{
-			_timelines[i].setPaused(true);
+			_timelines[i].paused = true;
 		}
 		Animator._stopUpdate();
 	};
@@ -422,7 +427,7 @@
 		// Resume playing of all the instances
 		for(var i = 0; i < _timelines.length; i++)
 		{
-			_timelines[i].setPaused(false);
+			_timelines[i].paused = false;
 		}
 		if (Animator._hasTimelines()) Animator._startUpdate();
 	};
@@ -443,7 +448,7 @@
 		{
 			if (container.contains(_timelines[i].instance))
 			{
-				_timelines[i].setPaused(paused);
+				_timelines[i].paused = paused;
 			}
 		}
 	};
@@ -548,8 +553,7 @@
 				if(t.playSound && t.time >= t.soundStart)
 				{
 					t.time = t.soundStart;
-					t.soundInst = Animator.audioLib.play(t.soundAlias, undefined, 
-						undefined, undefined, undefined, undefined, undefined, 
+					t.soundInst = Animator.audioLib.play(t.soundAlias, 
 						onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
 				}
 			}
@@ -562,6 +566,18 @@
 			timeline = _removedTimelines[i];
 			Animator._remove(timeline, true);
 		}
+	};
+	
+	var onSoundStarted = function(timeline)
+	{
+		timeline.playSound = false;
+		timeline.soundEnd = timeline.soundStart + timeline.soundInst.length * 0.001;//convert sound length to seconds
+	};
+	
+	var onSoundDone = function(timeline)
+	{
+		timeline.time = timeline.soundEnd || timeline.soundStart;//in case the sound goes wrong, 
+		timeline.soundInst = null;
 	};
 	
 	/**
