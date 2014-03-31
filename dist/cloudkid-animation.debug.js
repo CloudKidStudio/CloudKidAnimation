@@ -65,9 +65,10 @@
         if (index >= 0 && _removedTimelines.splice(index, 1), index = _timelines.indexOf(timeline), 
         !(0 > index)) {
             var onComplete = timeline.onComplete, onCompleteParams = timeline.onCompleteParams;
-            timeline.instance.stop(), _timelines.splice(index, 1), delete _timelinesMap[timeline.instance.id], 
-            timeline.instance = null, timeline.event = null, timeline.onComplete = null, timeline.onCompleteParams = null, 
-            Animator._hasTimelines() || Animator._stopUpdate(), doOnComplete && onComplete && onComplete.apply(null, onCompleteParams);
+            timeline.instance.stop(), timeline.soundInst && timeline.soundInst.stop(), _timelines.splice(index, 1), 
+            delete _timelinesMap[timeline.instance.id], timeline.instance = null, timeline.event = null, 
+            timeline.onComplete = null, timeline.onCompleteParams = null, Animator._hasTimelines() || Animator._stopUpdate(), 
+            doOnComplete && onComplete && onComplete.apply(null, onCompleteParams);
         }
     }, Animator.pause = function() {
         if (_timelines && !_paused) {

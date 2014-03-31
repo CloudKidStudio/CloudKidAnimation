@@ -5,22 +5,19 @@
 		Application = cloudkid.Application,
 		Animator = cloudkid.Animator;
 	
-	var AudioEaselJS = function()
+	var SoundEaselJS = function()
 	{
 		this.initialize();
 	}
 	
 	// Extend the createjs container
-	var p = AudioEaselJS.prototype = new Application();
+	var p = SoundEaselJS.prototype = new Application();
 	
 	// The name of this app
-	p.name = "AnimationTest-Audio-EaselJS";
+	p.name = "AnimationTest-Souns-EaselJS";
 	
 	// Private stage variable
 	var stage;
-
-	var isLoaded = false;
-	var isLoading = false;
 
 	var anim = null;
 	
@@ -35,8 +32,25 @@
 		{
 			stage.enableMouseOver();
 		}
-		cloudkid.Audio.init("sounds/pizzaplaceaudio.json", onReady);
-		cloudkid.Animator.audioLib = cloudkid.Audio.instance;
+		//set up sound
+		createjs.FlashPlugin.BASE_PATH = "sounds/";
+		createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.FlashPlugin]);
+		var soundConfig = {
+			"context":"sfx",
+			"path":"sounds/",
+			"soundManifest":
+			[
+				{"id":"Pizza_Intro_Sound", "src":"Pizza_Intro_Sound"}
+			]
+		};
+		var supportedSound;
+		if(createjs.Sound.getCapability("ogg"))
+			this.supportedSound = supportedSound = ".ogg";
+		else if(createjs.Sound.activePlugin instanceof createjs.FlashPlugin || createjs.Sound.getCapability("mp3"))
+			this.supportedSound = supportedSound = ".mp3";
+
+		cloudkid.Sound.init(supportedSound, soundConfig);
+		cloudkid.Animator.audioLib = cloudkid.Sound.instance;
 
 		var manifest = [
 			{src:"images/PizzaPlace_IntroBG.jpg", id:"PizzaPlace_IntroBG"},
@@ -66,35 +80,16 @@
 
 	function loadTasksComplete()
 	{
-	}
-
-	function onReady()
-	{
 		stage.addEventListener("click", onClick);
-	}
-
-	function onClick()
-	{
-		if(!isLoading && !isLoaded)
-			startLoading();
-		else if(isLoaded)
-			playAnim();
-	}
-
-	function startLoading()
-	{
-		isLoading = true;
-		cloudkid.Audio.instance.load(audioLoaded);
-	}
-
-	function audioLoaded()
-	{
-		isLoading = false;
-		isLoaded = true;
 		anim = new lib.PizzaPlaceIntro();
 		anim.id = "intro";
 		anim.enableFramerateIndependence(15);
 		stage.addChildAt(anim, 0);
+		playAnim();
+	}
+
+	function onClick()
+	{
 		playAnim();
 	}
 
@@ -111,7 +106,9 @@
 		this.removeAllChildren();
 		stage = null;
 		currentShape = null;
+		if(createjs.Sound.activePlugin instanceof createjs.FlashPlugin)
+			$("#SoundJSFlashContainer").remove();
 	}
 	
-	namespace('cloudkid').AudioEaselJS = AudioEaselJS;
+	namespace('cloudkid').SoundEaselJS = SoundEaselJS;
 }());

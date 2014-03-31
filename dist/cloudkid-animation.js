@@ -536,6 +536,9 @@
 		
 		// Stop the animation
 		timeline.instance.stop();
+
+		if(timeline.soundInst)
+			timeline.soundInst.stop();//stop the sound from playing
 		
 		// Remove from the stack
 		_timelines.splice(index, 1);
