@@ -6,29 +6,39 @@
 	<macrodef name="uglifyjs">
 		<attribute name="options" default="-m" />
 		<attribute name="debug" default="false" />
-		<attribute name="compress" default="" />
+		<attribute name="createjs" default="true" />
+ 		<attribute name="compress" default="" />
+		<attribute name="order" default="${source.createjs.order}" />
 		<attribute name="output" />
 		<sequential>
-			<fail unless="source.order" message="version needs to be specified in the build.properties as the output directory" />
 			<fail unless="source.dir" message="The folder that contains all the source" />
 			<fail unless="compressor" message="Path to the uglify-js program" />
-			<jshint list="${source.order}" dir="${source.dir}" />
+			<jshint list="@{order}" dir="${source.dir}" />
 			<echo message="+---------------------------------+" />
 			<echo message="| Building the Library JavaScript |" />
 			<echo message="+---------------------------------+" />
 			<resourcelist id="files"> 
-				<file file="${source.order}" />
+				<file file="@{order}" />
 				<filterchain>
 					<prefixlines prefix="${source.dir}/" /> 
 				</filterchain>
 			</resourcelist>
 		    <pathconvert property="allFiles" refid="files" pathsep=" " />
-			<exec executable="${compressor}" failonerror="true">
+			<exec osfamily="mac" executable="${compressor}" failonerror="true">
 				<arg line="${allFiles}" />
 				<arg line="-o @{output}" />
 				<arg line="@{options}" />
 				<arg line="-c @{compress}" />
-				<arg line="--define DEBUG=@{debug},RELEASE=!@{debug}" />
+				<arg line="--define DEBUG=@{debug},RELEASE=!@{debug},CONFIG_CREATEJS=@{createjs},CONFIG_PIXI=!@{createjs}" />
+			</exec>
+			<exec osfamily="windows" executable="cmd.exe" failonerror="true">
+				<arg line="/c" />
+				<arg line="${compressor}" />
+				<arg line="${allFiles}" />
+				<arg line="-o @{output}" />
+				<arg line="@{options}" />
+				<arg line="-c @{compress}" />
+				<arg line="--define DEBUG=@{debug},RELEASE=!@{debug},CONFIG_CREATEJS=@{createjs},CONFIG_PIXI=!@{createjs}" />
 			</exec>
 			<replaceregexp file="@{output}" match="\$\{version\}" replace="${version}" flags="g" />
 		</sequential>
@@ -54,24 +64,46 @@
 	        </exec>
 		</sequential>
 	</macrodef>
-	<target name="build-debug" description="Compile JS project in debug mode">
-		<uglifyjs output="${output.debug}" debug="true" options="-b" />
+
+	<target name="build-createjs-debug" description="Compile JS project in debug mode">
+		<uglifyjs output="${output.createjs.debug}" debug="true" options="-b" />
 	</target>
 	
-	<target name="build-release" description="Compile JS project in release mode">
-		<uglifyjs output="${output.min}" />
+	<target name="build-createjs-release" description="Compile JS project in release mode">
+		<uglifyjs output="${output.createjs.min}" />
 	</target>
 	
-	<target name="build-uncompressed" description="Compile JS project with the docs">
-		<concat-source output="${output.docs}" dir="${source.dir}" order="${source.order}" />
-		<replaceregexp file="${output.docs}" match="\( ?RELEASE ?\)" replace="(false)" flags="g" />
-		<replaceregexp file="${output.docs}" match="\( ?DEBUG ?\)" replace="(true)" flags="g" />
+	<target name="build-createjs-uncompressed" description="Compile JS project with the docs">
+		<concat-source output="${output.createjs.docs}" dir="${source.dir}" order="${source.createjs.order}" />
+		<replaceregexp file="${output.createjs.docs}" match="\( ?RELEASE ?\)" replace="(false)" flags="g" />
+		<replaceregexp file="${output.createjs.docs}" match="\( ?DEBUG ?\)" replace="(true)" flags="g" />
+		<replaceregexp file="${output.createjs.docs}" match="\( ?CONFIG_CREATEJS ?\)" replace="(true)" flags="g" />
+		<replaceregexp file="${output.createjs.docs}" match="\( ?CONFIG_PIXI ?\)" replace="(false)" flags="g" />
+	</target>
+	
+	<target name="build-pixi-debug" description="Compile JS project in debug mode">
+		<uglifyjs output="${output.pixi.debug}" debug="true" options="-b" createjs="false" order="${source.pixi.order}" />
+	</target>
+	
+	<target name="build-pixi-release" description="Compile JS project in release mode">
+		<uglifyjs output="${output.pixi.min}" createjs="false" order="${source.pixi.order}" />
+	</target>
+	
+	<target name="build-pixi-uncompressed" description="Compile JS project with the docs">
+		<concat-source output="${output.pixi.docs}" dir="${source.dir}" order="${source.pixi.order}" />
+		<replaceregexp file="${output.pixi.docs}" match="\( ?RELEASE ?\)" replace="(false)" flags="g" />
+		<replaceregexp file="${output.pixi.docs}" match="\( ?DEBUG ?\)" replace="(true)" flags="g" />
+		<replaceregexp file="${output.pixi.docs}" match="\( ?CONFIG_PIXI ?\)" replace="(true)" flags="g" />
+		<replaceregexp file="${output.pixi.docs}" match="\( ?CONFIG_CREATEJS ?\)" replace="(false)" flags="g" />
 	</target>
 	
 	<target name="build-all" description="Compile the Minified, Debug and Uncompressed versions of the library">
-		<antcall target="build-debug" />
-		<antcall target="build-release" />
-		<antcall target="build-uncompressed" />
+		<antcall target="build-createjs-debug" />
+		<antcall target="build-createjs-release" />
+		<antcall target="build-createjs-uncompressed" />
+		<antcall target="build-pixi-debug" />
+		<antcall target="build-pixi-release" />
+		<antcall target="build-pixi-uncompressed" />
 	</target>
 	
 	<macrodef name="concat-source">

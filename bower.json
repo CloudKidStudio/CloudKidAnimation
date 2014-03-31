@@ -10,11 +10,10 @@
     },
     "ignore": [
         "build.xml",
-        "build.properties",
+        "build",
         "example",
         "docs",
         "libs",
-        "dependencies.txt",
         "src",
         "src.order"
     ]
