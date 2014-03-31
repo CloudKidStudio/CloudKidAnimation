@@ -5,7 +5,8 @@
     "dependencies": {
         "tweenjs" : "https://github.com/CloudKidStudio/TweenJS.git",
         "cloudkid-os" : "*",
-        "cloudkid-audio" : "~2.0.0"
+        "cloudkid-audio" : "~2.0.0",
+        "cloudkid-sound" : "~2.0.0"
     },
     "ignore": [
         "build.xml",
