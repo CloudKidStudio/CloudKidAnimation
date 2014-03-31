@@ -2,7 +2,7 @@
     var AnimatorTimeline = function() {}, p = AnimatorTimeline.prototype;
     p.onComplete = null, p.onCompleteParams = null, p.event = null, p.instance = null, 
     p.firstFrame = -1, p.lastFrame = -1, p.isLooping = !1, p.isLastFrame = !1, p.length = 0, 
-    p._paused = !1, Object.defineProperty(AnimTimeline.prototype, "paused", {
+    p._paused = !1, Object.defineProperty(AnimatorTimeline.prototype, "paused", {
         get: function() {
             return this._paused;
         },
@@ -13,7 +13,7 @@
     p.soundInst = null, p.playSound = !1, p.soundStart = 0, p.soundEnd = 0, namespace("cloudkid").AnimatorTimeline = AnimatorTimeline;
 }(), function(undefined) {
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "1.0.0", Animator.debug = !1, Animator.soundLib = null;
+    Animator.VERSION = "2.0.0", Animator.debug = !1, Animator.soundLib = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
     Animator.init = function() {
         _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
@@ -48,7 +48,7 @@
         timeline.soundAlias = soundData.alias);
         var startFrame = instance.timeline.resolve(event), stopFrame = instance.timeline.resolve(event + "_stop"), stopLoopFrame = instance.timeline.resolve(event + "_loop");
         return startFrame !== undefined && (timeline.firstFrame = startFrame, timeline.startTime = startFrame / instance.getAnimFrameRate()), 
-        stopFrame !== undefined ? timeline.lastFrame = stopTime : stopLoopFrame !== undefined && (timeline.lastFrame = stopLoopTime, 
+        stopFrame !== undefined ? timeline.lastFrame = stopFrame : stopLoopFrame !== undefined && (timeline.lastFrame = stopLoopTime, 
         timeline.isLooping = !0), timeline.length = timeline.lastFrame - timeline.firstFrame, 
         timeline.duration = timeline.length / instance.getAnimFrameRate(), timeline;
     }, Animator.stop = function(instance, doOnComplete) {
@@ -93,9 +93,10 @@
         OS.instance && OS.instance.removeUpdateCallback("Animator");
     }, Animator._update = function(elapsed) {
         if (_timelines) {
-            for (var delta = .001 * elapsed, i = _timelines.length - 1; i >= 0; --i) {
-                var t = _timelines[i];
-                if (!timeline.getPaused()) {
+            for (var t, delta = .001 * elapsed, i = _timelines.length - 1; i >= 0; --i) {
+                t = _timelines[i];
+                var instance = t.instance;
+                if (!t.paused) {
                     {
                         t.time;
                     }
@@ -106,15 +107,13 @@
                         }
                         t.time = t.soundStart + .001 * t.soundInst.position;
                     } else t.time += delta * t.speed, t.time >= t.duration && (t.isLooping ? (t.time -= t.duration, 
-                    t.onComplete && t.onComplete.apply(null, t.onCompleteParams)) : (instance.gotoAndStop(timeline.lastFrame), 
-                    _removedTimelines.push(timeline))), t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
+                    t.onComplete && t.onComplete.apply(null, t.onCompleteParams)) : (instance.gotoAndStop(t.lastFrame), 
+                    _removedTimelines.push(t))), t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
                     t.soundInst = Animator.audioLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)));
-                    var instance = t.instance;
-                    instance._elapsedTime = t.startTime + t.time, instance._tick(0);
+                    instance._elapsedTime = t.startTime + t.time, instance._tick();
                 }
             }
-            for (i = 0; i < _removedTimelines.length; i++) timeline = _removedTimelines[i], 
-            Animator._remove(timeline, !0);
+            for (i = 0; i < _removedTimelines.length; i++) t = _removedTimelines[i], Animator._remove(t, !0);
         }
     };
     var onSoundStarted = function(timeline) {

@@ -62,8 +62,8 @@ textarea {
 
 #content {
 	margin:20px auto;
-	width:550px;
-	height:350px;
+	/*width:550px;
+	height:350px;*/
 }
 #stage {
 	border:1px solid #ccc;

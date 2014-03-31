@@ -90,7 +90,7 @@
 	* @property {bool} paused
 	* @public
 	*/
-	Object.defineProperty(AnimTimeline.prototype, "paused", {
+	Object.defineProperty(AnimatorTimeline.prototype, "paused", {
 		get: function() { return this._paused; },
 		set: function(value) {
 			if(value == this._paused) return;
@@ -201,6 +201,7 @@
 	
 	/**
 	* The instance of cloudkid.Audio or cloudkid.Sound for playing audio along with animations.
+	* This MUST be set in order to play synced animations.
 	* 
 	* @property {cloudkid.Audio|cloudkid.Sound} soundLib
 	* @public
@@ -241,7 +242,7 @@
 	var _paused = false;
 	
 	/**
-	*	Sets the variables of the Animator to their defaults. Used when __timelines is null,
+	*	Sets the variables of the Animator to their defaults. Use when _timelines is null,
 	*	if the Animator data was cleaned up but was needed again later.
 	*	
 	*	@function init
@@ -443,7 +444,7 @@
 		}
 		if (stopFrame !== undefined)
 		{
-			timeline.lastFrame = stopTime;
+			timeline.lastFrame = stopFrame;
 		}
 		else if (stopLoopFrame !== undefined)
 		{
@@ -690,10 +691,12 @@
 		
 		var delta = elapsed * 0.001;//ms -> sec
 		
+		var t;
 		for(var i = _timelines.length - 1; i >= 0; --i)
 		{
-			var t = _timelines[i];
-			if(timeline.getPaused()) continue;
+			t = _timelines[i];
+			var instance = t.instance;
+			if(t.paused) continue;
 			var prevTime = t.time;
 			if(t.soundInst)
 			{
@@ -718,8 +721,8 @@
 					}
 					else
 					{
-						instance.gotoAndStop(timeline.lastFrame);
-						_removedTimelines.push(timeline);
+						instance.gotoAndStop(t.lastFrame);
+						_removedTimelines.push(t);
 					}
 				}
 				if(t.playSound && t.time >= t.soundStart)
@@ -729,14 +732,13 @@
 						onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
 				}
 			}
-			var instance = t.instance;
 			instance._elapsedTime = t.startTime + t.time;
-			instance._tick(0);
+			instance._tick();
 		}
 		for(i = 0; i < _removedTimelines.length; i++)
 		{
-			timeline = _removedTimelines[i];
-			Animator._remove(timeline, true);
+			t = _removedTimelines[i];
+			Animator._remove(t, true);
 		}
 	};
 	

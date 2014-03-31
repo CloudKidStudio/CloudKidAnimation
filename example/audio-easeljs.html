@@ -18,11 +18,15 @@
 		<script src="libs/cloudkid-debug/dist/cloudkid-debug.js"></script>
 		<script src="libs/cloudkid-namespace/namespace.js"></script>
 		<script src="libs/cloudkid-os/dist/cloudkid-os-createjs.min.js"></script>
+		<script src="libs/swish-sprite/dist/swish-sprite.min.js"></script>
+		<script src="libs/cloudkid-audio/dist/cloudkid-audio.js"></script>
+		<script src="libs/cloudkid-tasks/dist/cloudkid-tasks.min.js"></script>
 		
 		<script src="../dist/cloudkid-animation.js"></script>
 
 		<script src="js/Chick.js"></script>
-		<script src="js/AnimationApp.js"></script>
+		<script src="js/AudioEaselJS.js"></script>
+		<script src="js/PizzaPlaceIntro.js"></script>
     </head>
     <body>
 		<header>
@@ -30,14 +34,7 @@
 			<a id="exit_app">Exit App</a>
 		</header>
 		<div id="content">
-			<div id="ui">
-				<a data-action="up">Up</a>
-				<a data-action="down">Down</a>
-				<a data-action="upDown">Up + Down</a>
-				<a data-action="loop">Loop</a>
-				<a data-action="clear">Clear</a>
-			</div>
-			<canvas id="stage" width="550" height="350" />
+			<canvas id="stage" width="900" height="480" />
 			<script>
 				var os = cloudkid.OS.init("stage", {
 					showFramerate: true,
@@ -48,7 +45,7 @@
 				});
 				
 				$("#run_app").click(function(){
-					os.addApp(new cloudkid.AnimationApp);
+					os.addApp(new cloudkid.AudioEaselJS);
 				}).click();
 				$("#exit_app").click(function(){
 					os.removeApp();

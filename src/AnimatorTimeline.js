@@ -90,7 +90,7 @@
 	* @property {bool} paused
 	* @public
 	*/
-	Object.defineProperty(AnimTimeline.prototype, "paused", {
+	Object.defineProperty(AnimatorTimeline.prototype, "paused", {
 		get: function() { return this._paused; },
 		set: function(value) {
 			if(value == this._paused) return;
