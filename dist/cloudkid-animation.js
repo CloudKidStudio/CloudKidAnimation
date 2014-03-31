@@ -63,20 +63,6 @@
 	p.isLooping = false;
 	
 	/**
-	* The time passed in milliseconds, used to calculate frame dropping, if needed
-	* 
-	* @property {int} timePassed
-	*/
-	p.timePassed = 0;
-	
-	/**
-	* The actual frame started on, if the animation started on a different frame for some reason 
-	* 
-	* @property {int} realStartFrame
-	*/
-	p.realStartFrame = 0;
-	
-	/**
 	* Ensure we show the last frame before looping
 	* 
 	* @property {bool} isLastFrame
@@ -90,49 +76,89 @@
 	*/
 	p.length = 0;
 	
-	/** 
-	* If this animation is valid for frame dropping - flash will already do it because of audio, etc
-	* 
-	* @property {bool} dropFrames
-	*/
-	p.dropFrames = false;
-	
 	/**
-	* If the timeline is paused 
+	* If the timeline is paused.
 	* 
-	* @property {bool} _isPaused
+	* @property {bool} _paused
 	* @private
 	*/
-	p._isPaused = false;
+	p._paused = false;
 	
 	/**
-	* If this timeline is paused
+	* Sets and gets the animation's paused status.
 	* 
-	* @function getPaused
-	* @return {bool} Whether the timeline is paused
+	* @property {bool} paused
+	* @public
 	*/
-	p.getPaused = function()
-	{
-		return this._isPaused;
-	};
-	
-	/**
-	* Set is paused
-	* 
-	* @function setPaused
-	* @param {bool} pause Whether to pause or unPause
-	*/
-	p.setPaused = function(pause)
-	{
-		this._isPaused = pause;
-		if(this.instance)
-		{
-			if(pause)
-				this.instance.stop();
-			else
-				this.instance.play();
+	Object.defineProperty(AnimTimeline.prototype, "paused", {
+		get: function() { return this._paused; },
+		set: function(value) {
+			if(value == this._paused) return;
+			this._paused = !!value;
+			if(this.soundInst)
+			{
+				if(this.paused)
+					this.soundInst.pause();
+				else
+					this.soundInst.unpause();
+			}
 		}
-	};
+	});
+
+	/**
+	* The animation start time in seconds on the movieclip's timeline.
+	* @property {Number} startTime
+	* @public
+	*/
+	p.startTime = 0;
+	/**
+	* The animation duration in seconds.
+	* @property {Number} duration
+	* @public
+	*/
+	p.duration = 0;
+	/**
+	* The animation speed. Default is 1.
+	* @property {Number} speed
+	* @public
+	*/
+	p.speed = 1;
+	/**
+	* The position of the animation in seconds.
+	* @property {Number} time
+	* @public
+	*/
+	p.time = 0;
+	/**
+	* Sound alias to sync to during the animation.
+	* @property {String} soundAlias
+	* @public
+	*/
+	p.soundAlias = null;
+	/**
+	* A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.
+	* @property {Object} soundInst
+	* @public
+	*/
+	p.soundInst = null;
+	/**
+	* If the timeline will, but has yet to play a sound.
+	* @property {bool} playSound
+	* @public
+	*/
+	p.playSound = false;
+	/**
+	* The time (seconds) into the animation that the sound starts.
+	* @property {Number} soundStart
+	* @public
+	*/
+	p.soundStart = 0;
+	/**
+	* The time (seconds) into the animation that the sound ends
+	* @property {Number} soundEnd
+	* @public
+	*/
+	p.soundEnd = 0;
 	
 	// Assign to the name space
 	namespace('cloudkid').AnimatorTimeline = AnimatorTimeline;
@@ -159,6 +185,7 @@
 	* The current version of the Animator class 
 	* 
 	* @property {String} VERSION
+	* @public
 	* @static
 	*/
 	Animator.VERSION = "${version}";
@@ -167,8 +194,19 @@
 	* If we fire debug statements 
 	* 
 	* @property {bool} debug
+	* @public
+	* @static
 	*/
 	Animator.debug = false;
+	
+	/**
+	* The instance of cloudkid.Audio or cloudkid.Sound for playing audio along with animations.
+	* 
+	* @property {cloudkid.Audio|cloudkid.Sound} soundLib
+	* @public
+	* @static
+	*/
+	Animator.soundLib = null;
 	
 	/**
 	* The collection of timelines
@@ -203,14 +241,6 @@
 	var _paused = false;
 	
 	/**
-	* if the animator should use magic frame dropping technology
-	* 
-	* @property {bool} useFrameDropping
-	* @static
-	*/
-	Animator.useFrameDropping = false;
-	
-	/**
 	*	Sets the variables of the Animator to their defaults. Used when __timelines is null,
 	*	if the Animator data was cleaned up but was needed again later.
 	*	
@@ -223,7 +253,6 @@
 		_removedTimelines = [];
 		_timelinesMap = {};
 		_paused = false;
-		Animator.useFrameDropping = false;
 	};
 	
 	/**
@@ -249,18 +278,20 @@
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
 	*   @param {function} onComplete The function to callback when we're done
 	*   @param {function} onCompleteParams Parameters to pass to onComplete function
-	*   @param {bool} dropFrames If Animator should check this for frame dropping, if frame dropping is allowed
-	*   @param {int} frameOffset The number of frames into the animation to start
+	*	@param {int} startTime The time in milliseconds into the animation to start.
+	*	@param {Number} speed The speed at which to play the animation.
+	*	@param {Object} soundData An object with alias and start (in seconds) properties
+	*		describing a sound to sync the animation with.
 	*   @param {bool} doCancelledCallback Should an overridden animation's callback function still run?
 	*   @return {cloudkid.AnimatorTimeline} The Timeline object
 	*   @static
 	*/
-	Animator.play = function(instance, event, onComplete, onCompleteParams, dropFrames, frameOffset, doCancelledCallback)
+	Animator.play = function(instance, event, onComplete, onCompleteParams, startTime, speed, soundData, doCancelledCallback)
 	{
 		onComplete = onComplete || null;
 		onCompleteParams = onCompleteParams || null;
-		dropFrames = dropFrames || true;
-		frameOffset = frameOffset || 0;
+		startTime = startTime ? startTime * 0.001 : 0;//convert into seconds, as that is what the time uses internally
+		speed = speed || 1;
 		doCancelledCallback = doCancelledCallback || false;
 		
 		if (!_timelines) 
@@ -271,13 +302,15 @@
 			Animator.stop(instance, doCancelledCallback);
 		}
 				
-		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, dropFrames);
+		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, speed, soundData);
 		
 		if (timeline.firstFrame > -1 && timeline.lastFrame > -1)//if the animation is present and complete
 		{
-			timeline.realStartFrame = timeline.firstFrame + frameOffset;
+			timeline.time = startTime;
 			
-			instance.gotoAndPlay(timeline.realStartFrame);
+			instance._elapsedTime = timeline.startTime + timeline.time;
+			instance.play();//have it set its 'paused' variable to false
+			instance._tick();//update the movieclip to make sure it is redrawn correctly at the next opportunity
 			
 			// Before we add the timeline, we should check to see
 			// if there are no timelines, then start the enter frame
@@ -307,19 +340,22 @@
 	*   Play an animation for a frame label event, starting at a random frame within the animation
 	*   
 	*   @function playAtRandomFrame
-	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate
-	*   @param {String} event The frame label event (e.g. "onClose" to "onClose_stop")
-	*   @param {function} onComplete The function to callback when we're done
-	*   @param {function} onCompleteParams Parameters to pass to onComplete function
-	*   @param {bool} dropFrames If Animator should check this for frame dropping, if frame dropping is allowed
+	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate.
+	*   @param {String} event The frame label event (e.g. "onClose" to "onClose_stop").
+	*   @param {function} onComplete The function to callback when we're done.
+	*   @param {function} onCompleteParams Parameters to pass to onComplete function.
+	*	@param {Number} speed The speed at which to play the animation.
+	*	@param {Object} soundData An object with alias and start (in seconds) properties
+	*		describing a sound to sync the animation with.
 	*   @return {cloudkid.AnimatorTimeline} The Timeline object
 	*   @static
 	*/
-	Animator.playAtRandomFrame = function(instance, event, onComplete, onCompleteParams, dropFrames)
+	Animator.playAtRandomFrame = function(instance, event, onComplete, onCompleteParams, speed, soundData)
 	{
 		onComplete = onComplete || null;
 		onCompleteParams = onCompleteParams || null;
-		dropFrames = dropFrames || true;
+		speed = speed || 1;
+		doCancelledCallback = doCancelledCallback || false;
 				
 		if (!_timelines) 
 			Animator.init();
@@ -331,11 +367,13 @@
 		
 		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, dropFrames);
 		
-		if (timeline.firstFrame > 0 && timeline.lastFrame > 0)//if the animation is present and complete
+		if (timeline.firstFrame > -1 && timeline.lastFrame > -1)//if the animation is present and complete
 		{
-			timeline.realStartFrame = Math.random() * (timeline.lastFrame - timeline.firstFrame) + timeline.firstFrame;
+			timeline.time = Math.random() * timeline.duration;
 			
-			instance.gotoAndPlay(timeline.realStartFrame);
+			instance._elapsedTime = timeline.startTime + timeline.time;
+			instance.play();//have it set its 'paused' variable to false
+			instance._tick();//update the movieclip to make sure it is redrawn correctly at the next opportunity
 			
 			// Before we add the timeline, we should check to see
 			// if there are no timelines, then start the enter frame
@@ -368,42 +406,52 @@
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
 	*   @param {function} onComplete The function to callback when we're done
 	*   @param {function} onCompleteParams Parameters to pass to onComplete function
-	*   @param {bool} dropFrames If Animator should check this for frame dropping, if frame dropping is allowed
+	*   @param {Number} speed The speed at which to play the animation.
+	*	@param {Object} soundData Data about sound to sync the animation to.
 	*   @return {cloudkid.AnimatorTimeline} The Timeline object
 	*   @private
 	*   @static
 	*/
-	Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, dropFrames)
+	Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, speed, soundData)
 	{
 		var timeline = new AnimatorTimeline();
 		if(instance instanceof MovieClip === false)//not a movieclip
 		{
 			return timeline;
 		}
+		instance.advanceDuringTicks = false;//make sure the movieclip doesn't play outside the control of Animator
 		timeline.instance = instance;
 		timeline.event = event;
 		timeline.onComplete = onComplete;
 		timeline.onCompleteParams = onCompleteParams;
-		timeline.dropFrames = dropFrames;
-				
-		var startTime = instance.timeline.resolve(event); 
-		var stopTime = instance.timeline.resolve(event + "_stop");
-		var stopLoopTime = instance.timeline.resolve(event + "_loop");
-
-		if (startTime !== undefined)
+		timeline.speed = speed;
+		if(soundData)
 		{
-			timeline.firstFrame = timeline.realStartFrame = startTime;
+			timeline.playSound = true;
+			timeline.soundStart = soundData.start;//seconds
+			timeline.soundAlias = soundData.alias;
 		}
-		if (stopTime !== undefined)
+				
+		var startFrame = instance.timeline.resolve(event); 
+		var stopFrame = instance.timeline.resolve(event + "_stop");
+		var stopLoopFrame = instance.timeline.resolve(event + "_loop");
+
+		if (startFrame !== undefined)
+		{
+			timeline.firstFrame = startFrame;
+			timeline.startTime = startFrame / instance.getAnimFrameRate();
+		}
+		if (stopFrame !== undefined)
 		{
 			timeline.lastFrame = stopTime;
 		}
-		else if (stopLoopTime !== undefined)
+		else if (stopLoopFrame !== undefined)
 		{
 			timeline.lastFrame = stopLoopTime;
 			timeline.isLooping = true;
 		}
 		timeline.length = timeline.lastFrame - timeline.firstFrame;
+		timeline.duration = timeline.length / instance.getAnimFrameRate();
 		
 		return timeline;
 	};
@@ -430,7 +478,6 @@
 			}
 			return;
 		}
-		
 		var timeline = _timelinesMap[instance.id];
 		Animator._remove(timeline, doOnComplete);
 	};
@@ -524,7 +571,7 @@
 		
 		for(var i = 0; i < _timelines.length; i++)
 		{
-			_timelines[i].setPaused(true);
+			_timelines[i].paused = true;
 		}
 		Animator._stopUpdate();
 	};
@@ -546,7 +593,7 @@
 		// Resume playing of all the instances
 		for(var i = 0; i < _timelines.length; i++)
 		{
-			_timelines[i].setPaused(false);
+			_timelines[i].paused = false;
 		}
 		if (Animator._hasTimelines()) Animator._startUpdate();
 	};
@@ -567,7 +614,7 @@
 		{
 			if (container.contains(_timelines[i].instance))
 			{
-				_timelines[i].setPaused(paused);
+				_timelines[i].paused = paused;
 			}
 		}
 	};
@@ -641,147 +688,68 @@
 	{
 		if(!_timelines) return;
 		
-		/** The expected frame that a movieclip should be on when dropping frames. */
-		var expected = 0;//used when dropping frames
-		/** The framerate / 1000, for calculations (0.030 for 30fps) */
-		var frameRate = 0;
-		/** The expected length of a frame in milliseconds, to weed out wierd frames that are too short */
-		var expectedFrameLength = 0;
+		var delta = elapsed * 0.001;//ms -> sec
 		
-		if(Animator.useFrameDropping)
+		for(var i = _timelines.length - 1; i >= 0; --i)
 		{
-			frameRate = OS.instance.fps;
-			expectedFrameLength = 1000 / frameRate;
-			frameRate *= 0.001;
-		}
-		
-		var timeline;
-		var instance;
-		var currentFrame;
-		
-		for (var i = 0; i < _timelines.length; i++)
-		{
-			timeline = _timelines[i];
-			
+			var t = _timelines[i];
 			if(timeline.getPaused()) continue;
-			
-			instance = timeline.instance;
-			currentFrame = instance.timeline.position || 0;
-			
-			if (currentFrame >= timeline.lastFrame || currentFrame < timeline.firstFrame || timeline.isLastFrame)
+			var prevTime = t.time;
+			if(t.soundInst)
 			{
-				if(currentFrame == timeline.lastFrame && !timeline.isLastFrame)
+				if(t.soundInst.isValid)
+					t.time = t.soundStart + t.soundInst.position * 0.001;//convert sound position ms -> sec
+				else//if sound is no longer valid, stop animation playback immediately
 				{
-					timeline.isLastFrame = true;
-					if(Animator.useFrameDropping && timeline.dropFrames)
-					{
-						if(elapsed < expectedFrameLength)
-							timeline.timePassed += expectedFrameLength;
-						else
-							timeline.timePassed += elapsed;
-					}
-					instance.stop();
+					_removedTimelines.push(timeline);
 					continue;
 				}
-				if(timeline.isLooping)
+			}
+			else
+			{
+				t.time += delta * t.speed;
+				if(t.time >= t.duration)
 				{
-					if(timeline.isLastFrame)
+					if(t.isLooping)
 					{
-						timeline.isLastFrame = false;
-					}
-					
-					if(Animator.useFrameDropping && timeline.dropFrames)
-					{
-						if(currentFrame == 1 && timeline.firstFrame > 1)
-						{
-							instance.gotoAndPlay(timeline.firstFrame);
-							timeline.timePassed = 0;
-						}
-						else
-						{
-							if(elapsed < expectedFrameLength)
-								timeline.timePassed += expectedFrameLength;
-							else
-								timeline.timePassed += elapsed;
-							
-							expected = Math.round(timeline.timePassed * frameRate) + timeline.realStartFrame;
-							expected -= timeline.firstFrame;
-							expected = expected % timeline.length + timeline.firstFrame;
-							timeline.timePassed = Math.round((expected - timeline.firstFrame) / frameRate);
-							timeline.realStartFrame = timeline.firstFrame;
-							instance.gotoAndPlay(expected);
-						}
+						t.time -= t.duration;
+						if (t.onComplete)
+							t.onComplete.apply(null, t.onCompleteParams);
 					}
 					else
-						instance.gotoAndPlay(timeline.firstFrame);
-					
-					if (true)
 					{
-						Debug.log("animation ended - " + timeline.event);
-					}
-					if (timeline.onComplete)
-					{
-						timeline.onComplete.apply(null, timeline.onCompleteParams);
+						instance.gotoAndStop(timeline.lastFrame);
+						_removedTimelines.push(timeline);
 					}
 				}
-				else
+				if(t.playSound && t.time >= t.soundStart)
 				{
-					instance.gotoAndStop(timeline.lastFrame);
-					_removedTimelines.push(timeline);
+					t.time = t.soundStart;
+					t.soundInst = Animator.audioLib.play(t.soundAlias, 
+						onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
 				}
 			}
-			//try to drop frames to keep up, timewise - may look bad, but shouldn't result in animations interfering with timing
-			else if(Animator.useFrameDropping && timeline.dropFrames)
-			{
-				if(elapsed < expectedFrameLength)
-					timeline.timePassed += expectedFrameLength;
-				else
-					timeline.timePassed += elapsed;
-				expected = Math.round(timeline.timePassed * frameRate) + timeline.realStartFrame;
-					
-				//if we are behind
-				if(currentFrame < expected)
-				{
-					if(expected >= timeline.lastFrame)
-					{
-						if(expected == timeline.lastFrame)
-						{
-							timeline.isLastFrame = true;
-							instance.gotoAndStop(expected);
-							continue;
-						}
-						if(timeline.isLooping)
-						{
-							expected -= timeline.firstFrame;
-							expected = expected % timeline.length + timeline.firstFrame;
-							instance.gotoAndPlay(expected);
-							timeline.timePassed = Math.round((expected - timeline.firstFrame) / frameRate);
-							timeline.realStartFrame = timeline.firstFrame;
-
-							if (timeline.onComplete)
-							{
-								timeline.onComplete.apply(null, timeline.onCompleteParams);
-							}
-						}
-						else
-						{
-							//make sure it is on the last frame before we stop it
-							instance.gotoAndStop(timeline.lastFrame);
-							_removedTimelines.push(timeline);
-						}
-					}
-					else//otherwise, just skip ahead as needed
-					{
-						instance.gotoAndPlay(expected);
-					}
-				}
-			}
+			var instance = t.instance;
+			instance._elapsedTime = t.startTime + t.time;
+			instance._tick(0);
 		}
 		for(i = 0; i < _removedTimelines.length; i++)
 		{
 			timeline = _removedTimelines[i];
 			Animator._remove(timeline, true);
 		}
+	};
+	
+	var onSoundStarted = function(timeline)
+	{
+		timeline.playSound = false;
+		timeline.soundEnd = timeline.soundStart + timeline.soundInst.length * 0.001;//convert sound length to seconds
+	};
+	
+	var onSoundDone = function(timeline)
+	{
+		timeline.time = timeline.soundEnd || timeline.soundStart;//in case the sound goes wrong, 
+		timeline.soundInst = null;
 	};
 	
 	/**
