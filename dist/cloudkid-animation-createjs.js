@@ -302,7 +302,6 @@
 		{
 			Animator.stop(instance, doCancelledCallback);
 		}
-				
 		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, speed, soundData);
 		
 		if (timeline.firstFrame > -1 && timeline.lastFrame > -1)//if the animation is present and complete

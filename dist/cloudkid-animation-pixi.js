@@ -196,13 +196,28 @@
 			cloudkid.OS.instance.addUpdateCallback(this._updateAlias, this._boundUpdate);
 		return t;
 	};
+
+	/**
+	 * Checks to see if a Spine animation includes a given animation alias
+	 * 
+	 * @function instanceHasAnimation
+	 * @param {PIXI.spine} instance The animation to search. This has to be a Spine animation.
+	 * @param {String} anim The animation alias to search for
+	 * @returns {Boolean} Returns true if the animation is found
+	 */
+	p.instanceHasAnimation = function(instance, anim)
+	{
+		if(instance instanceof PIXI.Spine)
+			return checkSpineForAnimation(instance, anim);
+		return false;
+	};
 	
 	/**
-	 * Checks to see if a spine includes a given animation alias
+	 * Checks to see if a Spine animation includes a given animation alias
 	 * 
 	 * @function checkSpineForAnimation
 	 * @param {PIXI.spine} clip The spine to search
-	 * @param {String} anim The animation alias to search
+	 * @param {String} anim The animation alias to search for
 	 * @returns {Boolean} Returns true if the animation is found
 	 */
 	var checkSpineForAnimation = function(clip, anim)

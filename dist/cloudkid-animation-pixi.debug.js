@@ -38,6 +38,8 @@
         t.loop = loop, t.time = startTime > 0 ? startTime : 0, this._timelines.push(t), 
         1 == ++this._numAnims && cloudkid.OS.instance.addUpdateCallback(this._updateAlias, this._boundUpdate), 
         t;
+    }, p.instanceHasAnimation = function(instance, anim) {
+        return instance instanceof PIXI.Spine ? checkSpineForAnimation(instance, anim) : !1;
     };
     var checkSpineForAnimation = function(clip, anim) {
         return null !== clip.stateData.skeletonData.findAnimation(anim);
