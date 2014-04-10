@@ -182,9 +182,7 @@
 			t.soundAlias = soundData.alias;
 			if(t.soundStart === 0)
 			{
-				t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, undefined, 
-					undefined, undefined, undefined, undefined, undefined, 
-					onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
+				t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
 			}
 			else
 				cloudkid.Sound.instance.preloadSound(soundData.alias);
@@ -322,8 +320,7 @@
 				if(t.playSound && t.time >= t.soundStart)
 				{
 					t.time = t.soundStart;
-					t.soundInst = this.soundLib.play(t.soundAlias, 
-						onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
+					t.soundInst = this.soundLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
 				}
 			}
 			var c = t.clip;
