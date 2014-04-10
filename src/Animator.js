@@ -136,7 +136,6 @@
 		{
 			Animator.stop(instance, doCancelledCallback);
 		}
-				
 		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, speed, soundData);
 		
 		if (timeline.firstFrame > -1 && timeline.lastFrame > -1)//if the animation is present and complete
@@ -237,7 +236,7 @@
 	*   Creates the AnimatorTimeline for a given animation
 	*   
 	*   @function _makeTimeline
-	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate
+	*   @param {easeljs.MovieClip} instance The timeline to animate
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
 	*   @param {function} onComplete The function to callback when we're done
 	*   @param {function} onCompleteParams Parameters to pass to onComplete function
@@ -289,6 +288,25 @@
 		timeline.duration = timeline.length / instance.getAnimFrameRate();
 		
 		return timeline;
+	};
+
+	/**
+	*   Checks if animation exists
+	*   
+	*   @function _makeTimeline
+	*   @param {easeljs.MovieClip} instance The timeline to check
+	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
+	*   @public
+	*   @static
+	*	@return {bool} does this animation exist?
+	*/
+	Animator.instanceHasAnimation = function(instance, event)
+	{
+		var startFrame = instance.timeline.resolve(event); 
+		var stopFrame = instance.timeline.resolve(event + "_stop");
+		var stopLoopFrame = instance.timeline.resolve(event + "_loop");
+
+		return startFrame !== undefined && (stopFrame !== undefined || stopLoopFrame !== undefined);
 	};
 	
 	/**

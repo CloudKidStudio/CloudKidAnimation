@@ -51,6 +51,9 @@
         stopFrame !== undefined ? timeline.lastFrame = stopFrame : stopLoopFrame !== undefined && (timeline.lastFrame = stopLoopTime, 
         timeline.isLooping = !0), timeline.length = timeline.lastFrame - timeline.firstFrame, 
         timeline.duration = timeline.length / instance.getAnimFrameRate(), timeline;
+    }, Animator.instanceHasAnimation = function(instance, event) {
+        var startFrame = instance.timeline.resolve(event), stopFrame = instance.timeline.resolve(event + "_stop"), stopLoopFrame = instance.timeline.resolve(event + "_loop");
+        return startFrame !== undefined && (stopFrame !== undefined || stopLoopFrame !== undefined);
     }, Animator.stop = function(instance, doOnComplete) {
         if (doOnComplete = doOnComplete || !1, _timelines) {
             if (_timelinesMap[instance.id] === undefined) return void Debug.log("No timeline was found matching the instance id " + instance);
