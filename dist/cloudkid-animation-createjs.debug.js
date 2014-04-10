@@ -42,10 +42,13 @@
     }, Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, speed, soundData) {
         var timeline = new AnimatorTimeline();
         if (instance instanceof MovieClip == !1) return timeline;
-        instance.advanceDuringTicks = !1, timeline.instance = instance, timeline.event = event, 
-        timeline.onComplete = onComplete, timeline.onCompleteParams = onCompleteParams, 
-        timeline.speed = speed, soundData && (timeline.playSound = !0, timeline.soundStart = soundData.start, 
-        timeline.soundAlias = soundData.alias);
+        if (instance.advanceDuringTicks = !1, !instance.getAnimFrameRate()) {
+            var fps = cloudkid.OS.instance.options.fps;
+            fps || (fps = cloudkid.OS.instance.fps), fps || (fps = 15), instance.enableFramerateIndependence(15);
+        }
+        timeline.instance = instance, timeline.event = event, timeline.onComplete = onComplete, 
+        timeline.onCompleteParams = onCompleteParams, timeline.speed = speed, soundData && (timeline.playSound = !0, 
+        timeline.soundStart = soundData.start, timeline.soundAlias = soundData.alias);
         var startFrame = instance.timeline.resolve(event), stopFrame = instance.timeline.resolve(event + "_stop"), stopLoopFrame = instance.timeline.resolve(event + "_loop");
         return startFrame !== undefined && (timeline.firstFrame = startFrame, timeline.startTime = startFrame / instance.getAnimFrameRate()), 
         stopFrame !== undefined ? timeline.lastFrame = stopFrame : stopLoopFrame !== undefined && (timeline.lastFrame = stopLoopTime, 

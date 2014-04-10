@@ -420,6 +420,15 @@
 			return timeline;
 		}
 		instance.advanceDuringTicks = false;//make sure the movieclip doesn't play outside the control of Animator
+		if(!instance.getAnimFrameRate())//make sure the movieclip is framerate independent
+		{
+			var fps = cloudkid.OS.instance.options.fps;
+			if(!fps)
+				fps = cloudkid.OS.instance.fps;
+			if(!fps)
+				fps = 15;
+			instance.enableFramerateIndependence(15);
+		}
 		timeline.instance = instance;
 		timeline.event = event;
 		timeline.onComplete = onComplete;
