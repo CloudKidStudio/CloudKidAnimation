@@ -568,7 +568,7 @@
 					t.time = t.soundStart + t.soundInst.position * 0.001;//convert sound position ms -> sec
 				else//if sound is no longer valid, stop animation playback immediately
 				{
-					_removedTimelines.push(timeline);
+					_removedTimelines.push(t);
 					continue;
 				}
 			}

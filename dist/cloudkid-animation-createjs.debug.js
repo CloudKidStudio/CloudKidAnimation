@@ -109,7 +109,7 @@
                     }
                     if (t.soundInst) {
                         if (!t.soundInst.isValid) {
-                            _removedTimelines.push(timeline);
+                            _removedTimelines.push(t);
                             continue;
                         }
                         t.time = t.soundStart + .001 * t.soundInst.position;
