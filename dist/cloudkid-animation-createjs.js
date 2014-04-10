@@ -456,7 +456,7 @@
 		}
 		else if (stopLoopFrame !== undefined)
 		{
-			timeline.lastFrame = stopLoopTime;
+			timeline.lastFrame = stopLoopFrame;
 			timeline.isLooping = true;
 		}
 		timeline.length = timeline.lastFrame - timeline.firstFrame;
