@@ -377,7 +377,8 @@
 	
 	var onSoundDone = function(timeline)
 	{
-		timeline.time = timeline.soundEnd || timeline.soundStart;//in case the sound goes wrong, 
+		if(timeline.soundEnd > 0 && timeline.time < timeline.soundEnd)
+			timeline.time = timeline.soundEnd;
 		timeline.soundInst = null;
 	};
 	

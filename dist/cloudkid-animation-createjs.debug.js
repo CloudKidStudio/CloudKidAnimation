@@ -13,7 +13,7 @@
     p.soundInst = null, p.playSound = !1, p.soundStart = 0, p.soundEnd = 0, namespace("cloudkid").AnimatorTimeline = AnimatorTimeline;
 }(), function(undefined) {
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.0.2", Animator.debug = !1, Animator.soundLib = null;
+    Animator.VERSION = "2.0.3", Animator.debug = !1, Animator.soundLib = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
     Animator.init = function() {
         _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
@@ -126,7 +126,8 @@
     var onSoundStarted = function(timeline) {
         timeline.playSound = !1, timeline.soundEnd = timeline.soundStart + .001 * timeline.soundInst.length;
     }, onSoundDone = function(timeline) {
-        timeline.time = timeline.soundEnd || timeline.soundStart, timeline.soundInst = null;
+        timeline.soundEnd > 0 && timeline.soundEnd > timeline.time && (timeline.time = timeline.soundEnd), 
+        timeline.soundInst = null;
     };
     Animator._hasTimelines = function() {
         return _timelines ? _timelines.length > 0 : !1;

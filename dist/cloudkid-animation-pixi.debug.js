@@ -95,7 +95,8 @@
     var onSoundStarted = function(timeline) {
         timeline.playSound = !1, timeline.soundEnd = timeline.soundStart + .001 * timeline.soundInst.length;
     }, onSoundDone = function(timeline) {
-        timeline.time = timeline.soundEnd || timeline.soundStart, timeline.soundInst = null;
+        timeline.soundEnd > 0 && timeline.time < timeline.soundEnd && (timeline.time = timeline.soundEnd), 
+        timeline.soundInst = null;
     };
     p._onMovieClipDone = function(timeline) {
         for (var i = 0; i < this._numAnims; ++i) if (this._timelines[i] === timeline) {

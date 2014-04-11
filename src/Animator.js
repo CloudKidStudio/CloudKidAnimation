@@ -565,7 +565,9 @@
 			if(t.soundInst)
 			{
 				if(t.soundInst.isValid)
+				{
 					t.time = t.soundStart + t.soundInst.position * 0.001;//convert sound position ms -> sec
+				}
 				else//if sound is no longer valid, stop animation playback immediately
 				{
 					_removedTimelines.push(t);
@@ -614,7 +616,8 @@
 	
 	var onSoundDone = function(timeline)
 	{
-		timeline.time = timeline.soundEnd || timeline.soundStart;//in case the sound goes wrong, 
+		if(timeline.soundEnd > 0 && timeline.soundEnd > timeline.time)
+			timeline.time = timeline.soundEnd;
 		timeline.soundInst = null;
 	};
 	
