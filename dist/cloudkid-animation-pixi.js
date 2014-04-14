@@ -100,6 +100,8 @@
 	 * @param {bool} loop Whether the animation should loop
 	 * @param {int} speed The speed at which to play the animation
 	 * @param {int} startTime The time in milliseconds into the animation to start.
+	 * @param {Object|String} soundData Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
+	 *        start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
 	 */
 	p.play = function(clip, anim, callback, loop, speed, startTime, soundData)
 	{
@@ -178,8 +180,16 @@
 		if(soundData)
 		{
 			t.playSound = true;
-			t.soundStart = soundData.start;//seconds
-			t.soundAlias = soundData.alias;
+			if(typeof soundData == "string")
+			{
+				t.soundStart = 0;
+				t.soundAlias = soundData;
+			}
+			else
+			{
+				t.soundStart = soundData.start > 0 ? soundData.start : 0;//seconds
+				t.soundAlias = soundData.alias;
+			}
 			if(t.soundStart === 0)
 			{
 				t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));

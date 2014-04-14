@@ -179,8 +179,8 @@
 	*   @param {function} onComplete The function to callback when we're done.
 	*   @param {function} onCompleteParams Parameters to pass to onComplete function.
 	*	@param {Number} speed The speed at which to play the animation.
-	*	@param {Object} soundData An object with alias and start (in seconds) properties
-	*		describing a sound to sync the animation with.
+	*	@param {Object|String} soundData Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
+	*		start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
 	*   @return {cloudkid.AnimatorTimeline} The Timeline object
 	*   @static
 	*/
@@ -199,7 +199,7 @@
 			Animator.stop(instance, false);
 		}
 		
-		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, dropFrames);
+		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, speed, soundData);
 		
 		if (timeline.firstFrame > -1 && timeline.lastFrame > -1)//if the animation is present and complete
 		{
@@ -271,8 +271,16 @@
 		if(soundData)
 		{
 			timeline.playSound = true;
-			timeline.soundStart = soundData.start;//seconds
-			timeline.soundAlias = soundData.alias;
+			if(typeof soundData == "string")
+			{
+				timeline.soundStart = 0;
+				timeline.soundAlias = soundData;
+			}
+			else
+			{
+				timeline.soundStart = soundData.start > 0 ? soundData.start : 0;//seconds
+				timeline.soundAlias = soundData.alias;
+			}
 		}
 				
 		var startFrame = instance.timeline.resolve(event); 

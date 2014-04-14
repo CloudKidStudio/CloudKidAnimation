@@ -13,7 +13,7 @@
     p.soundInst = null, p.playSound = !1, p.soundStart = 0, p.soundEnd = 0, namespace("cloudkid").AnimatorTimeline = AnimatorTimeline;
 }(), function(undefined) {
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.0.3", Animator.debug = !1, Animator.soundLib = null;
+    Animator.VERSION = "2.1.0", Animator.debug = !1, Animator.soundLib = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
     Animator.init = function() {
         _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
@@ -29,11 +29,11 @@
         Animator._hasTimelines() || Animator._startUpdate(), _timelines.push(timeline), 
         _timelinesMap[instance.id] = timeline, timeline) : (Debug.log("No event " + event + " was found, or it lacks an end, on this MovieClip " + instance), 
         onComplete && onComplete.apply(null, onCompleteParams), null);
-    }, Animator.playAtRandomFrame = function(instance, event, onComplete, onCompleteParams, speed) {
+    }, Animator.playAtRandomFrame = function(instance, event, onComplete, onCompleteParams, speed, soundData) {
         onComplete = onComplete || null, onCompleteParams = onCompleteParams || null, speed = speed || 1, 
         doCancelledCallback = doCancelledCallback || !1, _timelines || Animator.init(), 
         _timelinesMap[instance.id] !== undefined && Animator.stop(instance, !1);
-        var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, dropFrames);
+        var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, speed, soundData);
         return timeline.firstFrame > -1 && timeline.lastFrame > -1 ? (timeline.time = Math.random() * timeline.duration, 
         instance._elapsedTime = timeline.startTime + timeline.time, instance.play(), instance._tick(), 
         Animator._hasTimelines() || Animator._startUpdate(), _timelines.push(timeline), 
@@ -48,7 +48,8 @@
         }
         timeline.instance = instance, timeline.event = event, timeline.onComplete = onComplete, 
         timeline.onCompleteParams = onCompleteParams, timeline.speed = speed, soundData && (timeline.playSound = !0, 
-        timeline.soundStart = soundData.start, timeline.soundAlias = soundData.alias);
+        "string" == typeof soundData ? (timeline.soundStart = 0, timeline.soundAlias = soundData) : (timeline.soundStart = soundData.start > 0 ? soundData.start : 0, 
+        timeline.soundAlias = soundData.alias));
         var startFrame = instance.timeline.resolve(event), stopFrame = instance.timeline.resolve(event + "_stop"), stopLoopFrame = instance.timeline.resolve(event + "_loop");
         return startFrame !== undefined && (timeline.firstFrame = startFrame, timeline.startTime = startFrame / instance.getAnimFrameRate()), 
         stopFrame !== undefined ? timeline.lastFrame = stopFrame : stopLoopFrame !== undefined && (timeline.lastFrame = stopLoopFrame, 
