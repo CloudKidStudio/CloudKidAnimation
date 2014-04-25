@@ -13,7 +13,7 @@
         }
     }), p.play = function(clip, anim, options, loop, speed, startTime, soundData) {
         var callback = null;
-        if (options && "function" == typeof options ? (callback = options, options = {}) : void 0 === options && (options = {}), 
+        if (options && "function" == typeof options ? (callback = options, options = {}) : options || (options = {}), 
         null === clip || !(clip instanceof PIXI.Spine) && !clip.updateAnim) return void (callback && callback());
         this.stop(clip), callback = options.callback || callback || null, loop = options.loop || loop || !1, 
         speed = options.speed || speed || 1, startTime = options.startTime || startTime, 

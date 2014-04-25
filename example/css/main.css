@@ -61,14 +61,13 @@ textarea {
    ========================================================================== */
 
 #content {
-	margin:20px auto;
-	/*width:550px;
-	height:350px;*/
+	margin:20px 0;
 }
 #stage {
 	border:1px solid #ccc;
 	display:block;
 	background-color: #fff;
+    margin:0 auto;
 }
 
 #ui {

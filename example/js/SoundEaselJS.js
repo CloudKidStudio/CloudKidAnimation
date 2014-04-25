@@ -3,7 +3,14 @@
 	// Imports
 	var OS = cloudkid.OS,
 		Application = cloudkid.Application,
-		Animator = cloudkid.Animator;
+		Animator = cloudkid.Animator,
+		Touch = createjs.Touch,
+		FlashPlugin = createjs.FlashPlugin,
+		TaskManager = cloudkid.TaskManager,
+		ListTask = cloudkid.ListTask,
+		Sound = cloudkid.Sound,
+		SoundJS = createjs.Sound,
+		WebAudioPlugin = createjs.WebAudioPlugin;
 	
 	var SoundEaselJS = function()
 	{
@@ -28,13 +35,14 @@
 	{	
 		stage = OS.instance.stage;
 		
-		if (!createjs.Touch.isSupported())
+		if (!Touch.isSupported())
 		{
 			stage.enableMouseOver();
 		}
 		//set up sound
-		createjs.FlashPlugin.BASE_PATH = "sounds/";
-		createjs.Sound.registerPlugins([createjs.WebAudioPlugin, createjs.FlashPlugin]);
+		FlashPlugin.BASE_PATH = "sounds/";
+
+		SoundJS.registerPlugins([WebAudioPlugin, FlashPlugin]);
 		var soundConfig = {
 			"context":"sfx",
 			"path":"sounds/",
@@ -44,13 +52,18 @@
 			]
 		};
 		var supportedSound;
-		if(createjs.Sound.getCapability("ogg"))
-			this.supportedSound = supportedSound = ".ogg";
-		else if(createjs.Sound.activePlugin instanceof createjs.FlashPlugin || createjs.Sound.getCapability("mp3"))
-			this.supportedSound = supportedSound = ".mp3";
 
-		cloudkid.Sound.init(supportedSound, soundConfig);
-		cloudkid.Animator.audioLib = cloudkid.Sound.instance;
+		if (SoundJS.getCapability("ogg"))
+		{
+			this.supportedSound = supportedSound = ".ogg";
+		}
+		else if(SoundJS.activePlugin instanceof FlashPlugin || SoundJS.getCapability("mp3"))
+		{
+			this.supportedSound = supportedSound = ".mp3";
+		}
+		
+		Sound.init(supportedSound, soundConfig);
+		Animator.audioLib = Sound.instance;
 
 		var manifest = [
 			{src:"images/PizzaPlace_IntroBG.jpg", id:"PizzaPlace_IntroBG"},
@@ -58,16 +71,11 @@
 			{src:"images/Peg_FR_Hair_Back_Right.png", id:"Peg_FR_Hair_Back_Right"},
 			{src:"images/Peg_FR_Head.png", id:"Peg_FR_Head"}
 		];
-		var tasks = 
-		[
-			new cloudkid.ListTask('manifests', manifest, onManifestLoaded)
-		];
-		var taskManager = new cloudkid.TaskManager(tasks);
-		taskManager.addEventListener(
-			cloudkid.TaskManager.ALL_TASKS_DONE, 
+
+		TaskManager.process(
+			[new ListTask('manifests', manifest, onManifestLoaded)], 
 			loadTasksComplete
 		);
-		taskManager.startAll();
 	}
 
 	function onManifestLoaded(results)
@@ -95,7 +103,9 @@
 
 	function playAnim()
 	{
-		cloudkid.Animator.play(anim, "intro", null, null, null, null, {alias:"Pizza_Intro_Sound", start:0.266});
+		Animator.play(anim, "intro", {
+			soundData : {alias:"Pizza_Intro_Sound", start:0.266}
+		});
 	}
 	
 	/**
@@ -106,7 +116,7 @@
 		this.removeAllChildren();
 		stage = null;
 		currentShape = null;
-		if(createjs.Sound.activePlugin instanceof createjs.FlashPlugin)
+		if (SoundJS.activePlugin instanceof FlashPlugin)
 			$("#SoundJSFlashContainer").remove();
 	}
 	

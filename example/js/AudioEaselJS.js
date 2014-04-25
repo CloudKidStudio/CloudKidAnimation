@@ -3,7 +3,11 @@
 	// Imports
 	var OS = cloudkid.OS,
 		Application = cloudkid.Application,
-		Animator = cloudkid.Animator;
+		Animator = cloudkid.Animator,
+		TaskManager = cloudkid.TaskManager,
+		ListTask = cloudkid.ListTask,
+		Touch = createjs.Touch,
+		Audio = cloudkid.Audio;
 	
 	var AudioEaselJS = function()
 	{
@@ -31,12 +35,12 @@
 	{	
 		stage = OS.instance.stage;
 		
-		if (!createjs.Touch.isSupported())
+		if (!Touch.isSupported())
 		{
 			stage.enableMouseOver();
 		}
-		cloudkid.Audio.init("sounds/pizzaplaceaudio.json", onReady);
-		cloudkid.Animator.audioLib = cloudkid.Audio.instance;
+		Audio.init("sounds/pizzaplaceaudio.json", onReady);
+		Animator.audioLib = Audio.instance;
 
 		var manifest = [
 			{src:"images/PizzaPlace_IntroBG.jpg", id:"PizzaPlace_IntroBG"},
@@ -44,16 +48,10 @@
 			{src:"images/Peg_FR_Hair_Back_Right.png", id:"Peg_FR_Hair_Back_Right"},
 			{src:"images/Peg_FR_Head.png", id:"Peg_FR_Head"}
 		];
-		var tasks = 
-		[
-			new cloudkid.ListTask('manifests', manifest, onManifestLoaded)
-		];
-		var taskManager = new cloudkid.TaskManager(tasks);
-		taskManager.addEventListener(
-			cloudkid.TaskManager.ALL_TASKS_DONE, 
+		TaskManager.process(
+			[new ListTask('manifests', manifest, onManifestLoaded)], 
 			loadTasksComplete
 		);
-		taskManager.startAll();
 	}
 
 	function onManifestLoaded(results)
@@ -70,7 +68,14 @@
 
 	function onReady()
 	{
-		stage.addEventListener("click", onClick);
+		if (Touch.isSupported())
+		{
+			$(document).click(onClick);
+		}
+		else
+		{
+			onClick();
+		}
 	}
 
 	function onClick()
@@ -84,7 +89,7 @@
 	function startLoading()
 	{
 		isLoading = true;
-		cloudkid.Audio.instance.load(audioLoaded);
+		Audio.instance.load(audioLoaded);
 	}
 
 	function audioLoaded()
@@ -92,15 +97,17 @@
 		isLoading = false;
 		isLoaded = true;
 		anim = new lib.PizzaPlaceIntro();
-		anim.id = "intro";
 		anim.enableFramerateIndependence(15);
+		anim.id = "intro";
 		stage.addChildAt(anim, 0);
 		playAnim();
 	}
 
 	function playAnim()
 	{
-		cloudkid.Animator.play(anim, "intro", null, null, null, null, {alias:"Pizza_Intro_Sound", start:0.266});
+		Animator.play(anim, "intro", {
+			soundData : {alias:"Pizza_Intro_Sound", start:0.266}
+		});
 	}
 	
 	/**

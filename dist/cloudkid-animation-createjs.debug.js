@@ -22,7 +22,7 @@
         Animator.stopAll(), _timelines = null, _removedTimelines = null, _timelinesMap = null;
     }, Animator.play = function(instance, event, options, onCompleteParams, startTime, speed, soundData, doCancelledCallback) {
         var onComplete;
-        options && "function" == typeof options ? (onComplete = options, options = {}) : options === undefined && (options = {}), 
+        options && "function" == typeof options ? (onComplete = options, options = {}) : options || (options = {}), 
         onComplete = options.onComplete || onComplete || null, onCompleteParams = options.onCompleteParams || onCompleteParams || null, 
         startTime = options.startTime || startTime, startTime = startTime ? .001 * startTime : 0, 
         speed = options.speed || speed || 1, doCancelledCallback = options.doCancelledCallback || doCancelledCallback || !1, 

@@ -313,7 +313,7 @@
 			onComplete = options;
 			options = {};
 		}
-		else if (options === undefined)
+		else if (!options)
 		{
 			options = {};
 		}
