@@ -1,9 +1,10 @@
 (function() {
 	
 	/**
-	* [PIXI Only] Animator for interacting with Spine animations
-	* @class cloudkid.PixiAnimator
-	* @constructor
+	*  [PIXI Only] Animator for interacting with Spine animations
+	*  @class cloudkid.PixiAnimator
+	*  @constructor
+	*  @author Andrew Start
 	*/
 	var PixiAnimator = function()
 	{
@@ -68,6 +69,13 @@
 	var _animPool = null;
 	
 	/**
+	*  The global captions object to use with animator
+	*  @property {cloudkid.Captions} captions
+	*  @public
+	*/
+	p.captions = null;
+
+	/**
 	 * Initializes the singleton instance of PixiAnimator.
 	 * @method init
 	 * @static
@@ -80,8 +88,7 @@
 	
 	/**
 	* Getter for the reference to this instance of PixiAnimator
-	* @property instance
-	* @type cloudkid.PixiAnimator
+	* @property {cloudkid.PixiAnimator} instance
 	* @readOnly
 	* @static
 	*/
@@ -96,27 +103,46 @@
 	 * @function play
 	 * @param {PIXI.MovieClip|PIXI.Spine} clip The clip to play
 	 * @param {String} anim The alias for the animation to play
-	 * @param {function} callback The function to call once the animation has finished
-	 * @param {bool} loop Whether the animation should loop
-	 * @param {int} speed The speed at which to play the animation
-	 * @param {int} startTime The time in milliseconds into the animation to start.
-	 * @param {Object|String} soundData Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
+	 * @param {Object} [options={}] The optional settings for this play
+	 * @param {function} [options.callback=null] The function to call once the animation has finished
+	 * @param {bool} [options.loop=false] Whether the animation should loop
+	 * @param {int} [options.speed=1] The speed at which to play the animation
+	 * @param {int} [options.startTime=0] The time in milliseconds into the animation to start.
+	 * @param {Object|String} [options.soundData=null] Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
 	 *        start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
 	 */
-	p.play = function(clip, anim, callback, loop, speed, startTime, soundData)
+	p.play = function(clip, anim, options, loop, speed, startTime, soundData)
 	{
+		var callback = null;
+
+		if (options && typeof options == "function")
+		{
+			callback = options;
+			options = {};
+		}
+		else if (options === undefined)
+		{
+			options = {};
+		}
+
 		if(clip === null || (!(clip instanceof PIXI.Spine) && !(clip.updateAnim/*clip instanceof PIXI.MovieClip*/)))
 		{
-			if(callback)
-				callback();
+			if(callback) callback();
 			return;
 		}
 		
 		this.stop(clip);
-		loop = loop || false;
+		callback = options.callback || callback || null;
+		loop = options.loop || loop || false;
+		speed = options.speed || speed || 1;
+		startTime = options.startTime || startTime;
 		startTime = startTime ? startTime * 0.001 : 0;//convert into seconds, as that is what the time uses internally
-		
-		var t = _animPool.length ? _animPool.pop().init(clip, callback || null, speed || 1) : new AnimTimeline(clip, callback || null, speed || 1);
+		soundData = options.soundData || soundData || null;
+
+		var t = _animPool.length ? 
+			_animPool.pop().init(clip, callback, speed) : 
+			new AnimTimeline(clip, callback, speed);
+
 		if(t.isSpine)//PIXI.Spine
 		{
 			var i;
@@ -190,6 +216,8 @@
 				t.soundStart = soundData.start > 0 ? soundData.start : 0;//seconds
 				t.soundAlias = soundData.alias;
 			}
+			timeline.useCaptions = this.captions && this.captions.hasCaption(timeline.soundAlias);
+
 			if(t.soundStart === 0)
 			{
 				t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
@@ -317,7 +345,13 @@
 			if(t.soundInst)
 			{
 				if(t.soundInst.isValid)
+				{
 					t.time = t.soundStart + t.soundInst.position * 0.001;//convert sound position ms -> sec
+					if (t.useCaptions)
+					{
+						this.captions.seek(t.soundInst.position);
+					}
+				}
 				else//if sound is no longer valid, stop animation immediately
 				{
 					this._onMovieClipDone(t);
@@ -330,7 +364,16 @@
 				if(t.playSound && t.time >= t.soundStart)
 				{
 					t.time = t.soundStart;
-					t.soundInst = this.soundLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
+					t.soundInst = this.soundLib.play(
+						t.soundAlias, 
+						onSoundDone.bind(this, t), 
+						onSoundStarted.bind(this, t)
+					);
+					if (t.useCaptions)
+					{
+						this.captions.isSlave = true;
+						this.captions.run(t.soundAlias);
+					}
 				}
 			}
 			var c = t.clip;
@@ -426,6 +469,11 @@
 	 */
 	p.destroy = function()
 	{
+		if (this.captions)
+		{
+			this.captions.destroy();
+		}
+		this.captions = null;
 		_instance = null;
 		_animPool = null;
 		this._timelines = null;
@@ -466,77 +514,98 @@
 		*	@public
 		*/
 		this.clip = clip;
+
 		/**
 		*	Whether the clip is a PIXI.Spine
 		*	@property {bool} isSpine
 		*	@public
 		*/
 		this.isSpine = clip instanceof PIXI.Spine;
+
 		/**
 		*	The function to call when the clip is finished playing
 		*	@property {function} callback
 		*	@public
 		*/
 		this.callback = callback;
+
 		/**
 		*	The speed at which the clip should be played
 		*	@property {Number} speed
 		*	@public
 		*/
 		this.speed = speed;
+
 		/**
 		*	@property {Array} spineStates
 		*	@public
 		*/
 		this.spineStates = null;
+
 		/**
 		*	Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played
 		*	@property {bool} loop
 		*	@public
 		*/
 		this.loop = null;
+
 		/**
 		*	The position of the animation in seconds
 		*	@property {Number} time
 		*	@public
 		*/
 		this.time = 0;
+
 		/**
 		*	Sound alias to sync to during the animation.
 		*	@property {String} soundAlias
 		*	@public
 		*/
 		this.soundAlias = null;
+
 		/**
 		*	A sound instance object from cloudkid.Sound, used for tracking sound position.
 		*	@property {Object} soundInst
 		*	@public
 		*/
 		this.soundInst = null;
+
 		/**
 		*	If the timeline will, but has yet to, play a sound
 		*	@property {bool} playSound
 		*	@public
 		*/
 		this.playSound = false;
+
 		/**
 		*	The time (seconds) into the animation that the sound starts.
 		*	@property {Number} soundStart
 		*	@public
 		*/
 		this.soundStart = 0;
+
 		/**
 		*	The time (seconds) into the animation that the sound ends
 		*	@property {Number} soundEnd
 		*	@public
 		*/
 		this.soundEnd = 0;
+
+		/**
+		*  If this timeline plays captions
+		*
+		*  @property {bool} useCaptions
+		*  @readOnly
+		*/
+		this.useCaptions = false;
+
 		/**
 		*	If this animation is paused.
 		*	@property {bool} _paused
 		*	@private
 		*/
 		this._paused = false;
+
 		return this;
 	};
 	

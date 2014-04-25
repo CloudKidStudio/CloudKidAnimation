@@ -6,7 +6,7 @@
 	*   
 	*   @class cloudkid.AnimatorTimeline
 	*   @constructor
-	*   @author Matt Moore
+	*   @author Matt Karl, Andrew Start
 	*/
 	var AnimatorTimeline = function(){};
 	
@@ -75,6 +75,14 @@
 	* @property {int} length
 	*/
 	p.length = 0;
+
+	/**
+	*  If this timeline plays captions
+	*
+	*  @property {bool} useCaptions
+	*  @readOnly
+	*/
+	p.useCaptions = false;
 	
 	/**
 	* If the timeline is paused.
@@ -177,7 +185,7 @@
 	*
 	*   @class cloudkid.Animator
 	*   @static
-	*   @author Matt Moore
+	*   @author Matt Karl, Andrew Start
 	*/
 	var Animator = function(){};
 	
@@ -208,6 +216,14 @@
 	* @static
 	*/
 	Animator.soundLib = null;
+
+	/**
+	*  The global captions object to use with animator
+	*  @property {cloudkid.Captions} captions
+	*  @public
+	*  @static
+	*/
+	Animator.captions = null;
 	
 	/**
 	* The collection of timelines
@@ -277,24 +293,39 @@
 	*   @function play
 	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
-	*   @param {function} onComplete The function to callback when we're done
-	*   @param {function} onCompleteParams Parameters to pass to onComplete function
-	*	@param {int} startTime The time in milliseconds into the animation to start.
-	*	@param {Number} speed The speed at which to play the animation.
-	*	@param {Object} soundData An object with alias and start (in seconds) properties
-	*		describing a sound to sync the animation with.
-	*   @param {bool} doCancelledCallback Should an overridden animation's callback function still run?
+	*   @param {Object} [options={}] The object of optional parameters
+	*   @param {function} [options.onComplete=null] The callback function when the animation is done
+	*   @param {Array} [options.onCompleteParams=null] Parameters to pass to onComplete function
+	*	@param {int} [options.startTime=0] The time in milliseconds into the animation to start. A value of -1 makes the animation play at a random startTime.
+	*	@param {Number} [options.speed=1] The speed at which to play the animation.
+	*	@param {Object|String} [options.soundData=null] soundData Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
+	*		start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
+	*   @param {bool} [options.doCancelledCallback=false] Should an overridden animation's callback function still run?
 	*   @return {cloudkid.AnimatorTimeline} The Timeline object
 	*   @static
 	*/
-	Animator.play = function(instance, event, onComplete, onCompleteParams, startTime, speed, soundData, doCancelledCallback)
+	Animator.play = function(instance, event, options, onCompleteParams, startTime, speed, soundData, doCancelledCallback)
 	{
-		onComplete = onComplete || null;
-		onCompleteParams = onCompleteParams || null;
+		var onComplete;
+
+		if (options && typeof options == "function")
+		{
+			onComplete = options;
+			options = {};
+		}
+		else if (options === undefined)
+		{
+			options = {};
+		}
+
+		onComplete = options.onComplete || onComplete || null;
+		onCompleteParams = options.onCompleteParams || onCompleteParams || null;
+		startTime = options.startTime || startTime;
 		startTime = startTime ? startTime * 0.001 : 0;//convert into seconds, as that is what the time uses internally
-		speed = speed || 1;
-		doCancelledCallback = doCancelledCallback || false;
-		
+		speed = options.speed || speed || 1;
+		doCancelledCallback = options.doCancelledCallback || doCancelledCallback || false;
+		soundData = options.soundData || soundData || null;
+
 		if (!_timelines) 
 			Animator.init();
 		
@@ -306,7 +337,7 @@
 		
 		if (timeline.firstFrame > -1 && timeline.lastFrame > -1)//if the animation is present and complete
 		{
-			timeline.time = startTime;
+			timeline.time = startTime == -1 ? Math.random() * timeline.duration : startTime;
 			
 			instance._elapsedTime = timeline.startTime + timeline.time;
 			instance.play();//have it set its 'paused' variable to false
@@ -333,7 +364,6 @@
 			onComplete.apply(null, onCompleteParams);
 		}
 		return null;
-		
 	};
 	
 	/**
@@ -342,60 +372,19 @@
 	*   @function playAtRandomFrame
 	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate.
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose_stop").
-	*   @param {function} onComplete The function to callback when we're done.
-	*   @param {function} onCompleteParams Parameters to pass to onComplete function.
-	*	@param {Number} speed The speed at which to play the animation.
-	*	@param {Object|String} soundData Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
+	*   @param {Object} [options] The object of optional parameters
+	*   @param {function} [options.onComplete=null] The callback function when the animation is done
+	*   @param {Array} [options.onCompleteParams=null] Parameters to pass to onComplete function
+	*	@param {Number} [options.speed=1] The speed at which to play the animation.
+	*	@param {Object} [options.soundData=null] soundData Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
 	*		start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
+	*   @param {bool} [options.doCancelledCallback=false] Should an overridden animation's callback function still run?
 	*   @return {cloudkid.AnimatorTimeline} The Timeline object
 	*   @static
 	*/
-	Animator.playAtRandomFrame = function(instance, event, onComplete, onCompleteParams, speed, soundData)
+	Animator.playAtRandomFrame = function(instance, event, options, onCompleteParams, speed, soundData, doCancelledCallback)
 	{
-		onComplete = onComplete || null;
-		onCompleteParams = onCompleteParams || null;
-		speed = speed || 1;
-		doCancelledCallback = doCancelledCallback || false;
-				
-		if (!_timelines) 
-			Animator.init();
-		
-		if (_timelinesMap[instance.id] !== undefined)
-		{
-			Animator.stop(instance, false);
-		}
-		
-		var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, speed, soundData);
-		
-		if (timeline.firstFrame > -1 && timeline.lastFrame > -1)//if the animation is present and complete
-		{
-			timeline.time = Math.random() * timeline.duration;
-			
-			instance._elapsedTime = timeline.startTime + timeline.time;
-			instance.play();//have it set its 'paused' variable to false
-			instance._tick();//update the movieclip to make sure it is redrawn correctly at the next opportunity
-			
-			// Before we add the timeline, we should check to see
-			// if there are no timelines, then start the enter frame
-			// updating
-			if (!Animator._hasTimelines()) Animator._startUpdate();
-			
-			_timelines.push(timeline);
-			_timelinesMap[instance.id] = timeline;
-			
-			return timeline;
-		}
-		
-		if (Animator.debug)
-		{
-			Debug.log("No event " + event + " was found, or it lacks an end, on this MovieClip " + instance);
-		}
-		
-		if (onComplete)
-		{
-			onComplete.apply(null, onCompleteParams);
-		}
-		return null;
+		return Animator.play(instance, event, options, onCompleteParams, -1, speed, soundData, doCancelledCallback);
 	};
 	
 	/**
@@ -427,7 +416,7 @@
 				fps = cloudkid.OS.instance.fps;
 			if(!fps)
 				fps = 15;
-			instance.enableFramerateIndependence(15);
+			instance.enableFramerateIndependence(fps);
 		}
 		timeline.instance = instance;
 		timeline.event = event;
@@ -447,6 +436,7 @@
 				timeline.soundStart = soundData.start > 0 ? soundData.start : 0;//seconds
 				timeline.soundAlias = soundData.alias;
 			}
+			timeline.useCaptions = Animator.captions && Animator.captions.hasCaption(timeline.soundAlias);
 		}
 				
 		var startFrame = instance.timeline.resolve(event); 
@@ -735,14 +725,21 @@
 			t = _timelines[i];
 			var instance = t.instance;
 			if(t.paused) continue;
-			var prevTime = t.time;
+			
 			if(t.soundInst)
 			{
 				if(t.soundInst.isValid)
 				{
-					t.time = t.soundStart + t.soundInst.position * 0.001;//convert sound position ms -> sec
+					//convert sound position ms -> sec
+					t.time = t.soundStart + t.soundInst.position * 0.001;
+					
+					if (t.useCaptions)
+					{
+						Animator.captions.seek(t.soundInst.position);
+					}
 				}
-				else//if sound is no longer valid, stop animation playback immediately
+				//if sound is no longer valid, stop animation playback immediately
+				else
 				{
 					_removedTimelines.push(t);
 					continue;
@@ -768,8 +765,16 @@
 				if(t.playSound && t.time >= t.soundStart)
 				{
 					t.time = t.soundStart;
-					t.soundInst = Animator.audioLib.play(t.soundAlias, 
-						onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
+					t.soundInst = Animator.audioLib.play(
+						t.soundAlias, 
+						onSoundDone.bind(this, t), 
+						onSoundStarted.bind(this, t)
+					);
+					if (t.useCaptions)
+					{
+						Animator.captions.isSlave = true;
+						Animator.captions.run(t.soundAlias);
+					}
 				}
 			}
 			instance._elapsedTime = t.startTime + t.time;
@@ -782,12 +787,24 @@
 		}
 	};
 	
+	/**
+	*  The sound has been started
+	*  @method onSoundStarted
+	*  @private
+	*  @param {cloudkid.AnimatorTimeline} timeline
+	*/
 	var onSoundStarted = function(timeline)
 	{
 		timeline.playSound = false;
 		timeline.soundEnd = timeline.soundStart + timeline.soundInst.length * 0.001;//convert sound length to seconds
 	};
 	
+	/**
+	*  The sound is done
+	*  @method onSoundDone
+	*  @private
+	*  @param {cloudkid.AnimatorTimeline} timeline
+	*/
 	var onSoundDone = function(timeline)
 	{
 		if(timeline.soundEnd > 0 && timeline.soundEnd > timeline.time)

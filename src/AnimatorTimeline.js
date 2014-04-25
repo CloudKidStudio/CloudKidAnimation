@@ -6,7 +6,7 @@
 	*   
 	*   @class cloudkid.AnimatorTimeline
 	*   @constructor
-	*   @author Matt Moore
+	*   @author Matt Karl, Andrew Start
 	*/
 	var AnimatorTimeline = function(){};
 	
@@ -75,6 +75,14 @@
 	* @property {int} length
 	*/
 	p.length = 0;
+
+	/**
+	*  If this timeline plays captions
+	*
+	*  @property {bool} useCaptions
+	*  @readOnly
+	*/
+	p.useCaptions = false;
 	
 	/**
 	* If the timeline is paused.

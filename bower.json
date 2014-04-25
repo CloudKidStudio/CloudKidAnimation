@@ -1,12 +1,13 @@
 {
     "name": "cloudkid-animation",
-    "version": "2.1.1",
+    "version": "2.2.0",
     "main": "dist/cloudkid-animation.min.js",
     "dependencies": {
         "tweenjs" : "https://github.com/CloudKidStudio/TweenJS.git",
         "cloudkid-os" : "*",
         "cloudkid-audio" : "^2.0.0",
-        "cloudkid-sound" : "^2.0.0"
+        "cloudkid-sound" : "^2.0.0",
+        "cloudkid-captions" : "*"
     },
     "ignore": [
         "build.xml",

@@ -5,16 +5,20 @@
     p._timelines = null, p._numAnims = 0, p._updateAlias = "animator", p._boundUpdate = null, 
     p.soundLib = null;
     var _animPool = null;
-    PixiAnimator.init = function() {
+    p.captions = null, PixiAnimator.init = function() {
         _instance = new PixiAnimator(), _animPool = [];
     }, Object.defineProperty(PixiAnimator, "instance", {
         get: function() {
             return _instance;
         }
-    }), p.play = function(clip, anim, callback, loop, speed, startTime, soundData) {
-        if (null === clip || !(clip instanceof PIXI.Spine) && !clip.updateAnim) return void (callback && callback());
-        this.stop(clip), loop = loop || !1, startTime = startTime ? .001 * startTime : 0;
-        var t = _animPool.length ? _animPool.pop().init(clip, callback || null, speed || 1) : new AnimTimeline(clip, callback || null, speed || 1);
+    }), p.play = function(clip, anim, options, loop, speed, startTime, soundData) {
+        var callback = null;
+        if (options && "function" == typeof options ? (callback = options, options = {}) : void 0 === options && (options = {}), 
+        null === clip || !(clip instanceof PIXI.Spine) && !clip.updateAnim) return void (callback && callback());
+        this.stop(clip), callback = options.callback || callback || null, loop = options.loop || loop || !1, 
+        speed = options.speed || speed || 1, startTime = options.startTime || startTime, 
+        startTime = startTime ? .001 * startTime : 0, soundData = options.soundData || soundData || null;
+        var t = _animPool.length ? _animPool.pop().init(clip, callback, speed) : new AnimTimeline(clip, callback, speed);
         if (t.isSpine) {
             var i;
             if ("string" == typeof anim) {
@@ -35,7 +39,8 @@
         startTime > 0 && clip.update(startTime * t.speed);
         return soundData && (t.playSound = !0, "string" == typeof soundData ? (t.soundStart = 0, 
         t.soundAlias = soundData) : (t.soundStart = soundData.start > 0 ? soundData.start : 0, 
-        t.soundAlias = soundData.alias), 0 === t.soundStart ? t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)) : cloudkid.Sound.instance.preloadSound(soundData.alias)), 
+        t.soundAlias = soundData.alias), timeline.useCaptions = this.captions && this.captions.hasCaption(timeline.soundAlias), 
+        0 === t.soundStart ? t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)) : cloudkid.Sound.instance.preloadSound(soundData.alias)), 
         t.loop = loop, t.time = startTime > 0 ? startTime : 0, this._timelines.push(t), 
         1 == ++this._numAnims && cloudkid.OS.instance.addUpdateCallback(this._updateAlias, this._boundUpdate), 
         t;
@@ -72,9 +77,10 @@
                         this._onMovieClipDone(t);
                         continue;
                     }
-                    t.time = t.soundStart + .001 * t.soundInst.position;
+                    t.time = t.soundStart + .001 * t.soundInst.position, t.useCaptions && this.captions.seek(t.soundInst.position);
                 } else t.time += delta, t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
-                t.soundInst = this.soundLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)));
+                t.soundInst = this.soundLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)), 
+                t.useCaptions && (this.captions.isSlave = !0, this.captions.run(t.soundAlias)));
                 var c = t.clip;
                 if (t.isSpine) if (t.spineStates) {
                     for (var complete = !1, j = 0, len = t.spineStates.length; len > j; ++j) {
@@ -107,7 +113,8 @@
             break;
         }
     }, p.destroy = function() {
-        _instance = null, _animPool = null, this._timelines = null, cloudkid.OS.instance.removeUpdateCallback(this._updateAlias), 
+        this.captions && this.captions.destroy(), this.captions = null, _instance = null, 
+        _animPool = null, this._timelines = null, cloudkid.OS.instance.removeUpdateCallback(this._updateAlias), 
         this._boundUpdate = null;
     };
     var AnimTimeline = function(clip, callback, speed) {
@@ -117,7 +124,7 @@
         return this.clip = clip, this.isSpine = clip instanceof PIXI.Spine, this.callback = callback, 
         this.speed = speed, this.spineStates = null, this.loop = null, this.time = 0, this.soundAlias = null, 
         this.soundInst = null, this.playSound = !1, this.soundStart = 0, this.soundEnd = 0, 
-        this._paused = !1, this;
+        this.useCaptions = !1, this._paused = !1, this;
     }, Object.defineProperty(AnimTimeline.prototype, "paused", {
         get: function() {
             return this._paused;
