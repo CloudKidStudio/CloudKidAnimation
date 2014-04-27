@@ -1,0 +1,1838 @@
+{
+    "project": {
+        "name": "CloudKid Animation API",
+        "description": "CloudKid Captions API: a library for playing Animations",
+        "version": "2.2.0",
+        "logo": "cloudkid.png"
+    },
+    "files": {
+        "src/Animator.js": {
+            "name": "src/Animator.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.Animator": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/AnimatorTimeline.js": {
+            "name": "src/AnimatorTimeline.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.AnimatorTimeline": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/CharacterClip.js": {
+            "name": "src/CharacterClip.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.CharacterClip": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/CharacterController.js": {
+            "name": "src/CharacterController.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.CharacterController": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/PixiAnimator.js": {
+            "name": "src/PixiAnimator.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.PixiAnimator": 1,
+                "cloudkid.PixiAnimator.AnimTimeline": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "cloudkid.Animator": {
+            "name": "cloudkid.Animator",
+            "shortname": "cloudkid.Animator",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/Animator.js",
+            "line": 8,
+            "description": "Animator is a static class designed to provided\nbase animation functionality, using frame labels of MovieClips",
+            "static": 1,
+            "author": "Matt Karl, Andrew Start"
+        },
+        "cloudkid.AnimatorTimeline": {
+            "name": "cloudkid.AnimatorTimeline",
+            "shortname": "cloudkid.AnimatorTimeline",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/AnimatorTimeline.js",
+            "line": 3,
+            "description": "Animator Timeline is a class designed to provide\nbase animation functionality",
+            "is_constructor": 1,
+            "author": "Matt Karl, Andrew Start"
+        },
+        "cloudkid.CharacterClip": {
+            "name": "cloudkid.CharacterClip",
+            "shortname": "cloudkid.CharacterClip",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/CharacterClip.js",
+            "line": 3,
+            "description": "CharacterClip is used by the CharacterController class",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "event",
+                    "description": "Animator event to play",
+                    "type": "String"
+                },
+                {
+                    "name": "loops",
+                    "description": "The number of loops",
+                    "type": "Int"
+                }
+            ]
+        },
+        "cloudkid.CharacterController": {
+            "name": "cloudkid.CharacterController",
+            "shortname": "cloudkid.CharacterController",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/CharacterController.js",
+            "line": 6,
+            "description": "Character Controller class is designed to play animated\nsequences on the timeline. This is a flexible way to\nanimate characters on a timeline",
+            "is_constructor": 1,
+            "author": "Matt Moore"
+        },
+        "cloudkid.PixiAnimator": {
+            "name": "cloudkid.PixiAnimator",
+            "shortname": "cloudkid.PixiAnimator",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/PixiAnimator.js",
+            "line": 3,
+            "description": "[PIXI Only] Animator for interacting with Spine animations",
+            "is_constructor": 1,
+            "author": "Andrew Start"
+        },
+        "cloudkid.PixiAnimator.AnimTimeline": {
+            "name": "cloudkid.PixiAnimator.AnimTimeline",
+            "shortname": "cloudkid.PixiAnimator.AnimTimeline",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "src/PixiAnimator.js",
+            "line": 484,
+            "description": "[Pixi Only] Internal PixiAnimator class for keeping track of animations",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The AnimTimeline's clip",
+                    "type": "PIXI.MovieClip|Pixi.Spine"
+                },
+                {
+                    "name": "callback",
+                    "description": "The function to call when the clip is finished playing",
+                    "type": "Function"
+                },
+                {
+                    "name": "speed",
+                    "description": "The speed at which the clip should be played",
+                    "type": "Int"
+                }
+            ]
+        }
+    },
+    "classitems": [
+        {
+            "file": "src/Animator.js",
+            "line": 18,
+            "description": "The current version of the Animator class",
+            "itemtype": "property",
+            "name": "VERSION",
+            "type": "String",
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 27,
+            "description": "If we fire debug statements",
+            "itemtype": "property",
+            "name": "debug",
+            "type": "Bool",
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 36,
+            "description": "The instance of cloudkid.Audio or cloudkid.Sound for playing audio along with animations.\nThis MUST be set in order to play synced animations.",
+            "itemtype": "property",
+            "name": "soundLib",
+            "type": "cloudkid.Audio|cloudkid.Sound",
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 46,
+            "description": "The global captions object to use with animator",
+            "itemtype": "property",
+            "name": "captions",
+            "type": "cloudkid.Captions",
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 54,
+            "description": "The collection of timelines",
+            "itemtype": "property",
+            "name": "_timelines",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 62,
+            "description": "A collection of timelines for removal - kept out here so it doesn't need to be\nreallocated every frame",
+            "itemtype": "property",
+            "name": "_removedTimelines",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 71,
+            "itemtype": "property",
+            "name": "_timelinesMap",
+            "type": "Dictionary",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 78,
+            "description": "If the Animator is paused",
+            "itemtype": "property",
+            "name": "_paused",
+            "type": "Bool",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 86,
+            "description": "Sets the variables of the Animator to their defaults. Use when _timelines is null,\nif the Animator data was cleaned up but was needed again later.",
+            "itemtype": "method",
+            "name": "init",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 101,
+            "description": "Stops all animations and cleans up the variables used.",
+            "itemtype": "method",
+            "name": "destroy",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 116,
+            "description": "Play an animation for a frame label event",
+            "itemtype": "method",
+            "name": "play",
+            "params": [
+                {
+                    "name": "instance",
+                    "description": "The timeline to animate",
+                    "type": "cloudkid.AnimatorTimeline"
+                },
+                {
+                    "name": "event",
+                    "description": "The frame label event (e.g. \"onClose\" to \"onClose stop\")",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "The object of optional parameters or onComplete callback function",
+                    "type": "Object|function",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "onComplete",
+                            "description": "The callback function when the animation is done",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "onCompleteParams",
+                            "description": "Parameters to pass to onComplete function",
+                            "type": "Array",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "startTime",
+                            "description": "The time in milliseconds into the animation to start. A value of -1 makes the animation play at a random startTime.",
+                            "type": "Int",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "speed",
+                            "description": "The speed at which to play the animation.",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1"
+                        },
+                        {
+                            "name": "soundData",
+                            "description": "soundData Data about a sound to sync the animation to, as an alias or in the format {alias:\"MyAlias\", start:0}.\n\t\tstart is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.",
+                            "type": "Object|String",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "doCancelledCallback",
+                            "description": "Should an overridden animation's callback function still run?",
+                            "type": "Bool",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "The Timeline object",
+                "type": "cloudkid.AnimatorTimeline"
+            },
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 195,
+            "description": "Play an animation for a frame label event, starting at a random frame within the animation",
+            "itemtype": "method",
+            "name": "playAtRandomFrame",
+            "params": [
+                {
+                    "name": "instance",
+                    "description": "The timeline to animate.",
+                    "type": "cloudkid.AnimatorTimeline"
+                },
+                {
+                    "name": "event",
+                    "description": "The frame label event (e.g. \"onClose\" to \"onClose_stop\").",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "The object of optional parameters or onComplete callback function",
+                    "type": "Object|function",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "onComplete",
+                            "description": "The callback function when the animation is done",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "onCompleteParams",
+                            "description": "Parameters to pass to onComplete function",
+                            "type": "Array",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "speed",
+                            "description": "The speed at which to play the animation.",
+                            "type": "Number",
+                            "optional": true,
+                            "optdefault": "1"
+                        },
+                        {
+                            "name": "soundData",
+                            "description": "soundData Data about a sound to sync the animation to, as an alias or in the format {alias:\"MyAlias\", start:0}.\n\t\tstart is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "doCancelledCallback",
+                            "description": "Should an overridden animation's callback function still run?",
+                            "type": "Bool",
+                            "optional": true,
+                            "optdefault": "false"
+                        }
+                    ]
+                }
+            ],
+            "return": {
+                "description": "The Timeline object",
+                "type": "cloudkid.AnimatorTimeline"
+            },
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 216,
+            "description": "Creates the AnimatorTimeline for a given animation",
+            "itemtype": "method",
+            "name": "_makeTimeline",
+            "params": [
+                {
+                    "name": "instance",
+                    "description": "The timeline to animate",
+                    "type": "easeljs.MovieClip"
+                },
+                {
+                    "name": "event",
+                    "description": "The frame label event (e.g. \"onClose\" to \"onClose stop\")",
+                    "type": "String"
+                },
+                {
+                    "name": "onComplete",
+                    "description": "The function to callback when we're done",
+                    "type": "Function"
+                },
+                {
+                    "name": "onCompleteParams",
+                    "description": "Parameters to pass to onComplete function",
+                    "type": "Function"
+                },
+                {
+                    "name": "speed",
+                    "description": "The speed at which to play the animation.",
+                    "type": "Number"
+                },
+                {
+                    "name": "soundData",
+                    "description": "Data about sound to sync the animation to.",
+                    "type": "Object"
+                }
+            ],
+            "return": {
+                "description": "The Timeline object",
+                "type": "cloudkid.AnimatorTimeline"
+            },
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 292,
+            "description": "Checks if animation exists",
+            "itemtype": "method",
+            "name": "_makeTimeline",
+            "params": [
+                {
+                    "name": "instance",
+                    "description": "The timeline to check",
+                    "type": "easeljs.MovieClip"
+                },
+                {
+                    "name": "event",
+                    "description": "The frame label event (e.g. \"onClose\" to \"onClose stop\")",
+                    "type": "String"
+                }
+            ],
+            "access": "public",
+            "tagname": "",
+            "static": 1,
+            "return": {
+                "description": "does this animation exist?",
+                "type": "Bool"
+            },
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 311,
+            "description": "Stop the animation.",
+            "itemtype": "method",
+            "name": "stop",
+            "params": [
+                {
+                    "name": "instance",
+                    "description": "The MovieClip to stop the action on",
+                    "type": "createjs.MovieClip"
+                },
+                {
+                    "name": "doOnComplete",
+                    "description": "If we are suppose to do the complete callback when stopping (default is false)",
+                    "type": "Bool"
+                }
+            ],
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 337,
+            "description": "Stop all current Animator animations.\nThis is good for cleaning up all animation, as it doesn't do a callback on any of them.",
+            "itemtype": "method",
+            "name": "stopAll",
+            "params": [
+                {
+                    "name": "container",
+                    "description": "Optional - specify a container to stop timelines contained within",
+                    "type": "createjs.Container"
+                }
+            ],
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 363,
+            "description": "Remove a timeline from the stack",
+            "itemtype": "method",
+            "name": "_remove",
+            "params": [
+                {
+                    "name": "timeline",
+                    "description": "",
+                    "type": "cloudkid.AnimatorTimeline"
+                },
+                {
+                    "name": "doOnComplete",
+                    "description": "If we do the on complete callback",
+                    "type": "Bool"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 413,
+            "description": "Pause all tweens which have been excuted by Animator.play()",
+            "itemtype": "method",
+            "name": "pause",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 434,
+            "description": "Resumes all tweens executed by the Animator.play()",
+            "itemtype": "method",
+            "name": "resume",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 456,
+            "description": "Pauses or unpauses all timelines that are children of the specified DisplayObjectContainer.",
+            "itemtype": "method",
+            "name": "pauseInGroup",
+            "params": [
+                {
+                    "name": "paused",
+                    "description": "If this should be paused or unpaused",
+                    "type": "Bool"
+                },
+                {
+                    "name": "container",
+                    "description": "The container to stop timelines contained within",
+                    "type": "createjs.Container"
+                }
+            ],
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 478,
+            "description": "Get the timeline object for an instance",
+            "itemtype": "method",
+            "name": "getTimeline",
+            "params": [
+                {
+                    "name": "instance",
+                    "description": "MovieClip",
+                    "type": "createjs.MovieClip"
+                }
+            ],
+            "return": {
+                "description": "The timeline",
+                "type": "cloudkid.AnimatorTimeline"
+            },
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 497,
+            "description": "Whether the Animator class is currently paused.",
+            "itemtype": "method",
+            "name": "getPaused",
+            "return": {
+                "description": "if we're paused or not",
+                "type": "Bool"
+            },
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 508,
+            "description": "Start the updating",
+            "itemtype": "method",
+            "name": "_startUpdate",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 521,
+            "description": "Stop the updating",
+            "itemtype": "method",
+            "name": "_stopUpdate",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 534,
+            "description": "The update every frame",
+            "itemtype": "method",
+            "name": "",
+            "params": [
+                {
+                    "name": "elapsed",
+                    "description": "The time in milliseconds since the last frame",
+                    "type": "Int"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 616,
+            "description": "The sound has been started",
+            "itemtype": "method",
+            "name": "onSoundStarted",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "timeline",
+                    "description": "",
+                    "type": "cloudkid.AnimatorTimeline"
+                }
+            ],
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 628,
+            "description": "The sound is done",
+            "itemtype": "method",
+            "name": "onSoundDone",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "timeline",
+                    "description": "",
+                    "type": "cloudkid.AnimatorTimeline"
+                }
+            ],
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 641,
+            "description": "Check to see if we have timeline",
+            "itemtype": "method",
+            "name": "_hasTimelines",
+            "return": {
+                "description": "if we have timelines",
+                "type": "Bool"
+            },
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 655,
+            "description": "String representation of this class",
+            "itemtype": "method",
+            "name": "toString",
+            "return": {
+                "description": "String"
+            },
+            "static": 1,
+            "class": "cloudkid.Animator"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 16,
+            "description": "The event to callback when we're done",
+            "itemtype": "event",
+            "name": "onComplete",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 23,
+            "description": "The parameters to pass when completed",
+            "itemtype": "property",
+            "name": "onCompleteParams",
+            "type": "Array",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 30,
+            "description": "The event label",
+            "itemtype": "property",
+            "name": "event",
+            "type": "String",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 37,
+            "description": "The instance of the timeline to animate",
+            "itemtype": "property",
+            "name": "instance",
+            "type": "cloudkid.AnimatorTimeline",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 44,
+            "description": "The frame number of the first frame",
+            "itemtype": "property",
+            "name": "firstFrame",
+            "type": "Int",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 51,
+            "description": "The frame number of the last frame",
+            "itemtype": "property",
+            "name": "lastFrame",
+            "type": "Int",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 58,
+            "description": "If the animation loops - determined by looking to see if it ends in \" stop\" or \" loop\"",
+            "itemtype": "property",
+            "name": "isLooping",
+            "type": "Bool",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 65,
+            "description": "Ensure we show the last frame before looping",
+            "itemtype": "property",
+            "name": "isLastFrame",
+            "type": "Bool",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 72,
+            "description": "length of timeline in frames",
+            "itemtype": "property",
+            "name": "length",
+            "type": "Int",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 79,
+            "description": "If this timeline plays captions",
+            "itemtype": "property",
+            "name": "useCaptions",
+            "type": "Bool",
+            "readonly": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 87,
+            "description": "If the timeline is paused.",
+            "itemtype": "property",
+            "name": "_paused",
+            "type": "Bool",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 95,
+            "description": "Sets and gets the animation's paused status.",
+            "itemtype": "property",
+            "name": "paused",
+            "type": "Bool",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 116,
+            "description": "The animation start time in seconds on the movieclip's timeline.",
+            "itemtype": "property",
+            "name": "startTime",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 122,
+            "description": "The animation duration in seconds.",
+            "itemtype": "property",
+            "name": "duration",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 128,
+            "description": "The animation speed. Default is 1.",
+            "itemtype": "property",
+            "name": "speed",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 134,
+            "description": "The position of the animation in seconds.",
+            "itemtype": "property",
+            "name": "time",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 140,
+            "description": "Sound alias to sync to during the animation.",
+            "itemtype": "property",
+            "name": "soundAlias",
+            "type": "String",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 146,
+            "description": "A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.",
+            "itemtype": "property",
+            "name": "soundInst",
+            "type": "Object",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 152,
+            "description": "If the timeline will, but has yet to play a sound.",
+            "itemtype": "property",
+            "name": "playSound",
+            "type": "Bool",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 158,
+            "description": "The time (seconds) into the animation that the sound starts.",
+            "itemtype": "property",
+            "name": "soundStart",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/AnimatorTimeline.js",
+            "line": 164,
+            "description": "The time (seconds) into the animation that the sound ends",
+            "itemtype": "property",
+            "name": "soundEnd",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.AnimatorTimeline"
+        },
+        {
+            "file": "src/CharacterClip.js",
+            "line": 18,
+            "description": "The event to play",
+            "itemtype": "property",
+            "name": "event",
+            "type": "String",
+            "class": "cloudkid.CharacterClip"
+        },
+        {
+            "file": "src/CharacterClip.js",
+            "line": 25,
+            "description": "The number of times to loop",
+            "itemtype": "property",
+            "name": "loops",
+            "type": "Int",
+            "class": "cloudkid.CharacterClip"
+        },
+        {
+            "file": "src/CharacterClip.js",
+            "line": 32,
+            "description": "Initialiaze this character clip",
+            "itemtype": "method",
+            "name": "initialize",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The frame label to play using Animator.play",
+                    "type": "String"
+                },
+                {
+                    "name": "loops",
+                    "description": "The number of times to loop, default of 0 plays continuously",
+                    "type": "Int"
+                }
+            ],
+            "class": "cloudkid.CharacterClip"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 22,
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 25,
+            "description": "The currently playing animation",
+            "itemtype": "property",
+            "name": "_currentAnimation",
+            "type": "cloudkid.CharacterClip",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 33,
+            "description": "Current number of loops for the current animation",
+            "itemtype": "property",
+            "name": "_loops",
+            "type": "Int",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 41,
+            "description": "If the current animation choreographies can't be interrupted",
+            "itemtype": "property",
+            "name": "_interruptable",
+            "type": "Bool",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 49,
+            "description": "If frame dropping is allowed for this animation set",
+            "itemtype": "property",
+            "name": "_allowFrameDropping",
+            "type": "Bool",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 57,
+            "description": "The current character",
+            "itemtype": "property",
+            "name": "_character",
+            "type": "createjs.MovieClip",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 65,
+            "description": "Callback function for playing animation",
+            "itemtype": "property",
+            "name": "_callback",
+            "type": "Function",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 73,
+            "description": "If this instance has been destroyed",
+            "itemtype": "property",
+            "name": "_destroyed",
+            "type": "Bool",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 81,
+            "description": "Initiliazes this Character controller",
+            "itemtype": "method",
+            "name": "initialize",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 91,
+            "description": "Set the current character, setting to null clears character",
+            "itemtype": "method",
+            "name": "setCharacter",
+            "params": [
+                {
+                    "name": "character",
+                    "description": "MovieClip",
+                    "type": "createjs.MovieClip"
+                }
+            ],
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 108,
+            "description": "If we want to play a static frame",
+            "itemtype": "method",
+            "name": "gotoFrameAndStop",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The frame label to stop on",
+                    "type": "String"
+                }
+            ],
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 122,
+            "description": "Will play a sequence of animations",
+            "itemtype": "method",
+            "name": "playClips",
+            "params": [
+                {
+                    "name": "clips",
+                    "description": "an array of CharacterClip objects",
+                    "type": "Array"
+                },
+                {
+                    "name": "callback",
+                    "description": "Callback for when the animations are either done, or\n            have been interrupted. Will pass true is interrupted,\n            false if they completed",
+                    "type": "Function"
+                },
+                {
+                    "name": "interruptable",
+                    "description": "If calling this can interrupt the current animation(s)",
+                    "type": "Bool"
+                },
+                {
+                    "name": "cancelPreviousCallback",
+                    "description": "Cancel the callback the last time this was called",
+                    "type": "Bool"
+                },
+                {
+                    "name": "allowFrameDropping",
+                    "description": "If frame dropping is allowed for this frame, if the cloudkid.Animator is doing frame drop checks",
+                    "type": "Bool"
+                }
+            ],
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 165,
+            "description": "Start the next animation in the sequence",
+            "itemtype": "method",
+            "name": "startNext",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 193,
+            "description": "When the animation has completed playing",
+            "itemtype": "method",
+            "name": "_animationComplete",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 219,
+            "description": "Clear any animations for the current character",
+            "itemtype": "method",
+            "name": "clear",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/CharacterController.js",
+            "line": 237,
+            "description": "Don't use after this",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.CharacterController"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 17,
+            "description": "A reference to this instance of PixiAnimator. This is internal to PixiAnimator and can't be accessed externally.",
+            "itemtype": "property",
+            "name": "_instance",
+            "type": "cloudkid.PixiAnimator",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 25,
+            "description": "The collection of AnimTimelines that are playing",
+            "itemtype": "property",
+            "name": "_timelines",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 32,
+            "description": "The number of animations",
+            "itemtype": "property",
+            "name": "_numAnims",
+            "type": "Int",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 39,
+            "description": "A string reference to PixiAnimator's update callback\nso it can be removed in the event that there are no\nanimations to play",
+            "itemtype": "property",
+            "name": "_updateAlias",
+            "type": "String",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 48,
+            "description": "The function that PixiAnimator uses for update calls. Do not modify.",
+            "itemtype": "property",
+            "name": "_boundUpdate",
+            "type": "Function",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 55,
+            "description": "The instance of cloudkid.Audio or cloudkid.Sound for playing audio along with animations.",
+            "itemtype": "property",
+            "name": "soundLib",
+            "type": "cloudkid.Audio|cloudkid.Sound",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 63,
+            "description": "Stored collection of AnimTimelines. This is internal to PixiAnimator and can't be accessed externally.",
+            "itemtype": "property",
+            "name": "_animPool",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 71,
+            "description": "The global captions object to use with animator",
+            "itemtype": "property",
+            "name": "captions",
+            "type": "cloudkid.Captions",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 78,
+            "description": "Initializes the singleton instance of PixiAnimator.",
+            "itemtype": "method",
+            "name": "init",
+            "static": 1,
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 89,
+            "description": "Getter for the reference to this instance of PixiAnimator",
+            "itemtype": "property",
+            "name": "instance",
+            "type": "cloudkid.PixiAnimator",
+            "readonly": "",
+            "static": 1,
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 100,
+            "description": "Play a specified animation",
+            "itemtype": "method",
+            "name": "play",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The clip to play",
+                    "type": "PIXI.MovieClip|PIXI.Spine"
+                },
+                {
+                    "name": "anim",
+                    "description": "The alias for the animation to play",
+                    "type": "String"
+                },
+                {
+                    "name": "options",
+                    "description": "The object of optional parameters or onComplete callback function",
+                    "type": "Object|function",
+                    "optional": true,
+                    "props": [
+                        {
+                            "name": "callback",
+                            "description": "The function to call once the animation has finished",
+                            "type": "Function",
+                            "optional": true,
+                            "optdefault": "null"
+                        },
+                        {
+                            "name": "loop",
+                            "description": "Whether the animation should loop",
+                            "type": "Bool",
+                            "optional": true,
+                            "optdefault": "false"
+                        },
+                        {
+                            "name": "speed",
+                            "description": "The speed at which to play the animation",
+                            "type": "Int",
+                            "optional": true,
+                            "optdefault": "1"
+                        },
+                        {
+                            "name": "startTime",
+                            "description": "The time in milliseconds into the animation to start.",
+                            "type": "Int",
+                            "optional": true,
+                            "optdefault": "0"
+                        },
+                        {
+                            "name": "soundData",
+                            "description": "Data about a sound to sync the animation to, as an alias or in the format {alias:\"MyAlias\", start:0}.\n       start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.",
+                            "type": "Object|String",
+                            "optional": true,
+                            "optdefault": "null"
+                        }
+                    ]
+                }
+            ],
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 236,
+            "description": "Checks to see if a Spine animation includes a given animation alias",
+            "itemtype": "method",
+            "name": "instanceHasAnimation",
+            "params": [
+                {
+                    "name": "instance",
+                    "description": "The animation to search. This has to be a Spine animation.",
+                    "type": "PIXI.spine"
+                },
+                {
+                    "name": "anim",
+                    "description": "The animation alias to search for",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns true if the animation is found",
+                "type": "Boolean"
+            },
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 251,
+            "description": "Checks to see if a Spine animation includes a given animation alias",
+            "itemtype": "method",
+            "name": "checkSpineForAnimation",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The spine to search",
+                    "type": "PIXI.spine"
+                },
+                {
+                    "name": "anim",
+                    "description": "The animation alias to search for",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Returns true if the animation is found",
+                "type": "Boolean"
+            },
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 264,
+            "description": "Stop a clip",
+            "itemtype": "method",
+            "name": "stop",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The clip to stop",
+                    "type": "PIXI.MovieClip|PIXI.Spine"
+                },
+                {
+                    "name": "doCallback",
+                    "description": "Whether the animations callback should be run",
+                    "type": "Bool"
+                }
+            ],
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 291,
+            "description": "Stops all current animations",
+            "itemtype": "method",
+            "name": "stop",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 310,
+            "description": "Put an AnimTimeline back into the general pool after it's done playing\nor has been manually stopped",
+            "itemtype": "method",
+            "name": "_repool",
+            "params": [
+                {
+                    "name": "timeline",
+                    "description": "",
+                    "type": "cloudkid.PixiAnimator.AnimTimeline"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 329,
+            "description": "Update each frame",
+            "itemtype": "method",
+            "name": "_update",
+            "params": [
+                {
+                    "name": "elapsed",
+                    "description": "The time since the last frame",
+                    "type": "Int"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 438,
+            "description": "Called when a movie clip is done playing, calls the AnimTimeline's\ncallback if it has one",
+            "itemtype": "method",
+            "name": "_onMovieClipDone",
+            "params": [
+                {
+                    "name": "timeline",
+                    "description": "",
+                    "type": "cloudkid.PixiAnimator.AnimTimeline"
+                }
+            ],
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 465,
+            "description": "Destroy this",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.PixiAnimator"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 500,
+            "description": "Initialize the AnimTimeline",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "clip",
+                    "description": "The AnimTimeline's clip",
+                    "type": "PIXI.MovieClip|Pixi.Spine"
+                },
+                {
+                    "name": "callback",
+                    "description": "The function to call when the clip is finished playing",
+                    "type": "Function"
+                },
+                {
+                    "name": "speed",
+                    "description": "The speed at which the clip should be played",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "cloudkid.PixiAnimator.AnimTimeline"
+            },
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 511,
+            "description": "The clip for this AnimTimeLine",
+            "itemtype": "property",
+            "name": "clip",
+            "type": "PIXI.MovieClip|PIXI.Spine",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 518,
+            "description": "Whether the clip is a PIXI.Spine",
+            "itemtype": "property",
+            "name": "isSpine",
+            "type": "Bool",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 525,
+            "description": "The function to call when the clip is finished playing",
+            "itemtype": "property",
+            "name": "callback",
+            "type": "Function",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 532,
+            "description": "The speed at which the clip should be played",
+            "itemtype": "property",
+            "name": "speed",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 539,
+            "itemtype": "property",
+            "name": "spineStates",
+            "type": "Array",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 545,
+            "description": "Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played",
+            "itemtype": "property",
+            "name": "loop",
+            "type": "Bool",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 552,
+            "description": "The position of the animation in seconds",
+            "itemtype": "property",
+            "name": "time",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 559,
+            "description": "Sound alias to sync to during the animation.",
+            "itemtype": "property",
+            "name": "soundAlias",
+            "type": "String",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 566,
+            "description": "A sound instance object from cloudkid.Sound, used for tracking sound position.",
+            "itemtype": "property",
+            "name": "soundInst",
+            "type": "Object",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 573,
+            "description": "If the timeline will, but has yet to, play a sound",
+            "itemtype": "property",
+            "name": "playSound",
+            "type": "Bool",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 580,
+            "description": "The time (seconds) into the animation that the sound starts.",
+            "itemtype": "property",
+            "name": "soundStart",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 587,
+            "description": "The time (seconds) into the animation that the sound ends",
+            "itemtype": "property",
+            "name": "soundEnd",
+            "type": "Number",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 594,
+            "description": "If this timeline plays captions",
+            "itemtype": "property",
+            "name": "useCaptions",
+            "type": "Bool",
+            "readonly": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 602,
+            "description": "If this animation is paused.",
+            "itemtype": "property",
+            "name": "_paused",
+            "type": "Bool",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        },
+        {
+            "file": "src/PixiAnimator.js",
+            "line": 612,
+            "description": "Sets and gets the animation's paused status.",
+            "itemtype": "property",
+            "name": "paused",
+            "type": "Bool",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.PixiAnimator.AnimTimeline"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:86"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:101"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:116"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:195"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:216"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:292"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:311"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:337"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:363"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:413"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:434"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:456"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:478"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:497"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:508"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:521"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:534"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:641"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:655"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterClip.js:32"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterController.js:81"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterController.js:91"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterController.js:108"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterController.js:122"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterController.js:165"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterController.js:193"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterController.js:219"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/CharacterController.js:237"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:100"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:236"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/PixiAnimator.js:236"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:251"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/PixiAnimator.js:251"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:264"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:291"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:310"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:329"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:438"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:465"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/PixiAnimator.js:500"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " src/PixiAnimator.js:500"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/CharacterController.js:22"
+        }
+    ]
+}
