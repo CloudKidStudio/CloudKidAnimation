@@ -98,19 +98,19 @@
 	});
 	
 	/**
-	 * Play a specified animation
-	 * 
-	 * @function play
-	 * @param {PIXI.MovieClip|PIXI.Spine} clip The clip to play
-	 * @param {String} anim The alias for the animation to play
-	 * @param {Object} [options={}] The optional settings for this play
-	 * @param {function} [options.callback=null] The function to call once the animation has finished
-	 * @param {bool} [options.loop=false] Whether the animation should loop
-	 * @param {int} [options.speed=1] The speed at which to play the animation
-	 * @param {int} [options.startTime=0] The time in milliseconds into the animation to start.
-	 * @param {Object|String} [options.soundData=null] Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
-	 *        start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
-	 */
+	* Play a specified animation
+	* 
+	* @function play
+	* @param {PIXI.MovieClip|PIXI.Spine} clip The clip to play
+	* @param {String} anim The alias for the animation to play
+	* @param {Object|function} [options] The object of optional parameters or onComplete callback function
+	* @param {function} [options.callback=null] The function to call once the animation has finished
+	* @param {bool} [options.loop=false] Whether the animation should loop
+	* @param {int} [options.speed=1] The speed at which to play the animation
+	* @param {int} [options.startTime=0] The time in milliseconds into the animation to start.
+	* @param {Object|String} [options.soundData=null] Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
+	*        start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
+	*/
 	p.play = function(clip, anim, options, loop, speed, startTime, soundData)
 	{
 		var callback = null;

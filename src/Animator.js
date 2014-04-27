@@ -119,7 +119,7 @@
 	*   @function play
 	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
-	*   @param {Object} [options={}] The object of optional parameters
+	*   @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	*   @param {function} [options.onComplete=null] The callback function when the animation is done
 	*   @param {Array} [options.onCompleteParams=null] Parameters to pass to onComplete function
 	*	@param {int} [options.startTime=0] The time in milliseconds into the animation to start. A value of -1 makes the animation play at a random startTime.
@@ -198,7 +198,7 @@
 	*   @function playAtRandomFrame
 	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate.
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose_stop").
-	*   @param {Object} [options] The object of optional parameters
+	*   @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	*   @param {function} [options.onComplete=null] The callback function when the animation is done
 	*   @param {Array} [options.onCompleteParams=null] Parameters to pass to onComplete function
 	*	@param {Number} [options.speed=1] The speed at which to play the animation.
