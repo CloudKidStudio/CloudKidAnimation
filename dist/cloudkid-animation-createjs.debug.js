@@ -13,7 +13,7 @@
     p.soundInst = null, p.playSound = !1, p.soundStart = 0, p.soundEnd = 0, namespace("cloudkid").AnimatorTimeline = AnimatorTimeline;
 }(), function(undefined) {
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.2.0", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.2.1", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
     Animator.init = function() {
@@ -30,7 +30,7 @@
         _timelinesMap[instance.id] !== undefined && Animator.stop(instance, doCancelledCallback);
         var timeline = Animator._makeTimeline(instance, event, onComplete, onCompleteParams, speed, soundData);
         return timeline.firstFrame > -1 && timeline.lastFrame > -1 ? (timeline.time = -1 == startTime ? Math.random() * timeline.duration : startTime, 
-        instance._elapsedTime = timeline.startTime + timeline.time, instance.play(), instance._tick(), 
+        instance.elapsedTime = timeline.startTime + timeline.time, instance.play(), instance._tick(), 
         Animator._hasTimelines() || Animator._startUpdate(), _timelines.push(timeline), 
         _timelinesMap[instance.id] = timeline, timeline) : (Debug.log("No event " + event + " was found, or it lacks an end, on this MovieClip " + instance), 
         onComplete && onComplete.apply(null, onCompleteParams), null);
@@ -41,7 +41,7 @@
         if (instance instanceof MovieClip == !1) return timeline;
         if (instance.advanceDuringTicks = !1, !instance.getAnimFrameRate()) {
             var fps = cloudkid.OS.instance.options.fps;
-            fps || (fps = cloudkid.OS.instance.fps), fps || (fps = 15), instance.enableFramerateIndependence(fps);
+            fps || (fps = cloudkid.OS.instance.fps), fps || (fps = 15), instance.framerate = fps;
         }
         timeline.instance = instance, timeline.event = event, timeline.onComplete = onComplete, 
         timeline.onCompleteParams = onCompleteParams, timeline.speed = speed, soundData && (timeline.playSound = !0, 
@@ -113,7 +113,7 @@
                     _removedTimelines.push(t))), t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
                     t.soundInst = Animator.audioLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)), 
                     t.useCaptions && (Animator.captions.isSlave = !0, Animator.captions.run(t.soundAlias)));
-                    instance._elapsedTime = t.startTime + t.time, instance._tick();
+                    instance.elapsedTime = t.startTime + t.time, instance._tick();
                 }
             }
             for (i = 0; i < _removedTimelines.length; i++) t = _removedTimelines[i], Animator._remove(t, !0);

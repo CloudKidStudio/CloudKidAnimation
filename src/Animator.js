@@ -165,7 +165,7 @@
 		{
 			timeline.time = startTime == -1 ? Math.random() * timeline.duration : startTime;
 			
-			instance._elapsedTime = timeline.startTime + timeline.time;
+			instance.elapsedTime = timeline.startTime + timeline.time;
 			instance.play();//have it set its 'paused' variable to false
 			instance._tick();//update the movieclip to make sure it is redrawn correctly at the next opportunity
 			
@@ -242,7 +242,7 @@
 				fps = cloudkid.OS.instance.fps;
 			if(!fps)
 				fps = 15;
-			instance.enableFramerateIndependence(fps);
+			instance.framerate = fps;
 		}
 		timeline.instance = instance;
 		timeline.event = event;
@@ -603,7 +603,7 @@
 					}
 				}
 			}
-			instance._elapsedTime = t.startTime + t.time;
+			instance.elapsedTime = t.startTime + t.time;
 			instance._tick();
 		}
 		for(i = 0; i < _removedTimelines.length; i++)

@@ -293,7 +293,7 @@
 	*   @function play
 	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
-	*   @param {Object} [options={}] The object of optional parameters
+	*   @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	*   @param {function} [options.onComplete=null] The callback function when the animation is done
 	*   @param {Array} [options.onCompleteParams=null] Parameters to pass to onComplete function
 	*	@param {int} [options.startTime=0] The time in milliseconds into the animation to start. A value of -1 makes the animation play at a random startTime.
@@ -339,7 +339,7 @@
 		{
 			timeline.time = startTime == -1 ? Math.random() * timeline.duration : startTime;
 			
-			instance._elapsedTime = timeline.startTime + timeline.time;
+			instance.elapsedTime = timeline.startTime + timeline.time;
 			instance.play();//have it set its 'paused' variable to false
 			instance._tick();//update the movieclip to make sure it is redrawn correctly at the next opportunity
 			
@@ -372,7 +372,7 @@
 	*   @function playAtRandomFrame
 	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate.
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose_stop").
-	*   @param {Object} [options] The object of optional parameters
+	*   @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	*   @param {function} [options.onComplete=null] The callback function when the animation is done
 	*   @param {Array} [options.onCompleteParams=null] Parameters to pass to onComplete function
 	*	@param {Number} [options.speed=1] The speed at which to play the animation.
@@ -416,7 +416,7 @@
 				fps = cloudkid.OS.instance.fps;
 			if(!fps)
 				fps = 15;
-			instance.enableFramerateIndependence(fps);
+			instance.framerate = fps;
 		}
 		timeline.instance = instance;
 		timeline.event = event;
@@ -777,7 +777,7 @@
 					}
 				}
 			}
-			instance._elapsedTime = t.startTime + t.time;
+			instance.elapsedTime = t.startTime + t.time;
 			instance._tick();
 		}
 		for(i = 0; i < _removedTimelines.length; i++)
