@@ -1,9 +1,9 @@
 {
     "project": {
         "name": "CloudKid Animation API",
-        "description": "CloudKid Captions API: a library for playing Animations",
+        "description": "CloudKid Animation API: A library for playing Animations",
         "version": "2.2.0",
-        "logo": "cloudkid.png"
+        "logo": ""
     },
     "files": {
         "src/Animator.js": {
