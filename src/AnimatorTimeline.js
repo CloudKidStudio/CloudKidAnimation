@@ -1,12 +1,16 @@
+/**
+*  @module cloudkid
+*/
 (function(){
-	
+
+	"use strict";
+
 	/**
 	*   Animator Timeline is a class designed to provide
 	*   base animation functionality
 	*   
-	*   @class cloudkid.AnimatorTimeline
+	*   @class AnimatorTimeline
 	*   @constructor
-	*   @author Matt Karl, Andrew Start
 	*/
 	var AnimatorTimeline = function(){};
 	
@@ -37,7 +41,7 @@
 	/**
 	* The instance of the timeline to animate 
 	* 
-	* @property {cloudkid.AnimatorTimeline} instance
+	* @property {AnimatorTimeline} instance
 	*/
 	p.instance = null;
 	

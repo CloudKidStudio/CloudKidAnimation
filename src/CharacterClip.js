@@ -1,9 +1,14 @@
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	/**
 	*   CharacterClip is used by the CharacterController class
 	*   
-	*   @class cloudkid.CharacterClip
+	*   @class CharacterClip
 	*   @constructor
 	*   @param {String} event Animator event to play
 	*   @param {int} loops The number of loops

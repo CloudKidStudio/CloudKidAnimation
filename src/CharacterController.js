@@ -1,5 +1,10 @@
+/**
+*  @module cloudkid
+*/
 (function(){
-	
+
+	"use strict";
+
 	// Imports
 	var Animator = cloudkid.Animator;
 	
@@ -8,9 +13,7 @@
 	*   sequences on the timeline. This is a flexible way to
 	*   animate characters on a timeline
 	*   
-	*   @class cloudkid.CharacterController
-	*   @constructor
-	*   @author Matt Moore
+	*   @class CharacterController
 	*/
 	var CharacterController = function()
 	{
@@ -25,7 +28,7 @@
 	/**
 	* The currently playing animation 
 	* 
-	* @property {cloudkid.CharacterClip} _currentAnimation
+	* @property {CharacterClip} _currentAnimation
 	* @private
 	*/
 	p._currentAnimation = null;
@@ -129,7 +132,7 @@
 	 *             false if they completed
 	 * @param {bool} interruptable If calling this can interrupt the current animation(s)
 	 * @param {bool} cancelPreviousCallback Cancel the callback the last time this was called
-	 * @param {bool} allowFrameDropping If frame dropping is allowed for this frame, if the cloudkid.Animator is doing frame drop checks
+	 * @param {bool} allowFrameDropping If frame dropping is allowed for this frame, if the Animator is doing frame drop checks
 	 */
 	p.playClips = function(clips, callback, interruptable, cancelPreviousCallback, allowFrameDropping)
 	{
