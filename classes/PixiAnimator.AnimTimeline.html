@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.2.0 API Documentation : cloudkid.AnimatorTimeline</title>  
+	<title>CloudKid Animation API v2.2.1 API Documentation : PixiAnimator.AnimTimeline</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.2.0</em>
+            <em>API Documentation for: 2.2.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -39,21 +39,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/cloudkid.Animator.html">cloudkid.Animator</a></li>
+                <li><a href="../classes/Animator.html">Animator</a></li>
             
-                <li><a href="../classes/cloudkid.AnimatorTimeline.html">cloudkid.AnimatorTimeline</a></li>
+                <li><a href="../classes/AnimatorTimeline.html">AnimatorTimeline</a></li>
             
-                <li><a href="../classes/cloudkid.CharacterClip.html">cloudkid.CharacterClip</a></li>
+                <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
-                <li><a href="../classes/cloudkid.CharacterController.html">cloudkid.CharacterController</a></li>
+                <li><a href="../classes/CharacterController.html">CharacterController</a></li>
             
-                <li><a href="../classes/cloudkid.PixiAnimator.html">cloudkid.PixiAnimator</a></li>
+                <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
-                <li><a href="../classes/cloudkid.PixiAnimator.AnimTimeline.html">cloudkid.PixiAnimator.AnimTimeline</a></li>
+                <li><a href="../classes/PixiAnimator.AnimTimeline.html">PixiAnimator.AnimTimeline</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -88,7 +90,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1>cloudkid.AnimatorTimeline Class</h1>
+                        <h1>PixiAnimator.AnimTimeline Class</h1>
 <div class="box meta">
     
 
@@ -96,10 +98,14 @@
 
     
         <div class="foundat">
-            Defined in: <a href="../files/src_AnimatorTimeline.js.html#l3"><code>cloudkid.AnimatorTimeline:3</code></a>
+            Defined in: <a href="../files/src_PixiAnimator.js.html#l487"><code>PixiAnimator.AnimTimeline:487</code></a>
         </div>
     
 
+    
+        
+            Namespace: <a href="../modules/cloudkid.html">cloudkid</a>
+        
     
 
     
@@ -108,19 +114,40 @@
 
 
 <div class="box intro">
-    <p>Animator Timeline is a class designed to provide
-base animation functionality</p>
+    <p>[Pixi Only] Internal PixiAnimator class for keeping track of animations</p>
 
 </div>
 
 
     <div class="constructor">
         <h2>Constructor</h2>
-        <div id="method_cloudkid.AnimatorTimeline" class="method item">
-    <h3 class="name"><code>cloudkid.AnimatorTimeline</code></h3>
+        <div id="method_PixiAnimator.AnimTimeline" class="method item">
+    <h3 class="name"><code>PixiAnimator.AnimTimeline</code></h3>
 
     
-        <span class="paren">()</span>
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>clip</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>callback</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>speed</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
     
 
     
@@ -148,7 +175,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l3"><code>cloudkid.AnimatorTimeline:3</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l487"><code>PixiAnimator.AnimTimeline:487</code></a>
         
         </p>
 
@@ -162,6 +189,62 @@ base animation functionality</p>
         
     </div>
 
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">clip</code>
+                        <span class="type">PIXI.MovieClip | Pixi.Spine</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The AnimTimeline&#39;s clip</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">callback</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to call when the clip is finished playing</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">speed</code>
+                        <span class="type">Int</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The speed at which the clip should be played</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
     
 
     
@@ -177,12 +260,12 @@ base animation functionality</p>
         <li class="api-class-tab index"><a href="#index">Index</a></li>
 
         
+            <li class="api-class-tab methods"><a href="#methods">Methods</a></li>
+        
         
             <li class="api-class-tab properties"><a href="#properties">Properties</a></li>
         
         
-        
-            <li class="api-class-tab events"><a href="#events">Events</a></li>
         
     </ul>
 
@@ -190,6 +273,21 @@ base animation functionality</p>
         <div id="index" class="api-class-tabpanel index">
             <h2 class="off-left">Item Index</h2>
 
+            
+                <div class="index-section methods">
+                    <h3>Methods</h3>
+
+                    <ul class="index-list methods">
+                        
+                            <li class="index-item method">
+                                <a href="#method_init">init</a>
+
+                                
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
             
 
             
@@ -206,63 +304,28 @@ base animation functionality</p>
                             </li>
                         
                             <li class="index-item property public">
-                                <a href="#property_duration">duration</a>
+                                <a href="#property_callback">callback</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_event">event</a>
+                            <li class="index-item property public">
+                                <a href="#property_clip">clip</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_firstFrame">firstFrame</a>
+                            <li class="index-item property public">
+                                <a href="#property_isSpine">isSpine</a>
 
                                 
                                 
                             </li>
                         
-                            <li class="index-item property">
-                                <a href="#property_instance">instance</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_isLastFrame">isLastFrame</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_isLooping">isLooping</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_lastFrame">lastFrame</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_length">length</a>
-
-                                
-                                
-                            </li>
-                        
-                            <li class="index-item property">
-                                <a href="#property_onCompleteParams">onCompleteParams</a>
+                            <li class="index-item property public">
+                                <a href="#property_loop">loop</a>
 
                                 
                                 
@@ -318,7 +381,7 @@ base animation functionality</p>
                             </li>
                         
                             <li class="index-item property public">
-                                <a href="#property_startTime">startTime</a>
+                                <a href="#property_spineStates">spineStates</a>
 
                                 
                                 
@@ -345,23 +408,163 @@ base animation functionality</p>
             
 
             
-                <div class="index-section events">
-                    <h3>Events</h3>
-
-                    <ul class="index-list events">
-                        
-                            <li class="index-item event">
-                                <a href="#event_onComplete">onComplete</a>
-
-                                
-                                
-                            </li>
-                        
-                    </ul>
-                </div>
-            
         </div>
 
+        
+            <div id="methods" class="api-class-tabpanel">
+                <h2 class="off-left">Methods</h2>
+
+                
+                    <div id="method_init" class="method item">
+    <h3 class="name"><code>init</code></h3>
+
+    
+        <div class="args">
+            <span class="paren">(</span><ul class="args-list inline commas">
+            
+                <li class="arg">
+                    
+                        <code>clip</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>callback</code>
+                    
+                </li>
+            
+                <li class="arg">
+                    
+                        <code>speed</code>
+                    
+                </li>
+            
+            </ul><span class="paren">)</span>
+        </div>
+    
+
+    
+        <span class="returns-inline">
+            <span class="type"><a href="../classes/PixiAnimator.AnimTimeline.html" class="crosslink">PixiAnimator.AnimTimeline</a></span>
+        </span>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_PixiAnimator.js.html#l503"><code>init:503</code></a>
+        
+        </p>
+
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>Initialize the AnimTimeline</p>
+
+    </div>
+
+    
+        <div class="params">
+            <h4>Parameters:</h4>
+
+            <ul class="params-list">
+            
+                <li class="param">
+                    
+                        <code class="param-name">clip</code>
+                        <span class="type">PIXI.MovieClip | Pixi.Spine</span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The AnimTimeline&#39;s clip</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">callback</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The function to call when the clip is finished playing</p>
+
+                    </div>
+
+                    
+                </li>
+            
+                <li class="param">
+                    
+                        <code class="param-name">speed</code>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    
+
+                    
+
+                    <div class="param-description">
+                        <p>The speed at which the clip should be played</p>
+
+                    </div>
+
+                    
+                </li>
+            
+            </ul>
+        </div>
+    
+
+    
+        <div class="returns">
+            <h4>Returns:</h4>
+
+            <div class="returns-description">
+                
+                    
+                        <span class="type"><a href="../classes/PixiAnimator.AnimTimeline.html" class="crosslink">PixiAnimator.AnimTimeline</a></span>:
+                    
+                
+            </div>
+        </div>
+    
+
+    
+</div>
+
+                
+            </div>
         
 
         
@@ -394,7 +597,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l87"><code>_paused:87</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l605"><code>_paused:605</code></a>
         
         </p>
 
@@ -404,7 +607,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>If the timeline is paused.</p>
+        <p>If this animation is paused.</p>
 
     </div>
 
@@ -416,9 +619,9 @@ base animation functionality</p>
 </div>
 
                 
-                    <div id="property_duration" class="property item public">
-    <h3 class="name"><code>duration</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    <div id="property_callback" class="property item public">
+    <h3 class="name"><code>callback</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Function" class="crosslink external" target="_blank">Function</a></span>
 
     
 
@@ -441,7 +644,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l122"><code>duration:122</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l528"><code>callback:528</code></a>
         
         </p>
 
@@ -451,7 +654,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>The animation duration in seconds.</p>
+        <p>The function to call when the clip is finished playing</p>
 
     </div>
 
@@ -463,12 +666,14 @@ base animation functionality</p>
 </div>
 
                 
-                    <div id="property_event" class="property item">
-    <h3 class="name"><code>event</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                    <div id="property_clip" class="property item public">
+    <h3 class="name"><code>clip</code></h3>
+    <span class="type">PIXI.MovieClip | PIXI.Spine</span>
 
     
 
+    
+        <span class="flag public">public</span>
     
 
     
@@ -486,7 +691,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l30"><code>event:30</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l514"><code>clip:514</code></a>
         
         </p>
 
@@ -496,7 +701,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>The event label</p>
+        <p>The clip for this AnimTimeLine</p>
 
     </div>
 
@@ -508,103 +713,15 @@ base animation functionality</p>
 </div>
 
                 
-                    <div id="property_firstFrame" class="property item">
-    <h3 class="name"><code>firstFrame</code></h3>
-    <span class="type">Int</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_AnimatorTimeline.js.html#l44"><code>firstFrame:44</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>The frame number of the first frame</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_instance" class="property item">
-    <h3 class="name"><code>instance</code></h3>
-    <span class="type"><a href="../classes/cloudkid.AnimatorTimeline.html" class="crosslink">cloudkid.AnimatorTimeline</a></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_AnimatorTimeline.js.html#l37"><code>instance:37</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>The instance of the timeline to animate</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_isLastFrame" class="property item">
-    <h3 class="name"><code>isLastFrame</code></h3>
+                    <div id="property_isSpine" class="property item public">
+    <h3 class="name"><code>isSpine</code></h3>
     <span class="type">Bool</span>
 
     
 
     
+        <span class="flag public">public</span>
+    
 
     
 
@@ -621,7 +738,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l65"><code>isLastFrame:65</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l521"><code>isSpine:521</code></a>
         
         </p>
 
@@ -631,7 +748,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>Ensure we show the last frame before looping</p>
+        <p>Whether the clip is a PIXI.Spine</p>
 
     </div>
 
@@ -643,57 +760,14 @@ base animation functionality</p>
 </div>
 
                 
-                    <div id="property_isLooping" class="property item">
-    <h3 class="name"><code>isLooping</code></h3>
+                    <div id="property_loop" class="property item public">
+    <h3 class="name"><code>loop</code></h3>
     <span class="type">Bool</span>
 
     
 
     
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_AnimatorTimeline.js.html#l58"><code>isLooping:58</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>If the animation loops - determined by looking to see if it ends in " stop" or " loop"</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_lastFrame" class="property item">
-    <h3 class="name"><code>lastFrame</code></h3>
-    <span class="type">Int</span>
-
-    
-
+        <span class="flag public">public</span>
     
 
     
@@ -711,7 +785,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l51"><code>lastFrame:51</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l548"><code>loop:548</code></a>
         
         </p>
 
@@ -721,97 +795,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>The frame number of the last frame</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_length" class="property item">
-    <h3 class="name"><code>length</code></h3>
-    <span class="type">Int</span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_AnimatorTimeline.js.html#l72"><code>length:72</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>length of timeline in frames</p>
-
-    </div>
-
-    
-
-    
-
-    
-</div>
-
-                
-                    <div id="property_onCompleteParams" class="property item">
-    <h3 class="name"><code>onCompleteParams</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_AnimatorTimeline.js.html#l23"><code>onCompleteParams:23</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>The parameters to pass when completed</p>
+        <p>Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played</p>
 
     </div>
 
@@ -848,7 +832,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l95"><code>paused:95</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l615"><code>paused:615</code></a>
         
         </p>
 
@@ -895,7 +879,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l152"><code>playSound:152</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l576"><code>playSound:576</code></a>
         
         </p>
 
@@ -905,7 +889,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>If the timeline will, but has yet to play a sound.</p>
+        <p>If the timeline will, but has yet to, play a sound</p>
 
     </div>
 
@@ -942,7 +926,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l140"><code>soundAlias:140</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l562"><code>soundAlias:562</code></a>
         
         </p>
 
@@ -989,7 +973,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l164"><code>soundEnd:164</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l590"><code>soundEnd:590</code></a>
         
         </p>
 
@@ -1036,7 +1020,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l146"><code>soundInst:146</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l569"><code>soundInst:569</code></a>
         
         </p>
 
@@ -1046,7 +1030,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.</p>
+        <p>A sound instance object from cloudkid.Sound, used for tracking sound position.</p>
 
     </div>
 
@@ -1083,7 +1067,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l158"><code>soundStart:158</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l583"><code>soundStart:583</code></a>
         
         </p>
 
@@ -1130,7 +1114,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l128"><code>speed:128</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l535"><code>speed:535</code></a>
         
         </p>
 
@@ -1140,7 +1124,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>The animation speed. Default is 1.</p>
+        <p>The speed at which the clip should be played</p>
 
     </div>
 
@@ -1152,9 +1136,9 @@ base animation functionality</p>
 </div>
 
                 
-                    <div id="property_startTime" class="property item public">
-    <h3 class="name"><code>startTime</code></h3>
-    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                    <div id="property_spineStates" class="property item public">
+    <h3 class="name"><code>spineStates</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
 
     
 
@@ -1177,7 +1161,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l116"><code>startTime:116</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l542"><code>spineStates:542</code></a>
         
         </p>
 
@@ -1187,8 +1171,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>The animation start time in seconds on the movieclip&#39;s timeline.</p>
-
+        
     </div>
 
     
@@ -1224,7 +1207,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l134"><code>time:134</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l555"><code>time:555</code></a>
         
         </p>
 
@@ -1234,7 +1217,7 @@ base animation functionality</p>
     </div>
 
     <div class="description">
-        <p>The position of the animation in seconds.</p>
+        <p>The position of the animation in seconds</p>
 
     </div>
 
@@ -1269,7 +1252,7 @@ base animation functionality</p>
             
         
         
-        <a href="../files/src_AnimatorTimeline.js.html#l79"><code>useCaptions:79</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l597"><code>useCaptions:597</code></a>
         
         </p>
 
@@ -1296,56 +1279,6 @@ base animation functionality</p>
 
         
 
-        
-            <div id="events" class="api-class-tabpanel">
-                <h2 class="off-left">Events</h2>
-
-                
-                    <div id="event_onComplete" class="events item">
-    <h3 class="name"><code>onComplete</code></h3>
-    <span class="type"></span>
-
-    
-
-    
-
-    
-
-    
-
-    <div class="meta">
-        
-            
-                
-                <p>
-                
-                Defined in
-                
-            
-        
-        
-        <a href="../files/src_AnimatorTimeline.js.html#l16"><code>onComplete:16</code></a>
-        
-        </p>
-
-        
-
-        
-    </div>
-
-    <div class="description">
-        <p>The event to callback when we&#39;re done</p>
-
-    </div>
-
-    
-
-
-    
-</div>
-
-                
-            </div>
         
     </div>
 </div>

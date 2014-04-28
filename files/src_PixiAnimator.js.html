@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.2.0 API Documentation : src/PixiAnimator.js</title>  
+	<title>CloudKid Animation API v2.2.1 API Documentation : src/PixiAnimator.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.2.0</em>
+            <em>API Documentation for: 2.2.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -39,21 +39,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/cloudkid.Animator.html">cloudkid.Animator</a></li>
+                <li><a href="../classes/Animator.html">Animator</a></li>
             
-                <li><a href="../classes/cloudkid.AnimatorTimeline.html">cloudkid.AnimatorTimeline</a></li>
+                <li><a href="../classes/AnimatorTimeline.html">AnimatorTimeline</a></li>
             
-                <li><a href="../classes/cloudkid.CharacterClip.html">cloudkid.CharacterClip</a></li>
+                <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
-                <li><a href="../classes/cloudkid.CharacterController.html">cloudkid.CharacterController</a></li>
+                <li><a href="../classes/CharacterController.html">CharacterController</a></li>
             
-                <li><a href="../classes/cloudkid.PixiAnimator.html">cloudkid.PixiAnimator</a></li>
+                <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
-                <li><a href="../classes/cloudkid.PixiAnimator.AnimTimeline.html">cloudkid.PixiAnimator.AnimTimeline</a></li>
+                <li><a href="../classes/PixiAnimator.AnimTimeline.html">PixiAnimator.AnimTimeline</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -95,13 +97,16 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
+/**
+*  @module cloudkid
+*/
 (function() {
 	
+	&quot;use strict&quot;;
+
 	/**
 	*  [PIXI Only] Animator for interacting with Spine animations
-	*  @class cloudkid.PixiAnimator
-	*  @constructor
-	*  @author Andrew Start
+	*  @class PixiAnimator
 	*/
 	var PixiAnimator = function()
 	{
@@ -113,7 +118,7 @@
 	
 	/**
 	* A reference to this instance of PixiAnimator. This is internal to PixiAnimator and can&#x27;t be accessed externally.
-	* @property {cloudkid.PixiAnimator} _instance
+	* @property {PixiAnimator} _instance
 	* @private
 	* @static
 	*/
@@ -185,7 +190,7 @@
 	
 	/**
 	* Getter for the reference to this instance of PixiAnimator
-	* @property {cloudkid.PixiAnimator} instance
+	* @property {PixiAnimator} instance
 	* @readOnly
 	* @static
 	*/
@@ -409,7 +414,7 @@
 	 * or has been manually stopped
 	 * 
 	 * @function _repool
-	 * @param {cloudkid.PixiAnimator.AnimTimeline} timeline
+	 * @param {PixiAnimator.AnimTimeline} timeline
 	 * @private
 	 */
 	p._repool = function(timeline)
@@ -537,7 +542,7 @@
 	 * callback if it has one
 	 * 
 	 * @function _onMovieClipDone
-	 * @param {cloudkid.PixiAnimator.AnimTimeline} timeline
+	 * @param {PixiAnimator.AnimTimeline} timeline
 	 * @private
 	 */
 	p._onMovieClipDone = function(timeline)
@@ -581,7 +586,7 @@
 	/**
 	 * [Pixi Only] Internal PixiAnimator class for keeping track of animations
 	 * 
-	 * @class cloudkid.PixiAnimator.AnimTimeline
+	 * @class PixiAnimator.AnimTimeline
 	 * @constructor
 	 * @param {PIXI.MovieClip|Pixi.Spine} clip The AnimTimeline&#x27;s clip
 	 * @param {function} callback The function to call when the clip is finished playing
@@ -601,7 +606,7 @@
 	 * @param {PIXI.MovieClip|Pixi.Spine} clip The AnimTimeline&#x27;s clip
 	 * @param {function} callback The function to call when the clip is finished playing
 	 * @param {Number} speed The speed at which the clip should be played
-	 * @returns {cloudkid.PixiAnimator.AnimTimeline}
+	 * @returns {PixiAnimator.AnimTimeline}
 	 */
 	AnimTimeline.prototype.init = function(clip, callback, speed)
 	{

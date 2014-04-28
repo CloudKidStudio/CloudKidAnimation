@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.2.0 API Documentation : src/Animator.js</title>  
+	<title>CloudKid Animation API v2.2.1 API Documentation : src/Animator.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.2.0</em>
+            <em>API Documentation for: 2.2.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -39,21 +39,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/cloudkid.Animator.html">cloudkid.Animator</a></li>
+                <li><a href="../classes/Animator.html">Animator</a></li>
             
-                <li><a href="../classes/cloudkid.AnimatorTimeline.html">cloudkid.AnimatorTimeline</a></li>
+                <li><a href="../classes/AnimatorTimeline.html">AnimatorTimeline</a></li>
             
-                <li><a href="../classes/cloudkid.CharacterClip.html">cloudkid.CharacterClip</a></li>
+                <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
-                <li><a href="../classes/cloudkid.CharacterController.html">cloudkid.CharacterController</a></li>
+                <li><a href="../classes/CharacterController.html">CharacterController</a></li>
             
-                <li><a href="../classes/cloudkid.PixiAnimator.html">cloudkid.PixiAnimator</a></li>
+                <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
-                <li><a href="../classes/cloudkid.PixiAnimator.AnimTimeline.html">cloudkid.PixiAnimator.AnimTimeline</a></li>
+                <li><a href="../classes/PixiAnimator.AnimTimeline.html">PixiAnimator.AnimTimeline</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -95,8 +97,13 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
+/**
+*  @module cloudkid
+*/
 (function(undefined){
-	
+
+	&quot;use strict&quot;;
+
 	// Imports
 	var OS = cloudkid.OS,
 		AnimatorTimeline = cloudkid.AnimatorTimeline,
@@ -106,9 +113,8 @@
 	*   Animator is a static class designed to provided
 	*   base animation functionality, using frame labels of MovieClips
 	*
-	*   @class cloudkid.Animator
+	*   @class Animator
 	*   @static
-	*   @author Matt Karl, Andrew Start
 	*/
 	var Animator = function(){};
 	
@@ -214,7 +220,7 @@
 	*   Play an animation for a frame label event
 	*   
 	*   @function play
-	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate
+	*   @param {AnimatorTimeline} instance The timeline to animate
 	*   @param {String} event The frame label event (e.g. &quot;onClose&quot; to &quot;onClose stop&quot;)
 	*   @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	*   @param {function} [options.onComplete=null] The callback function when the animation is done
@@ -224,7 +230,7 @@
 	*	@param {Object|String} [options.soundData=null] soundData Data about a sound to sync the animation to, as an alias or in the format {alias:&quot;MyAlias&quot;, start:0}.
 	*		start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
 	*   @param {bool} [options.doCancelledCallback=false] Should an overridden animation&#x27;s callback function still run?
-	*   @return {cloudkid.AnimatorTimeline} The Timeline object
+	*   @return {AnimatorTimeline} The Timeline object
 	*   @static
 	*/
 	Animator.play = function(instance, event, options, onCompleteParams, startTime, speed, soundData, doCancelledCallback)
@@ -262,7 +268,7 @@
 		{
 			timeline.time = startTime == -1 ? Math.random() * timeline.duration : startTime;
 			
-			instance._elapsedTime = timeline.startTime + timeline.time;
+			instance.elapsedTime = timeline.startTime + timeline.time;
 			instance.play();//have it set its &#x27;paused&#x27; variable to false
 			instance._tick();//update the movieclip to make sure it is redrawn correctly at the next opportunity
 			
@@ -293,7 +299,7 @@
 	*   Play an animation for a frame label event, starting at a random frame within the animation
 	*   
 	*   @function playAtRandomFrame
-	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate.
+	*   @param {AnimatorTimeline} instance The timeline to animate.
 	*   @param {String} event The frame label event (e.g. &quot;onClose&quot; to &quot;onClose_stop&quot;).
 	*   @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	*   @param {function} [options.onComplete=null] The callback function when the animation is done
@@ -302,7 +308,7 @@
 	*	@param {Object} [options.soundData=null] soundData Data about a sound to sync the animation to, as an alias or in the format {alias:&quot;MyAlias&quot;, start:0}.
 	*		start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
 	*   @param {bool} [options.doCancelledCallback=false] Should an overridden animation&#x27;s callback function still run?
-	*   @return {cloudkid.AnimatorTimeline} The Timeline object
+	*   @return {AnimatorTimeline} The Timeline object
 	*   @static
 	*/
 	Animator.playAtRandomFrame = function(instance, event, options, onCompleteParams, speed, soundData, doCancelledCallback)
@@ -320,7 +326,7 @@
 	*   @param {function} onCompleteParams Parameters to pass to onComplete function
 	*   @param {Number} speed The speed at which to play the animation.
 	*	@param {Object} soundData Data about sound to sync the animation to.
-	*   @return {cloudkid.AnimatorTimeline} The Timeline object
+	*   @return {AnimatorTimeline} The Timeline object
 	*   @private
 	*   @static
 	*/
@@ -339,7 +345,7 @@
 				fps = cloudkid.OS.instance.fps;
 			if(!fps)
 				fps = 15;
-			instance.enableFramerateIndependence(fps);
+			instance.framerate = fps;
 		}
 		timeline.instance = instance;
 		timeline.event = event;
@@ -461,7 +467,7 @@
 	*   Remove a timeline from the stack
 	*   
 	*   @function _remove
-	*   @param {cloudkid.AnimatorTimeline} timeline
+	*   @param {AnimatorTimeline} timeline
 	*   @param {bool} doOnComplete If we do the on complete callback
 	*   @private
 	*   @static
@@ -577,7 +583,7 @@
 	*   
 	*   @function getTimeline
 	*   @param {createjs.MovieClip} instance MovieClip 
-	*   @return {cloudkid.AnimatorTimeline} The timeline
+	*   @return {AnimatorTimeline} The timeline
 	*   @static
 	*/
 	Animator.getTimeline = function(instance)
@@ -700,7 +706,7 @@
 					}
 				}
 			}
-			instance._elapsedTime = t.startTime + t.time;
+			instance.elapsedTime = t.startTime + t.time;
 			instance._tick();
 		}
 		for(i = 0; i &lt; _removedTimelines.length; i++)
@@ -714,7 +720,7 @@
 	*  The sound has been started
 	*  @method onSoundStarted
 	*  @private
-	*  @param {cloudkid.AnimatorTimeline} timeline
+	*  @param {AnimatorTimeline} timeline
 	*/
 	var onSoundStarted = function(timeline)
 	{
@@ -726,7 +732,7 @@
 	*  The sound is done
 	*  @method onSoundDone
 	*  @private
-	*  @param {cloudkid.AnimatorTimeline} timeline
+	*  @param {AnimatorTimeline} timeline
 	*/
 	var onSoundDone = function(timeline)
 	{

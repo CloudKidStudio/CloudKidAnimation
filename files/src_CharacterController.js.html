@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.2.0 API Documentation : src/CharacterController.js</title>  
+	<title>CloudKid Animation API v2.2.1 API Documentation : src/CharacterController.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.2.0</em>
+            <em>API Documentation for: 2.2.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -39,21 +39,23 @@
         <div id="api-tabview-panel">
             <ul id="api-classes" class="apis classes">
             
-                <li><a href="../classes/cloudkid.Animator.html">cloudkid.Animator</a></li>
+                <li><a href="../classes/Animator.html">Animator</a></li>
             
-                <li><a href="../classes/cloudkid.AnimatorTimeline.html">cloudkid.AnimatorTimeline</a></li>
+                <li><a href="../classes/AnimatorTimeline.html">AnimatorTimeline</a></li>
             
-                <li><a href="../classes/cloudkid.CharacterClip.html">cloudkid.CharacterClip</a></li>
+                <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
-                <li><a href="../classes/cloudkid.CharacterController.html">cloudkid.CharacterController</a></li>
+                <li><a href="../classes/CharacterController.html">CharacterController</a></li>
             
-                <li><a href="../classes/cloudkid.PixiAnimator.html">cloudkid.PixiAnimator</a></li>
+                <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
-                <li><a href="../classes/cloudkid.PixiAnimator.AnimTimeline.html">cloudkid.PixiAnimator.AnimTimeline</a></li>
+                <li><a href="../classes/PixiAnimator.AnimTimeline.html">PixiAnimator.AnimTimeline</a></li>
             
             </ul>
 
             <ul id="api-modules" class="apis modules">
+            
+                <li><a href="../modules/cloudkid.html">cloudkid</a></li>
             
             </ul>
         </div>
@@ -95,8 +97,13 @@
 
 <div class="file">
     <pre class="code prettyprint linenums">
+/**
+*  @module cloudkid
+*/
 (function(){
-	
+
+	&quot;use strict&quot;;
+
 	// Imports
 	var Animator = cloudkid.Animator;
 	
@@ -105,9 +112,7 @@
 	*   sequences on the timeline. This is a flexible way to
 	*   animate characters on a timeline
 	*   
-	*   @class cloudkid.CharacterController
-	*   @constructor
-	*   @author Matt Moore
+	*   @class CharacterController
 	*/
 	var CharacterController = function()
 	{
@@ -122,7 +127,7 @@
 	/**
 	* The currently playing animation 
 	* 
-	* @property {cloudkid.CharacterClip} _currentAnimation
+	* @property {CharacterClip} _currentAnimation
 	* @private
 	*/
 	p._currentAnimation = null;
@@ -226,7 +231,7 @@
 	 *             false if they completed
 	 * @param {bool} interruptable If calling this can interrupt the current animation(s)
 	 * @param {bool} cancelPreviousCallback Cancel the callback the last time this was called
-	 * @param {bool} allowFrameDropping If frame dropping is allowed for this frame, if the cloudkid.Animator is doing frame drop checks
+	 * @param {bool} allowFrameDropping If frame dropping is allowed for this frame, if the Animator is doing frame drop checks
 	 */
 	p.playClips = function(clips, callback, interruptable, cancelPreviousCallback, allowFrameDropping)
 	{
