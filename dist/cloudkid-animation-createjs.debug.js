@@ -1,4 +1,5 @@
 !function() {
+    "use strict";
     var AnimatorTimeline = function() {}, p = AnimatorTimeline.prototype;
     p.onComplete = null, p.onCompleteParams = null, p.event = null, p.instance = null, 
     p.firstFrame = -1, p.lastFrame = -1, p.isLooping = !1, p.isLastFrame = !1, p.length = 0, 
@@ -12,8 +13,9 @@
     }), p.startTime = 0, p.duration = 0, p.speed = 1, p.time = 0, p.soundAlias = null, 
     p.soundInst = null, p.playSound = !1, p.soundStart = 0, p.soundEnd = 0, namespace("cloudkid").AnimatorTimeline = AnimatorTimeline;
 }(), function(undefined) {
+    "use strict";
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.2.1", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.2.2", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
     Animator.init = function() {
@@ -69,10 +71,10 @@
         if (index >= 0 && _removedTimelines.splice(index, 1), index = _timelines.indexOf(timeline), 
         !(0 > index)) {
             var onComplete = timeline.onComplete, onCompleteParams = timeline.onCompleteParams;
-            timeline.instance.stop(), timeline.soundInst && timeline.soundInst.stop(), _timelines.splice(index, 1), 
-            delete _timelinesMap[timeline.instance.id], timeline.instance = null, timeline.event = null, 
-            timeline.onComplete = null, timeline.onCompleteParams = null, Animator._hasTimelines() || Animator._stopUpdate(), 
-            doOnComplete && onComplete && onComplete.apply(null, onCompleteParams);
+            timeline.instance.stop(), !doOnComplete && timeline.soundInst && timeline.soundInst.stop(), 
+            _timelines.splice(index, 1), delete _timelinesMap[timeline.instance.id], timeline.instance = null, 
+            timeline.event = null, timeline.onComplete = null, timeline.onCompleteParams = null, 
+            Animator._hasTimelines() || Animator._stopUpdate(), doOnComplete && onComplete && onComplete.apply(null, onCompleteParams);
         }
     }, Animator.pause = function() {
         if (_timelines && !_paused) {
@@ -107,7 +109,8 @@
                             _removedTimelines.push(t);
                             continue;
                         }
-                        t.time = t.soundStart + .001 * t.soundInst.position, t.useCaptions && Animator.captions.seek(t.soundInst.position);
+                        t.time = t.soundStart + .001 * t.soundInst.position, t.useCaptions && Animator.captions.seek(t.soundInst.position), 
+                        t.time >= t.duration && (instance.gotoAndStop(t.lastFrame), _removedTimelines.push(t));
                     } else t.time += delta * t.speed, t.time >= t.duration && (t.isLooping ? (t.time -= t.duration, 
                     t.onComplete && t.onComplete.apply(null, t.onCompleteParams)) : (instance.gotoAndStop(t.lastFrame), 
                     _removedTimelines.push(t))), t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
@@ -131,6 +134,7 @@
         return "[Animator version:" + Animator.VERSION + "]";
     }, namespace("cloudkid").Animator = Animator;
 }(), function() {
+    "use strict";
     var CharacterClip = function(event, loops) {
         this.initialize(event, loops);
     }, p = CharacterClip.prototype;
@@ -138,6 +142,7 @@
         this.event = event, this.loops = loops || 0;
     }, namespace("cloudkid").CharacterClip = CharacterClip;
 }(), function() {
+    "use strict";
     var Animator = cloudkid.Animator, CharacterController = function() {
         this.initialize();
     }, p = CharacterController.prototype;

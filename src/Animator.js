@@ -392,7 +392,8 @@
 		// Stop the animation
 		timeline.instance.stop();
 
-		if(timeline.soundInst)
+		//in most cases, if doOnComplete is true, it's a natural stop and the audio can be allowed to continue
+		if(!doOnComplete && timeline.soundInst)
 			timeline.soundInst.stop();//stop the sound from playing
 		
 		// Remove from the stack
@@ -566,6 +567,14 @@
 					if (t.useCaptions)
 					{
 						Animator.captions.seek(t.soundInst.position);
+					}
+					//if the sound goes beyond the animation, then stop the animation
+					//audio animations shouldn't loop, because doing that properly is difficult
+					//letting the audio continue should be okay though
+					if(t.time >= t.duration)
+					{
+						instance.gotoAndStop(t.lastFrame);
+						_removedTimelines.push(t);
 					}
 				}
 				//if sound is no longer valid, stop animation playback immediately

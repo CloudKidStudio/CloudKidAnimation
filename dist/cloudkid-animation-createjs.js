@@ -1,12 +1,16 @@
+/**
+*  @module cloudkid
+*/
 (function(){
-	
+
+	"use strict";
+
 	/**
 	*   Animator Timeline is a class designed to provide
 	*   base animation functionality
 	*   
-	*   @class cloudkid.AnimatorTimeline
+	*   @class AnimatorTimeline
 	*   @constructor
-	*   @author Matt Karl, Andrew Start
 	*/
 	var AnimatorTimeline = function(){};
 	
@@ -37,7 +41,7 @@
 	/**
 	* The instance of the timeline to animate 
 	* 
-	* @property {cloudkid.AnimatorTimeline} instance
+	* @property {AnimatorTimeline} instance
 	*/
 	p.instance = null;
 	
@@ -172,8 +176,13 @@
 	namespace('cloudkid').AnimatorTimeline = AnimatorTimeline;
 	
 }());
+/**
+*  @module cloudkid
+*/
 (function(undefined){
-	
+
+	"use strict";
+
 	// Imports
 	var OS = cloudkid.OS,
 		AnimatorTimeline = cloudkid.AnimatorTimeline,
@@ -183,9 +192,8 @@
 	*   Animator is a static class designed to provided
 	*   base animation functionality, using frame labels of MovieClips
 	*
-	*   @class cloudkid.Animator
+	*   @class Animator
 	*   @static
-	*   @author Matt Karl, Andrew Start
 	*/
 	var Animator = function(){};
 	
@@ -291,7 +299,7 @@
 	*   Play an animation for a frame label event
 	*   
 	*   @function play
-	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate
+	*   @param {AnimatorTimeline} instance The timeline to animate
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose stop")
 	*   @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	*   @param {function} [options.onComplete=null] The callback function when the animation is done
@@ -301,7 +309,7 @@
 	*	@param {Object|String} [options.soundData=null] soundData Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
 	*		start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
 	*   @param {bool} [options.doCancelledCallback=false] Should an overridden animation's callback function still run?
-	*   @return {cloudkid.AnimatorTimeline} The Timeline object
+	*   @return {AnimatorTimeline} The Timeline object
 	*   @static
 	*/
 	Animator.play = function(instance, event, options, onCompleteParams, startTime, speed, soundData, doCancelledCallback)
@@ -370,7 +378,7 @@
 	*   Play an animation for a frame label event, starting at a random frame within the animation
 	*   
 	*   @function playAtRandomFrame
-	*   @param {cloudkid.AnimatorTimeline} instance The timeline to animate.
+	*   @param {AnimatorTimeline} instance The timeline to animate.
 	*   @param {String} event The frame label event (e.g. "onClose" to "onClose_stop").
 	*   @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	*   @param {function} [options.onComplete=null] The callback function when the animation is done
@@ -379,7 +387,7 @@
 	*	@param {Object} [options.soundData=null] soundData Data about a sound to sync the animation to, as an alias or in the format {alias:"MyAlias", start:0}.
 	*		start is the seconds into the animation to start playing the sound. If it is omitted or soundData is a string, it defaults to 0.
 	*   @param {bool} [options.doCancelledCallback=false] Should an overridden animation's callback function still run?
-	*   @return {cloudkid.AnimatorTimeline} The Timeline object
+	*   @return {AnimatorTimeline} The Timeline object
 	*   @static
 	*/
 	Animator.playAtRandomFrame = function(instance, event, options, onCompleteParams, speed, soundData, doCancelledCallback)
@@ -397,7 +405,7 @@
 	*   @param {function} onCompleteParams Parameters to pass to onComplete function
 	*   @param {Number} speed The speed at which to play the animation.
 	*	@param {Object} soundData Data about sound to sync the animation to.
-	*   @return {cloudkid.AnimatorTimeline} The Timeline object
+	*   @return {AnimatorTimeline} The Timeline object
 	*   @private
 	*   @static
 	*/
@@ -538,7 +546,7 @@
 	*   Remove a timeline from the stack
 	*   
 	*   @function _remove
-	*   @param {cloudkid.AnimatorTimeline} timeline
+	*   @param {AnimatorTimeline} timeline
 	*   @param {bool} doOnComplete If we do the on complete callback
 	*   @private
 	*   @static
@@ -562,7 +570,8 @@
 		// Stop the animation
 		timeline.instance.stop();
 
-		if(timeline.soundInst)
+		//in most cases, if doOnComplete is true, it's a natural stop and the audio can be allowed to continue
+		if(!doOnComplete && timeline.soundInst)
 			timeline.soundInst.stop();//stop the sound from playing
 		
 		// Remove from the stack
@@ -654,7 +663,7 @@
 	*   
 	*   @function getTimeline
 	*   @param {createjs.MovieClip} instance MovieClip 
-	*   @return {cloudkid.AnimatorTimeline} The timeline
+	*   @return {AnimatorTimeline} The timeline
 	*   @static
 	*/
 	Animator.getTimeline = function(instance)
@@ -737,6 +746,14 @@
 					{
 						Animator.captions.seek(t.soundInst.position);
 					}
+					//if the sound goes beyond the animation, then stop the animation
+					//audio animations shouldn't loop, because doing that properly is difficult
+					//letting the audio continue should be okay though
+					if(t.time >= t.duration)
+					{
+						instance.gotoAndStop(t.lastFrame);
+						_removedTimelines.push(t);
+					}
 				}
 				//if sound is no longer valid, stop animation playback immediately
 				else
@@ -791,7 +808,7 @@
 	*  The sound has been started
 	*  @method onSoundStarted
 	*  @private
-	*  @param {cloudkid.AnimatorTimeline} timeline
+	*  @param {AnimatorTimeline} timeline
 	*/
 	var onSoundStarted = function(timeline)
 	{
@@ -803,7 +820,7 @@
 	*  The sound is done
 	*  @method onSoundDone
 	*  @private
-	*  @param {cloudkid.AnimatorTimeline} timeline
+	*  @param {AnimatorTimeline} timeline
 	*/
 	var onSoundDone = function(timeline)
 	{
@@ -842,12 +859,17 @@
 	namespace('cloudkid').Animator = Animator;
 
 }());
+/**
+*  @module cloudkid
+*/
 (function(){
 	
+	"use strict";
+
 	/**
 	*   CharacterClip is used by the CharacterController class
 	*   
-	*   @class cloudkid.CharacterClip
+	*   @class CharacterClip
 	*   @constructor
 	*   @param {String} event Animator event to play
 	*   @param {int} loops The number of loops
@@ -889,8 +911,13 @@
 	// Assign to the cloudkid namespace
 	namespace('cloudkid').CharacterClip = CharacterClip;
 }());
+/**
+*  @module cloudkid
+*/
 (function(){
-	
+
+	"use strict";
+
 	// Imports
 	var Animator = cloudkid.Animator;
 	
@@ -899,9 +926,7 @@
 	*   sequences on the timeline. This is a flexible way to
 	*   animate characters on a timeline
 	*   
-	*   @class cloudkid.CharacterController
-	*   @constructor
-	*   @author Matt Moore
+	*   @class CharacterController
 	*/
 	var CharacterController = function()
 	{
@@ -916,7 +941,7 @@
 	/**
 	* The currently playing animation 
 	* 
-	* @property {cloudkid.CharacterClip} _currentAnimation
+	* @property {CharacterClip} _currentAnimation
 	* @private
 	*/
 	p._currentAnimation = null;
@@ -1020,7 +1045,7 @@
 	 *             false if they completed
 	 * @param {bool} interruptable If calling this can interrupt the current animation(s)
 	 * @param {bool} cancelPreviousCallback Cancel the callback the last time this was called
-	 * @param {bool} allowFrameDropping If frame dropping is allowed for this frame, if the cloudkid.Animator is doing frame drop checks
+	 * @param {bool} allowFrameDropping If frame dropping is allowed for this frame, if the Animator is doing frame drop checks
 	 */
 	p.playClips = function(clips, callback, interruptable, cancelPreviousCallback, allowFrameDropping)
 	{

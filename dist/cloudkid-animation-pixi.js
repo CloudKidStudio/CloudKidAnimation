@@ -1,10 +1,13 @@
+/**
+*  @module cloudkid
+*/
 (function() {
 	
+	"use strict";
+
 	/**
 	*  [PIXI Only] Animator for interacting with Spine animations
-	*  @class cloudkid.PixiAnimator
-	*  @constructor
-	*  @author Andrew Start
+	*  @class PixiAnimator
 	*/
 	var PixiAnimator = function()
 	{
@@ -16,7 +19,7 @@
 	
 	/**
 	* A reference to this instance of PixiAnimator. This is internal to PixiAnimator and can't be accessed externally.
-	* @property {cloudkid.PixiAnimator} _instance
+	* @property {PixiAnimator} _instance
 	* @private
 	* @static
 	*/
@@ -88,7 +91,7 @@
 	
 	/**
 	* Getter for the reference to this instance of PixiAnimator
-	* @property {cloudkid.PixiAnimator} instance
+	* @property {PixiAnimator} instance
 	* @readOnly
 	* @static
 	*/
@@ -312,7 +315,7 @@
 	 * or has been manually stopped
 	 * 
 	 * @function _repool
-	 * @param {cloudkid.PixiAnimator.AnimTimeline} timeline
+	 * @param {PixiAnimator.AnimTimeline} timeline
 	 * @private
 	 */
 	p._repool = function(timeline)
@@ -440,7 +443,7 @@
 	 * callback if it has one
 	 * 
 	 * @function _onMovieClipDone
-	 * @param {cloudkid.PixiAnimator.AnimTimeline} timeline
+	 * @param {PixiAnimator.AnimTimeline} timeline
 	 * @private
 	 */
 	p._onMovieClipDone = function(timeline)
@@ -484,7 +487,7 @@
 	/**
 	 * [Pixi Only] Internal PixiAnimator class for keeping track of animations
 	 * 
-	 * @class cloudkid.PixiAnimator.AnimTimeline
+	 * @class PixiAnimator.AnimTimeline
 	 * @constructor
 	 * @param {PIXI.MovieClip|Pixi.Spine} clip The AnimTimeline's clip
 	 * @param {function} callback The function to call when the clip is finished playing
@@ -504,7 +507,7 @@
 	 * @param {PIXI.MovieClip|Pixi.Spine} clip The AnimTimeline's clip
 	 * @param {function} callback The function to call when the clip is finished playing
 	 * @param {Number} speed The speed at which the clip should be played
-	 * @returns {cloudkid.PixiAnimator.AnimTimeline}
+	 * @returns {PixiAnimator.AnimTimeline}
 	 */
 	AnimTimeline.prototype.init = function(clip, callback, speed)
 	{

@@ -1,4 +1,5 @@
 !function() {
+    "use strict";
     var PixiAnimator = function() {
         this._timelines = [], this._boundUpdate = this._update.bind(this);
     }, p = PixiAnimator.prototype = {}, _instance = null;
