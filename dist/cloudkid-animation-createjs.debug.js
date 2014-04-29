@@ -15,7 +15,7 @@
 }(), function(undefined) {
     "use strict";
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.2.2", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.2.3", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
     Animator.init = function() {
@@ -146,7 +146,7 @@
     var Animator = cloudkid.Animator, CharacterController = function() {
         this.initialize();
     }, p = CharacterController.prototype;
-    p_animationStack = null, p._currentAnimation = null, p._loops = 0, p._interruptable = !0, 
+    p._animationStack = null, p._currentAnimation = null, p._loops = 0, p._interruptable = !0, 
     p._allowFrameDropping = !1, p._character = null, p._callback = null, p._destroyed = !1, 
     p.initialize = function() {
         this._animationStack = [];
@@ -173,7 +173,7 @@
             this._callback = null, cb(!1);
         }
     }, p._animationComplete = function() {
-        this._loops++, 0 === this._currentAnimation.loops || this._loops < this._currentAnimation.loops ? Animator.play(this._character, this._currentAnimation.event, this._animationComplete.bind(this), [], this._allowFrameDropping) : this._currentAnimation.loops == this._loops && this.startNext();
+        this._loops++, 0 === this._currentAnimation.loops || this._loops < this._currentAnimation.loops ? Animator.play(this._character, this._currentAnimation.event, this._animationComplete.bind(this), null, this._allowFrameDropping) : this._currentAnimation.loops == this._loops && this.startNext();
     }, p.clear = function() {
         this._character && Animator.stop(this._character), this._currentAnimation = null, 
         this._interruptable = !0, this._callback = null, this._animationStack.length = 0, 

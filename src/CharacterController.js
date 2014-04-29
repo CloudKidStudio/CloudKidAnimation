@@ -22,8 +22,13 @@
 	
 	var p = CharacterController.prototype;
 	
-	/** The current stack of animations to play */
-	p_animationStack = null;
+	/**
+	* The current stack of animations to play
+	*
+	* @property {Array} _animationStack
+	* @private
+	*/
+	p._animationStack = null;
 	
 	/**
 	* The currently playing animation 
@@ -209,7 +214,7 @@
 				this._character, 
 				this._currentAnimation.event, 
 				this._animationComplete.bind(this), 
-				[], 
+				null, 
 				this._allowFrameDropping
 			);
 		}
