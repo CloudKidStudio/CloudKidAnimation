@@ -14,9 +14,8 @@
     p.soundInst = null, p.playSound = !1, p.soundStart = 0, p.soundEnd = 0, namespace("cloudkid").AnimatorTimeline = AnimatorTimeline;
 }(), function(undefined) {
     "use strict";
-    var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, Animator = (createjs.MovieClip, 
-    function() {});
-    Animator.VERSION = "2.2.4", Animator.debug = !1, Animator.soundLib = null, 
+    var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
+    Animator.VERSION = "2.2.5", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1, _optionsHelper = {};
     Animator.init = function() {
@@ -41,6 +40,7 @@
         return Animator.play(instance, event, options, onCompleteParams, -1, speed, soundData, doCancelledCallback);
     }, Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, speed, soundData) {
         var timeline = new AnimatorTimeline();
+        if (!Animator._canAnimate(instance)) return timeline;
         instance.advanceDuringTicks = !1;
         var fps;
         instance.framerate ? fps = instance.framerate : (fps = cloudkid.OS.instance.options.fps, 
@@ -64,6 +64,9 @@
         }
         return timeline.length = timeline.lastFrame - timeline.firstFrame, timeline.startTime = timeline.firstFrame / fps, 
         timeline.duration = timeline.length / fps, timeline;
+    }, Animator._canAnimate = function(instance) {
+        return instance instanceof MovieClip ? !0 : instance.framerate !== undefined && instance.getLabels !== undefined && instance.elapsedTime !== undefined && instance._tick !== undefined && instance.gotoAndStop !== undefined && instance.play !== undefined && instance.id !== undefined ? !0 : (Debug.error("Attempting to use Animator to play something that is not movieclip compatible: " + instance), 
+        !1);
     }, Animator.instanceHasAnimation = function(instance, event) {
         for (var labels = instance.getLabels(), startFrame = -1, stopFrame = -1, stopLabel = event + "_stop", loopLabel = event + "_loop", i = 0, len = labels.length; len > i; ++i) {
             var l = labels[i];

@@ -243,10 +243,10 @@
 	Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, speed, soundData)
 	{
 		var timeline = new AnimatorTimeline();
-		/*if(instance instanceof MovieClip === false)//not a movieclip
+		if(!Animator._canAnimate(instance))//not a movieclip
 		{
 			return timeline;
-		}*/
+		}
 		instance.advanceDuringTicks = false;//make sure the movieclip doesn't play outside the control of Animator
 		var fps;
 		if(!instance.framerate)//make sure the movieclip is framerate independent
@@ -310,6 +310,37 @@
 		timeline.duration = timeline.length / fps;
 		
 		return timeline;
+	};
+
+	/**
+	*   Determines if a given instance can be animated by Animator, to allow things that aren't
+	*	MovieClips from EaselJS to be animated if they share the same API. Note - 'id' is a property with
+	*	a unique value for each createjs.DisplayObject. If a custom object is made that does not inherit from DisplayObject,
+	*	it needs to not have an id that is identical to anything from EaselJS.
+	*   
+	*   @function _canAnimate
+	*   @param {easeljs.MovieClip} instance The object to check for animation properties.
+	*   @return {Boolean} If the instance can be animated or not.
+	*   @private
+	*   @static
+	*/
+	Animator._canAnimate = function(instance)
+	{
+		if(instance instanceof MovieClip)//all createjs.MovieClips are A-OK
+			return true;
+		if(instance.framerate !== undefined &&//property - calculate timing
+			instance.getLabels !== undefined &&//method - get framelabels
+			instance.elapsedTime !== undefined &&//property - set time passed
+			instance._tick !== undefined &&//method - update after setting elapsedTime
+			instance.gotoAndStop !== undefined &&//method - stop at end of anim
+			instance.play !== undefined &&//method - start playing
+			instance.id !== undefined)//property - used to avoid duplication of timelines
+			return true;
+		if(DEBUG)
+		{
+			Debug.error("Attempting to use Animator to play something that is not movieclip compatible: " + instance);
+		}
+		return false;
 	};
 
 	/**
