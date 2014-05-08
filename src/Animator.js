@@ -86,6 +86,15 @@
 	* @private
 	*/
 	var _paused = false;
+
+	/**
+	* An empty object to avoid creating new objects in play()
+	* when an options object is not used for parameters.
+	* 
+	* @property {Object} _optionsHelper
+	* @private
+	*/
+	var _optionsHelper = {};
 	
 	/**
 	*	Sets the variables of the Animator to their defaults. Use when _timelines is null,
@@ -141,11 +150,11 @@
 		if (options && typeof options == "function")
 		{
 			onComplete = options;
-			options = {};
+			options = _optionsHelper;//use the helper instead of creating a new object
 		}
 		else if (!options)
 		{
-			options = {};
+			options = _optionsHelper;//use the helper instead of creating a new object
 		}
 
 		onComplete = options.onComplete || onComplete || null;
@@ -234,20 +243,23 @@
 	Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, speed, soundData)
 	{
 		var timeline = new AnimatorTimeline();
-		if(instance instanceof MovieClip === false)//not a movieclip
+		/*if(instance instanceof MovieClip === false)//not a movieclip
 		{
 			return timeline;
-		}
+		}*/
 		instance.advanceDuringTicks = false;//make sure the movieclip doesn't play outside the control of Animator
-		if(!instance.getAnimFrameRate())//make sure the movieclip is framerate independent
+		var fps;
+		if(!instance.framerate)//make sure the movieclip is framerate independent
 		{
-			var fps = cloudkid.OS.instance.options.fps;
+			fps = cloudkid.OS.instance.options.fps;
 			if(!fps)
 				fps = cloudkid.OS.instance.fps;
 			if(!fps)
 				fps = 15;
 			instance.framerate = fps;
 		}
+		else
+			fps = instance.framerate;//we'll want this for some math later
 		timeline.instance = instance;
 		timeline.event = event;
 		timeline.onComplete = onComplete;
@@ -268,27 +280,34 @@
 			}
 			timeline.useCaptions = Animator.captions && Animator.captions.hasCaption(timeline.soundAlias);
 		}
-				
-		var startFrame = instance.timeline.resolve(event); 
-		var stopFrame = instance.timeline.resolve(event + "_stop");
-		var stopLoopFrame = instance.timeline.resolve(event + "_loop");
+		
+		//go through the list of labels (they are sorted by frame number)
+		var labels = instance.getLabels();
+		var stopLabel = event + "_stop";
+		var loopLabel = event + "_loop";
+		for(var i = 0, len = labels.length; i < len; ++i)
+		{
+			var l = labels[i];
+			if(l.label == event)
+			{
+				timeline.firstFrame = l.position;
+			}
+			else if(l.label == stopLabel)
+			{
+				timeline.lastFrame = l.position;
+				break;
+			}
+			else if(l.label == loopLabel)
+			{
+				timeline.lastFrame = l.position;
+				timeline.isLooping = true;
+				break;
+			}
+		}
 
-		if (startFrame !== undefined)
-		{
-			timeline.firstFrame = startFrame;
-			timeline.startTime = startFrame / instance.getAnimFrameRate();
-		}
-		if (stopFrame !== undefined)
-		{
-			timeline.lastFrame = stopFrame;
-		}
-		else if (stopLoopFrame !== undefined)
-		{
-			timeline.lastFrame = stopLoopFrame;
-			timeline.isLooping = true;
-		}
 		timeline.length = timeline.lastFrame - timeline.firstFrame;
-		timeline.duration = timeline.length / instance.getAnimFrameRate();
+		timeline.startTime = timeline.firstFrame / fps;
+		timeline.duration = timeline.length / fps;
 		
 		return timeline;
 	};
@@ -305,11 +324,25 @@
 	*/
 	Animator.instanceHasAnimation = function(instance, event)
 	{
-		var startFrame = instance.timeline.resolve(event); 
-		var stopFrame = instance.timeline.resolve(event + "_stop");
-		var stopLoopFrame = instance.timeline.resolve(event + "_loop");
+		var labels = instance.getLabels();
+		var startFrame = -1, stopFrame = -1;
+		var stopLabel = event + "_stop";
+		var loopLabel = event + "_loop";
+		for(var i = 0, len = labels.length; i < len; ++i)
+		{
+			var l = labels[i];
+			if(l.label == event)
+			{
+				startFrame = l.position;
+			}
+			else if(l.label == stopLabel || l.label == loopLabel)
+			{
+				stopFrame = l.position;
+				break;
+			}
+		}
 
-		return startFrame !== undefined && (stopFrame !== undefined || stopLoopFrame !== undefined);
+		return startFrame >= 0 && stopFrame >= 0;
 	};
 	
 	/**

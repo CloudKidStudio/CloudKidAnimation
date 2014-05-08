@@ -14,17 +14,18 @@
     p.soundInst = null, p.playSound = !1, p.soundStart = 0, p.soundEnd = 0, namespace("cloudkid").AnimatorTimeline = AnimatorTimeline;
 }(), function(undefined) {
     "use strict";
-    var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.2.3", Animator.debug = !1, Animator.soundLib = null, 
+    var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, Animator = (createjs.MovieClip, 
+    function() {});
+    Animator.VERSION = "2.2.4", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
-    var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
+    var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1, _optionsHelper = {};
     Animator.init = function() {
         _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1;
     }, Animator.destroy = function() {
         Animator.stopAll(), _timelines = null, _removedTimelines = null, _timelinesMap = null;
     }, Animator.play = function(instance, event, options, onCompleteParams, startTime, speed, soundData, doCancelledCallback) {
         var onComplete;
-        options && "function" == typeof options ? (onComplete = options, options = {}) : options || (options = {}), 
+        options && "function" == typeof options ? (onComplete = options, options = _optionsHelper) : options || (options = _optionsHelper), 
         onComplete = options.onComplete || onComplete || null, onCompleteParams = options.onCompleteParams || onCompleteParams || null, 
         startTime = options.startTime || startTime, startTime = startTime ? .001 * startTime : 0, 
         speed = options.speed || speed || 1, doCancelledCallback = options.doCancelledCallback || doCancelledCallback || !1, 
@@ -40,23 +41,38 @@
         return Animator.play(instance, event, options, onCompleteParams, -1, speed, soundData, doCancelledCallback);
     }, Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, speed, soundData) {
         var timeline = new AnimatorTimeline();
-        if (instance instanceof MovieClip == !1) return timeline;
-        if (instance.advanceDuringTicks = !1, !instance.getAnimFrameRate()) {
-            var fps = cloudkid.OS.instance.options.fps;
-            fps || (fps = cloudkid.OS.instance.fps), fps || (fps = 15), instance.framerate = fps;
-        }
+        instance.advanceDuringTicks = !1;
+        var fps;
+        instance.framerate ? fps = instance.framerate : (fps = cloudkid.OS.instance.options.fps, 
+        fps || (fps = cloudkid.OS.instance.fps), fps || (fps = 15), instance.framerate = fps), 
         timeline.instance = instance, timeline.event = event, timeline.onComplete = onComplete, 
         timeline.onCompleteParams = onCompleteParams, timeline.speed = speed, soundData && (timeline.playSound = !0, 
         "string" == typeof soundData ? (timeline.soundStart = 0, timeline.soundAlias = soundData) : (timeline.soundStart = soundData.start > 0 ? soundData.start : 0, 
         timeline.soundAlias = soundData.alias), timeline.useCaptions = Animator.captions && Animator.captions.hasCaption(timeline.soundAlias));
-        var startFrame = instance.timeline.resolve(event), stopFrame = instance.timeline.resolve(event + "_stop"), stopLoopFrame = instance.timeline.resolve(event + "_loop");
-        return startFrame !== undefined && (timeline.firstFrame = startFrame, timeline.startTime = startFrame / instance.getAnimFrameRate()), 
-        stopFrame !== undefined ? timeline.lastFrame = stopFrame : stopLoopFrame !== undefined && (timeline.lastFrame = stopLoopFrame, 
-        timeline.isLooping = !0), timeline.length = timeline.lastFrame - timeline.firstFrame, 
-        timeline.duration = timeline.length / instance.getAnimFrameRate(), timeline;
+        for (var labels = instance.getLabels(), stopLabel = event + "_stop", loopLabel = event + "_loop", i = 0, len = labels.length; len > i; ++i) {
+            var l = labels[i];
+            if (l.label == event) timeline.firstFrame = l.position; else {
+                if (l.label == stopLabel) {
+                    timeline.lastFrame = l.position;
+                    break;
+                }
+                if (l.label == loopLabel) {
+                    timeline.lastFrame = l.position, timeline.isLooping = !0;
+                    break;
+                }
+            }
+        }
+        return timeline.length = timeline.lastFrame - timeline.firstFrame, timeline.startTime = timeline.firstFrame / fps, 
+        timeline.duration = timeline.length / fps, timeline;
     }, Animator.instanceHasAnimation = function(instance, event) {
-        var startFrame = instance.timeline.resolve(event), stopFrame = instance.timeline.resolve(event + "_stop"), stopLoopFrame = instance.timeline.resolve(event + "_loop");
-        return startFrame !== undefined && (stopFrame !== undefined || stopLoopFrame !== undefined);
+        for (var labels = instance.getLabels(), startFrame = -1, stopFrame = -1, stopLabel = event + "_stop", loopLabel = event + "_loop", i = 0, len = labels.length; len > i; ++i) {
+            var l = labels[i];
+            if (l.label == event) startFrame = l.position; else if (l.label == stopLabel || l.label == loopLabel) {
+                stopFrame = l.position;
+                break;
+            }
+        }
+        return startFrame >= 0 && stopFrame >= 0;
     }, Animator.stop = function(instance, doOnComplete) {
         if (doOnComplete = doOnComplete || !1, _timelines) {
             if (_timelinesMap[instance.id] === undefined) return void Debug.log("No timeline was found matching the instance id " + instance);
