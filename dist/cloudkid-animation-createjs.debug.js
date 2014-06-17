@@ -15,7 +15,7 @@
 }(), function(undefined) {
     "use strict";
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.2.5", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.2.6", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1, _optionsHelper = {};
     Animator.init = function() {

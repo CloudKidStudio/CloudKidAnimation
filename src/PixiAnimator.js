@@ -219,7 +219,7 @@
 				t.soundStart = soundData.start > 0 ? soundData.start : 0;//seconds
 				t.soundAlias = soundData.alias;
 			}
-			timeline.useCaptions = this.captions && this.captions.hasCaption(timeline.soundAlias);
+			t.useCaptions = this.captions && this.captions.hasCaption(t.soundAlias);
 
 			if(t.soundStart === 0)
 			{

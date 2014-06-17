@@ -40,7 +40,7 @@
         startTime > 0 && clip.update(startTime * t.speed);
         return soundData && (t.playSound = !0, "string" == typeof soundData ? (t.soundStart = 0, 
         t.soundAlias = soundData) : (t.soundStart = soundData.start > 0 ? soundData.start : 0, 
-        t.soundAlias = soundData.alias), timeline.useCaptions = this.captions && this.captions.hasCaption(timeline.soundAlias), 
+        t.soundAlias = soundData.alias), t.useCaptions = this.captions && this.captions.hasCaption(t.soundAlias), 
         0 === t.soundStart ? t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)) : cloudkid.Sound.instance.preloadSound(soundData.alias)), 
         t.loop = loop, t.time = startTime > 0 ? startTime : 0, this._timelines.push(t), 
         1 == ++this._numAnims && cloudkid.OS.instance.addUpdateCallback(this._updateAlias, this._boundUpdate), 
