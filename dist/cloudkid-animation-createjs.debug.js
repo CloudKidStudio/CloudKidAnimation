@@ -15,7 +15,7 @@
 }(), function(undefined) {
     "use strict";
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.2.6", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.2.7", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1, _optionsHelper = {};
     Animator.init = function() {
@@ -34,7 +34,8 @@
         return timeline.firstFrame > -1 && timeline.lastFrame > -1 ? (timeline.time = -1 == startTime ? Math.random() * timeline.duration : startTime, 
         instance.elapsedTime = timeline.startTime + timeline.time, instance.play(), instance._tick(), 
         Animator._hasTimelines() || Animator._startUpdate(), _timelines.push(timeline), 
-        _timelinesMap[instance.id] = timeline, timeline) : (Debug.log("No event " + event + " was found, or it lacks an end, on this MovieClip " + instance), 
+        _timelinesMap[instance.id] = timeline, timeline.soundStart > 0 && Animator.audioLib.preloadSound && Animator.soundLib.preloadSound(timeline.soundAlias), 
+        timeline) : (Debug.log("No event " + event + " was found, or it lacks an end, on this MovieClip " + instance), 
         onComplete && onComplete.apply(null, onCompleteParams), null);
     }, Animator.playAtRandomFrame = function(instance, event, options, onCompleteParams, speed, soundData, doCancelledCallback) {
         return Animator.play(instance, event, options, onCompleteParams, -1, speed, soundData, doCancelledCallback);

@@ -223,10 +223,10 @@
 
 			if(t.soundStart === 0)
 			{
-				t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
+				t.soundInst = this.soundLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
 			}
-			else
-				cloudkid.Sound.instance.preloadSound(soundData.alias);
+			else if(this.soundLib.preloadSound)//if it can preload sound this way
+				this.soundLib.preloadSound(soundData.alias);
 		}
 		t.loop = loop;
 		t.time = startTime > 0 ? startTime : 0;
@@ -567,7 +567,7 @@
 		this.soundAlias = null;
 
 		/**
-		*	A sound instance object from cloudkid.Sound, used for tracking sound position.
+		*	A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.
 		*	@property {Object} soundInst
 		*	@public
 		*/
