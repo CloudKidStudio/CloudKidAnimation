@@ -37,7 +37,7 @@
             }
         } else anim && anim instanceof Array && (clip.textures = anim, clip.updateDuration()), 
         clip.loop = loop, clip.onComplete = this._onMovieClipDone.bind(this, t), clip.gotoAndPlay(0), 
-        startTime > 0 && clip.update(startTime * t.speed);
+        startTime > 0 && clip.updateAnim(startTime * t.speed);
         return soundData && (t.playSound = !0, "string" == typeof soundData ? (t.soundStart = 0, 
         t.soundAlias = soundData) : (t.soundStart = soundData.start > 0 ? soundData.start : 0, 
         t.soundAlias = soundData.alias), t.useCaptions = this.captions && this.captions.hasCaption(t.soundAlias), 

@@ -204,7 +204,7 @@
 			clip.onComplete = this._onMovieClipDone.bind(this, t);
 			clip.gotoAndPlay(0);
 			if(startTime > 0)
-				clip.update(startTime * t.speed);
+				clip.updateAnim(startTime * t.speed);
 		}
 		if(soundData)
 		{
