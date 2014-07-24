@@ -88,13 +88,14 @@
                         var s = t.spineStates[j];
                         s.update((t.time - prevTime) * t.speed[j]), s.apply(c.skeleton), !s.currentLoop && s.isComplete() && (complete = !0);
                     }
-                    complete && (this._timelines.splice(i, 1), this._numAnims--, t.callback && t.callback(), 
-                    this._repool(t));
+                    complete && (this._timelines.splice(i, 1), this._numAnims--, t.useCaptions && this.captions.stop(), 
+                    t.callback && t.callback(), this._repool(t));
                 } else {
                     c.updateAnim((t.time - prevTime) * t.speed);
                     var state = c.state;
                     !state.currentLoop && 0 === state.queue.length && state.currentTime >= state.current.duration && (this._timelines.splice(i, 1), 
-                    this._numAnims--, t.callback && t.callback(), this._repool(t));
+                    this._numAnims--, t.useCaptions && this.captions.stop(), t.callback && t.callback(), 
+                    this._repool(t));
                 } else c.updateAnim((t.time - prevTime) * t.speed);
             }
         }
@@ -109,7 +110,8 @@
     p._onMovieClipDone = function(timeline) {
         for (var i = 0; i < this._numAnims; ++i) if (this._timelines[i] === timeline) {
             var t = this._timelines[i];
-            t.clip.onComplete = null, this._timelines.splice(i, 1), 0 === --this._numAnims && cloudkid.OS.instance.removeUpdateCallback(this._updateAlias), 
+            t.useCaptions && this.captions.stop(), t.clip.onComplete = null, this._timelines.splice(i, 1), 
+            0 === --this._numAnims && cloudkid.OS.instance.removeUpdateCallback(this._updateAlias), 
             t.callback && t.callback(), this._repool(t);
             break;
         }

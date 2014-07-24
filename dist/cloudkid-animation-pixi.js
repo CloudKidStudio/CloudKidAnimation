@@ -397,6 +397,8 @@
 					{
 						this._timelines.splice(i, 1);
 						this._numAnims--;
+						if(t.useCaptions)
+							this.captions.stop();
 						if(t.callback)
 							t.callback();
 						this._repool(t);
@@ -410,6 +412,8 @@
 					{
 						this._timelines.splice(i, 1);
 						this._numAnims--;
+						if(t.useCaptions)
+							this.captions.stop();
 						if(t.callback)
 							t.callback();
 						this._repool(t);
@@ -453,6 +457,8 @@
 			if(this._timelines[i] === timeline)
 			{
 				var t = this._timelines[i];
+				if(t.useCaptions)
+					this.captions.stop();
 				t.clip.onComplete = null;
 				this._timelines.splice(i, 1);
 				if(--this._numAnims === 0)

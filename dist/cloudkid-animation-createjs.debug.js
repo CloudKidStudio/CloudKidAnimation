@@ -15,7 +15,7 @@
 }(), function(undefined) {
     "use strict";
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.2.8", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.2.9", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1, _optionsHelper = {};
     Animator.init = function() {
@@ -92,8 +92,8 @@
         !(0 > index)) {
             var onComplete = timeline.onComplete, onCompleteParams = timeline.onCompleteParams;
             timeline.instance.stop(), !doOnComplete && timeline.soundInst && timeline.soundInst.stop(), 
-            _timelines.splice(index, 1), delete _timelinesMap[timeline.instance.id], timeline.instance = null, 
-            timeline.event = null, timeline.onComplete = null, timeline.onCompleteParams = null, 
+            _timelines.splice(index, 1), delete _timelinesMap[timeline.instance.id], timeline.useCaptions && Animator.captions.stop(), 
+            timeline.instance = null, timeline.event = null, timeline.onComplete = null, timeline.onCompleteParams = null, 
             Animator._hasTimelines() || Animator._stopUpdate(), doOnComplete && onComplete && onComplete.apply(null, onCompleteParams);
         }
     }, Animator.pause = function() {

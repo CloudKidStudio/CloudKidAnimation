@@ -647,6 +647,12 @@
 		// Remove from the stack
 		_timelines.splice(index, 1);
 		delete _timelinesMap[timeline.instance.id];
+
+		//stop the captions, if relevant
+		if (timeline.useCaptions)
+		{
+			Animator.captions.stop();
+		}
 		
 		// Clear the timeline
 		timeline.instance = null;
