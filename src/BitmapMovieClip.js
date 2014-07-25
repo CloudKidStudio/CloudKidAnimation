@@ -361,6 +361,8 @@
 	 *  @param {int} [data.frames.min] The first frame number in the frame sequence.
 	 *  @param {int} [data.frames.max] The last frame number in the frame sequence.
 	 *  @param {int} [data.frames.digits=4] The maximum number of digits in the names of the frames, e.g. myAnim0001 has 4 digits.
+	 *   @param {Number} [data.scale=1] The scale at which the art was exported, e.g. a scale of 1.4 means the art was increased
+	 *          in size to 140% before exporting and should be scaled back down before drawing to the screen.
 	 *
 	 *  Format for data:
 	 *	{
