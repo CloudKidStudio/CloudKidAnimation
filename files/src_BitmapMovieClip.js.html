@@ -43,19 +43,19 @@
             
                 <li><a href="../classes/AnimatorTimeline.html">AnimatorTimeline</a></li>
             
+                <li><a href="../classes/BitmapMovieClip.html">BitmapMovieClip</a></li>
+            
                 <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
                 <li><a href="../classes/CharacterController.html">CharacterController</a></li>
             
-                <li><a href="../classes/cloudkid.BitmapMovieClip.html">cloudkid.BitmapMovieClip</a></li>
-            
-                <li><a href="../classes/cloudkid.TextureAtlas.html">cloudkid.TextureAtlas</a></li>
-            
-                <li><a href="../classes/cloudkid.TextureAtlas.Texture.html">cloudkid.TextureAtlas.Texture</a></li>
-            
                 <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
                 <li><a href="../classes/PixiAnimator.AnimTimeline.html">PixiAnimator.AnimTimeline</a></li>
+            
+                <li><a href="../classes/Texture.html">Texture</a></li>
+            
+                <li><a href="../classes/TextureAtlas.html">TextureAtlas</a></li>
             
             </ul>
 
@@ -110,10 +110,10 @@
 	*  The CreateJS Sprite class requires a spritesheet with equal sized and spaced frames. By using cloudkid.TextureAtlas,
 	*  you can use a much smaller spritesheet, sprites on screen with fewer extra transparent pixels, and use the same
 	*  API as MovieClip.
-	*  @class cloudkid.BitmapMovieClip
+	*  @class BitmapMovieClip
 	*  @extends createjs.Container
 	*  @constructor
-	*  @param {cloudkid.TextureAtlas} atlas=null The texture atlas to pull frames from.
+	*  @param {TextureAtlas} atlas=null The texture atlas to pull frames from.
 	*  @param {Object} data=null Initialization data
 	*   @param {int} [data.fps] Framerate to play the movieclip at. Omitting this will use the current framerate.
 	*   @param {Object} [data.labels] A dictionary of the labels in the movieclip to assist in playing animations.
@@ -456,7 +456,7 @@
 	 * Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()
 	 * for more information.
 	 * @method init
-	 * @param {cloudkid.TextureAtlas} atlas The texture atlas to pull frames from.
+	 * @param {TextureAtlas} atlas The texture atlas to pull frames from.
 	 * @param {Object} data Initialization data
 	 *  @param {int} [data.fps] Framerate to play the movieclip at. Omitting this will use the current framerate.
 	 *  @param {Object} [data.labels] A dictionary of the labels in the movieclip to assist in playing animations.

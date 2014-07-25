@@ -3,13 +3,13 @@ YUI.add("yuidoc-meta", function(Y) {
     "classes": [
         "Animator",
         "AnimatorTimeline",
+        "BitmapMovieClip",
         "CharacterClip",
         "CharacterController",
         "PixiAnimator",
         "PixiAnimator.AnimTimeline",
-        "cloudkid.BitmapMovieClip",
-        "cloudkid.TextureAtlas",
-        "cloudkid.TextureAtlas.Texture"
+        "Texture",
+        "TextureAtlas"
     ],
     "modules": [
         "cloudkid"

@@ -30,7 +30,7 @@
             "name": "src/BitmapMovieClip.js",
             "modules": {},
             "classes": {
-                "cloudkid.BitmapMovieClip": 1
+                "BitmapMovieClip": 1
             },
             "fors": {},
             "namespaces": {}
@@ -67,8 +67,8 @@
             "name": "src/TextureAtlas.js",
             "modules": {},
             "classes": {
-                "cloudkid.TextureAtlas": 1,
-                "cloudkid.TextureAtlas.Texture": 1
+                "TextureAtlas": 1,
+                "Texture": 1
             },
             "fors": {},
             "namespaces": {}
@@ -81,13 +81,13 @@
             "classes": {
                 "Animator": 1,
                 "AnimatorTimeline": 1,
-                "cloudkid.BitmapMovieClip": 1,
+                "BitmapMovieClip": 1,
                 "CharacterClip": 1,
                 "CharacterController": 1,
                 "PixiAnimator": 1,
                 "PixiAnimator.AnimTimeline": 1,
-                "cloudkid.TextureAtlas": 1,
-                "cloudkid.TextureAtlas.Texture": 1
+                "TextureAtlas": 1,
+                "Texture": 1
             },
             "fors": {},
             "namespaces": {},
@@ -127,9 +127,9 @@
             "description": "Animator Timeline is a class designed to provide\nbase animation functionality",
             "is_constructor": 1
         },
-        "cloudkid.BitmapMovieClip": {
-            "name": "cloudkid.BitmapMovieClip",
-            "shortname": "cloudkid.BitmapMovieClip",
+        "BitmapMovieClip": {
+            "name": "BitmapMovieClip",
+            "shortname": "BitmapMovieClip",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -146,7 +146,7 @@
                 {
                     "name": "atlas=null",
                     "description": "The texture atlas to pull frames from.",
-                    "type": "cloudkid.TextureAtlas"
+                    "type": "TextureAtlas"
                 },
                 {
                     "name": "data=null",
@@ -297,9 +297,9 @@
                 }
             ]
         },
-        "cloudkid.TextureAtlas": {
-            "name": "cloudkid.TextureAtlas",
-            "shortname": "cloudkid.TextureAtlas",
+        "TextureAtlas": {
+            "name": "TextureAtlas",
+            "shortname": "TextureAtlas",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -324,9 +324,9 @@
                 }
             ]
         },
-        "cloudkid.TextureAtlas.Texture": {
-            "name": "cloudkid.TextureAtlas.Texture",
-            "shortname": "cloudkid.TextureAtlas.Texture",
+        "Texture": {
+            "name": "Texture",
+            "shortname": "Texture",
             "classitems": [],
             "plugins": [],
             "extensions": [],
@@ -336,7 +336,7 @@
             "namespace": "",
             "file": "src/TextureAtlas.js",
             "line": 144,
-            "description": "A Texture - a specific portion of an image that can then be drawn by a Bitmap."
+            "description": "A Texture - a specific portion of an image that can then be drawn by a Bitmap.\nThis class is hidden within TextureAtlas, and can't be manually created."
         }
     },
     "classitems": [
@@ -1202,7 +1202,7 @@
             "name": "loop",
             "type": "Boolean",
             "default": "true",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1214,7 +1214,7 @@
             "type": "Number",
             "default": "0",
             "readonly": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1225,7 +1225,7 @@
             "name": "paused",
             "type": "Boolean",
             "default": "false",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1236,7 +1236,7 @@
             "name": "advanceDuringTicks",
             "type": "Boolean",
             "default": "true",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1247,7 +1247,7 @@
             "name": "framerate",
             "type": "{Number}",
             "default": "0",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1260,7 +1260,7 @@
             "default": "0",
             "access": "public",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1271,7 +1271,7 @@
             "name": "_framerate",
             "type": "{Number}",
             "default": "0",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1284,7 +1284,7 @@
             "default": "0",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1297,7 +1297,7 @@
             "default": "0",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1309,7 +1309,7 @@
             "default": "0",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1321,7 +1321,7 @@
             "type": "createjs.Bitmap",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1333,7 +1333,7 @@
             "type": "Array",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1345,7 +1345,7 @@
             "type": "Array",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1357,7 +1357,7 @@
             "type": "cloudkid.TextureAtlas.Texture",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1369,7 +1369,7 @@
             "type": "createjs.Point",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1381,7 +1381,7 @@
             "type": "Number",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1394,7 +1394,7 @@
                 "description": "Boolean indicating whether the display object would be visible if drawn to a canvas",
                 "type": "Boolean"
             },
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1415,7 +1415,7 @@
                     "type": "Boolean"
                 }
             ],
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1424,7 +1424,7 @@
             "description": "Sets paused to false.",
             "itemtype": "method",
             "name": "play",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1433,7 +1433,7 @@
             "description": "Sets paused to true.",
             "itemtype": "method",
             "name": "stop",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1449,7 +1449,7 @@
                     "type": "String|Number"
                 }
             ],
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1465,7 +1465,7 @@
                     "type": "String|Number"
                 }
             ],
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1482,7 +1482,7 @@
             ],
             "itemtype": "method",
             "name": "advance",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1495,7 +1495,7 @@
                 "description": "A sorted array of objects with label and position (aka frame) properties.",
                 "type": "Array[Object]"
             },
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1508,7 +1508,7 @@
                 "description": "The name of the current label or null if there is no label.",
                 "type": "String"
             },
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1521,7 +1521,7 @@
                 {
                     "name": "atlas",
                     "description": "The texture atlas to pull frames from.",
-                    "type": "cloudkid.TextureAtlas"
+                    "type": "TextureAtlas"
                 },
                 {
                     "name": "data",
@@ -1581,7 +1581,7 @@
                     "type": "Object"
                 }
             ],
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1597,7 +1597,7 @@
                     "type": "BitmapMovieClip"
                 }
             ],
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1606,7 +1606,7 @@
             "description": "Destroys the BitmapMovieClip, removing all children and nulling all reference variables.",
             "itemtype": "method",
             "name": "destroy",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1623,7 +1623,7 @@
             ],
             "access": "protected",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1640,7 +1640,7 @@
             ],
             "access": "protected",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1650,7 +1650,7 @@
             "name": "_updateTimeline",
             "access": "protected",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -1660,7 +1660,7 @@
             "name": "_reset",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.BitmapMovieClip",
+            "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
@@ -2459,7 +2459,7 @@
             "type": "Array",
             "access": "private",
             "tagname": "",
-            "class": "cloudkid.TextureAtlas",
+            "class": "TextureAtlas",
             "module": "cloudkid"
         },
         {
@@ -2469,7 +2469,7 @@
             "itemtype": "property",
             "name": "frames",
             "type": "Object",
-            "class": "cloudkid.TextureAtlas",
+            "class": "TextureAtlas",
             "module": "cloudkid"
         },
         {
@@ -2489,7 +2489,7 @@
                 "description": "The texture by that name, or null if it doesn't exist.",
                 "type": "cloudkid.TextureAtlas.Texture"
             },
-            "class": "cloudkid.TextureAtlas",
+            "class": "TextureAtlas",
             "module": "cloudkid"
         },
         {
@@ -2532,67 +2532,67 @@
                 "description": "An collection of cloudkid.TextureAtlas.Textures.",
                 "type": "Array"
             },
-            "class": "cloudkid.TextureAtlas",
+            "class": "TextureAtlas",
             "module": "cloudkid"
         },
         {
             "file": "src/TextureAtlas.js",
-            "line": 150,
+            "line": 151,
             "description": "The image element that this texture references.",
             "itemtype": "property",
             "name": "image",
             "type": "Image|HTMLCanvasElement",
-            "class": "cloudkid.TextureAtlas.Texture",
+            "class": "Texture",
             "module": "cloudkid"
         },
         {
             "file": "src/TextureAtlas.js",
-            "line": 156,
+            "line": 157,
             "description": "The frame rectangle within the image.",
             "itemtype": "property",
             "name": "frame",
             "type": "createjs.Rectangle",
-            "class": "cloudkid.TextureAtlas.Texture",
+            "class": "Texture",
             "module": "cloudkid"
         },
         {
             "file": "src/TextureAtlas.js",
-            "line": 161,
+            "line": 162,
             "description": "If this texture has been trimmed.",
             "itemtype": "property",
             "name": "trimmed",
             "type": "Boolean",
-            "class": "cloudkid.TextureAtlas.Texture",
+            "class": "Texture",
             "module": "cloudkid"
         },
         {
             "file": "src/TextureAtlas.js",
-            "line": 166,
+            "line": 167,
             "description": "The offset that the trimmed sprite should be placed at to restore it to the untrimmed position.",
             "itemtype": "property",
             "name": "offset",
             "type": "createjs.Point",
-            "class": "cloudkid.TextureAtlas.Texture",
+            "class": "Texture",
             "module": "cloudkid"
         },
         {
             "file": "src/TextureAtlas.js",
-            "line": 171,
+            "line": 172,
             "description": "The width of the untrimmed texture.",
             "itemtype": "property",
             "name": "width",
             "type": "Number",
-            "class": "cloudkid.TextureAtlas.Texture",
+            "class": "Texture",
             "module": "cloudkid"
         },
         {
             "file": "src/TextureAtlas.js",
-            "line": 176,
+            "line": 177,
             "description": "The height of the untrimmed texture.",
             "itemtype": "property",
             "name": "height",
             "type": "Number",
-            "class": "cloudkid.TextureAtlas.Texture",
+            "class": "Texture",
             "module": "cloudkid"
         }
     ],

@@ -43,19 +43,19 @@
             
                 <li><a href="../classes/AnimatorTimeline.html">AnimatorTimeline</a></li>
             
+                <li><a href="../classes/BitmapMovieClip.html">BitmapMovieClip</a></li>
+            
                 <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
                 <li><a href="../classes/CharacterController.html">CharacterController</a></li>
             
-                <li><a href="../classes/cloudkid.BitmapMovieClip.html">cloudkid.BitmapMovieClip</a></li>
-            
-                <li><a href="../classes/cloudkid.TextureAtlas.html">cloudkid.TextureAtlas</a></li>
-            
-                <li><a href="../classes/cloudkid.TextureAtlas.Texture.html">cloudkid.TextureAtlas.Texture</a></li>
-            
                 <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
                 <li><a href="../classes/PixiAnimator.AnimTimeline.html">PixiAnimator.AnimTimeline</a></li>
+            
+                <li><a href="../classes/Texture.html">Texture</a></li>
+            
+                <li><a href="../classes/TextureAtlas.html">TextureAtlas</a></li>
             
             </ul>
 
@@ -107,7 +107,7 @@
 
 	/**
 	*  Handles a spritesheet.
-	*  @class cloudkid.TextureAtlas
+	*  @class TextureAtlas
 	*  @constructor
 	*  @param {Image|HTMLCanvasElement|Array} image The image that all textures pull from.
 	*       This can also be an array of images, if the TextureAtlas should be built from several spritesheets.
@@ -248,7 +248,8 @@
 
 	/**
 	*  A Texture - a specific portion of an image that can then be drawn by a Bitmap.
-	*  @class cloudkid.TextureAtlas.Texture
+	*  This class is hidden within TextureAtlas, and can&#x27;t be manually created.
+	*  @class Texture
 	*/
 	var Texture = function(image, data)
 	{
