@@ -1273,12 +1273,14 @@
             "name": "_framerate",
             "type": "{Number}",
             "default": "0",
+            "access": "private",
+            "tagname": "",
             "class": "BitmapMovieClip",
             "module": "cloudkid"
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 159,
+            "line": 160,
             "description": "When the BitmapMovieClip is framerate independent, this is the total time in seconds for the animation.",
             "itemtype": "property",
             "name": "_duration",
@@ -1291,7 +1293,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 168,
+            "line": 169,
             "description": "When the BitmapMovieClip is framerate independent, this is the time elapsed from frame 0 in seconds.",
             "itemtype": "property",
             "name": "_t",
@@ -1304,7 +1306,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 177,
+            "line": 178,
             "itemtype": "property",
             "name": "_prevPosition",
             "type": "Number",
@@ -1316,7 +1318,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 185,
+            "line": 186,
             "description": "The Bitmap used to render the current frame of the animation.",
             "itemtype": "property",
             "name": "_bitmap",
@@ -1328,7 +1330,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 193,
+            "line": 194,
             "description": "An array of frame labels.",
             "itemtype": "property",
             "name": "_labels",
@@ -1340,7 +1342,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 201,
+            "line": 202,
             "description": "An array of textures.",
             "itemtype": "property",
             "name": "_frames",
@@ -1352,7 +1354,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 209,
+            "line": 210,
             "description": "The current texture.",
             "itemtype": "property",
             "name": "_currentTexture",
@@ -1364,7 +1366,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 217,
+            "line": 218,
             "description": "The origin point of the BitmapMovieClip.",
             "itemtype": "property",
             "name": "_origin",
@@ -1376,7 +1378,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 225,
+            "line": 226,
             "description": "A scale to apply to the images in the BitmapMovieClip\nto restore normal size (if spritesheet was exported at a smaller or larger size).",
             "itemtype": "property",
             "name": "_scale",
@@ -1388,7 +1390,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 236,
+            "line": 237,
             "description": "Returns true or false indicating whether the display object would be visible if drawn to a canvas.\nThis does not account for whether it would be visible within the boundaries of the stage.\nNOTE: This method is mainly for internal use, though it may be useful for advanced uses.",
             "itemtype": "method",
             "name": "isVisible",
@@ -1401,7 +1403,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 248,
+            "line": 249,
             "description": "Draws the display object into the specified context ignoring its visible, alpha, shadow, and transform.\nReturns true if the draw was handled (useful for overriding functionality).\nNOTE: This method is mainly for internal use, though it may be useful for advanced uses.",
             "itemtype": "method",
             "name": "draw",
@@ -1422,7 +1424,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 266,
+            "line": 267,
             "description": "Sets paused to false.",
             "itemtype": "method",
             "name": "play",
@@ -1431,7 +1433,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 274,
+            "line": 275,
             "description": "Sets paused to true.",
             "itemtype": "method",
             "name": "stop",
@@ -1440,7 +1442,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 282,
+            "line": 283,
             "description": "Advances this movie clip to the specified position or label and sets paused to false.",
             "itemtype": "method",
             "name": "gotoAndPlay",
@@ -1456,7 +1458,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 292,
+            "line": 293,
             "description": "Advances this movie clip to the specified position or label and sets paused to true.",
             "itemtype": "method",
             "name": "gotoAndStop",
@@ -1472,7 +1474,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 302,
+            "line": 303,
             "description": "Advances the playhead. This occurs automatically each tick by default.",
             "params": [
                 {
@@ -1489,7 +1491,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 326,
+            "line": 327,
             "description": "Returns a sorted list of the labels defined on this BitmapMovieClip. Shortcut to TweenJS: Timeline.getLabels();",
             "itemtype": "method",
             "name": "getLabels",
@@ -1502,7 +1504,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 335,
+            "line": 336,
             "description": "Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()\nfor more information.",
             "itemtype": "method",
             "name": "getCurrentLabel",
@@ -1515,7 +1517,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 354,
+            "line": 355,
             "description": "Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()\nfor more information.",
             "itemtype": "method",
             "name": "init",
@@ -1597,7 +1599,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 434,
+            "line": 435,
             "description": "Copies the labels, textures, origin, and framerate from another BitmapMovieClip.\nThe labels and textures are copied by reference, instead of a deep copy.",
             "itemtype": "method",
             "name": "copyFrom",
@@ -1613,7 +1615,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 451,
+            "line": 452,
             "description": "Destroys the BitmapMovieClip, removing all children and nulling all reference variables.",
             "itemtype": "method",
             "name": "destroy",
@@ -1622,7 +1624,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 465,
+            "line": 466,
             "itemtype": "method",
             "name": "_tick",
             "params": [
@@ -1639,7 +1641,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 476,
+            "line": 477,
             "itemtype": "method",
             "name": "_goto",
             "params": [
@@ -1656,7 +1658,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 506,
+            "line": 507,
             "itemtype": "method",
             "name": "_updateTimeline",
             "access": "protected",
@@ -1666,7 +1668,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 526,
+            "line": 527,
             "itemtype": "method",
             "name": "_reset",
             "access": "private",
