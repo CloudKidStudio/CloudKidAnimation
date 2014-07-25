@@ -2,3 +2,5 @@ AnimatorTimeline.js
 Animator.js
 CharacterClip.js
 CharacterController.js
+TextureAtlas.js
+BitmapMovieClip.js

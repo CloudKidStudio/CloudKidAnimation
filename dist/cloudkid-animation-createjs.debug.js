@@ -15,7 +15,7 @@
 }(), function(undefined) {
     "use strict";
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.2.9", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.3.0", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1, _optionsHelper = {};
     Animator.init = function() {
@@ -202,4 +202,143 @@
         this._destroyed || (this._destroyed = !0, this.clear(), this._character = null, 
         this._animationStack = null);
     }, namespace("cloudkid").CharacterController = CharacterController;
+}(), function(undefined) {
+    var TextureAtlas = function(image, spritesheetData) {
+        Array.isArray(image) ? this._images = image : (this._images = [ image ], spritesheetData = [ spritesheetData ]), 
+        this.frames = {};
+        for (var i = 0; i < this._images.length; ++i) {
+            image = this._images[i];
+            var dataFrames = spritesheetData[i].frames;
+            for (var name in dataFrames) {
+                var data = dataFrames[name], index = name.lastIndexOf(".");
+                index > 0 && (name = name.substring(0, index)), index = name.lastIndexOf("/"), 0 > index && (name = name.substring(index + 1)), 
+                this.frames[name] = new Texture(image, data);
+            }
+        }
+    }, p = TextureAtlas.prototype = {};
+    p.getFrame = function(name) {
+        return this.frames[name] || null;
+    }, p.getFrames = function(name, numberMin, numberMax, maxDigits, outArray) {
+        maxDigits === undefined && (maxDigits = 4), 0 > maxDigits && (maxDigits = 0), outArray || (outArray = []);
+        var i, c, zeros = [], compares = [];
+        for (i = 1; maxDigits > i; ++i) {
+            var s = "";
+            c = 1;
+            for (var j = 0; i > j; ++j) s += "0", c *= 10;
+            zeros.unshift(s), compares.push(c);
+        }
+        var prevTex, compareLength = compares.length;
+        for (i = numberMin, len = numberMax; len >= i; ++i) {
+            var num = null;
+            for (c = 0; compareLength > c; ++c) if (i < compares[c]) {
+                num = zeros[c] + i;
+                break;
+            }
+            num || (num = i.toString());
+            var texName = name.replace("#", num), tex = this.frames[texName];
+            tex && (prevTex = tex), prevTex && outArray.push(prevTex);
+        }
+        return outArray;
+    }, p.destroy = function() {
+        this.image = null, this.frames = null;
+    }, namespace("cloudkid").TextureAtlas = TextureAtlas;
+    var Texture = function(image, data) {
+        this.image = image;
+        var f = data.frame;
+        this.frame = new createjs.Rectangle(f.x, f.y, f.w, f.h), this.trimmed = data.trimmed, 
+        this.offset = new createjs.Point(data.spriteSourceSize.x, data.spriteSourceSize.y), 
+        this.width = data.sourceSize.w, this.height = data.sourceSize.h;
+    };
+}(), function() {
+    function labelSorter(a, b) {
+        return a.position - b.position;
+    }
+    var BitmapMovieClip = function(atlas, data) {
+        createjs.Container.call(this), this.mouseChildren = !1, this._bitmap = new createjs.Bitmap(), 
+        this.addChild(this._bitmap), atlas && data && this.init(atlas, data);
+    }, p = BitmapMovieClip.prototype = new createjs.Container(), s = createjs.Container.prototype;
+    p.loop = !0, p.currentFrame = 0, p.paused = !1, p.advanceDuringTicks = !0, Object.defineProperty(p, "framerate", {
+        get: function() {
+            return this._framerate;
+        },
+        set: function(value) {
+            value > 0 ? (this._framerate = value, this._duration = value ? this._frames.length / value : 0) : this._framerate = this._duration = 0;
+        }
+    }), Object.defineProperty(p, "elapsedTime", {
+        get: function() {
+            return this._t;
+        },
+        set: function(value) {
+            this._t = value;
+        }
+    }), p._framerate = 0, p._duration = 0, p._t = 0, p._prevPosition = 0, p._bitmap = 0, 
+    p._labels = 0, p._frames = null, p._currentTexture = null, p._origin = null, p._scale = 1, 
+    p.isVisible = function() {
+        return !!(this.visible && this.alpha > 0 && 0 !== this.scaleX && 0 !== this.scaleY);
+    }, p.draw = function(ctx, ignoreCache) {
+        return this.DisplayObject_draw(ctx, ignoreCache) ? !0 : (this._updateTimeline(), 
+        s.draw.call(this, ctx, ignoreCache), !0);
+    }, p.play = function() {
+        this.paused = !1;
+    }, p.stop = function() {
+        this.paused = !0;
+    }, p.gotoAndPlay = function(positionOrLabel) {
+        this.paused = !1, this._goto(positionOrLabel);
+    }, p.gotoAndStop = function(positionOrLabel) {
+        this.paused = !0, this._goto(positionOrLabel);
+    }, p.advance = function(time) {
+        this.paused || (this._framerate > 0 ? (this.advanceDuringTicks && (this._t += .001 * time), 
+        this._t > this._duration && (this._t = this.loop ? this._t - this._duration : this._duration), 
+        this._prevPosition = Math.floor(this._t * this._framerate), this._prevPosition >= this._frames.length && (this._prevPosition = this._frames.length - 1)) : this.advanceDuringTicks && (this._prevPosition = this._prevPosition + 1), 
+        this._updateTimeline());
+    }, p.getLabels = function() {
+        return this._labels;
+    }, p.getCurrentLabel = function() {
+        for (var labels = this._labels, current = null, i = 0, len = labels.length; len > i && labels[i].position <= this.currentFrame; ++i) current = labels[i].label;
+        return current;
+    }, p.init = function(atlas, data) {
+        var labels = this._labels = [];
+        if (data.labels) {
+            for (var name in data.labels) labels.push({
+                label: name,
+                position: data.labels[name]
+            });
+            labels.sort(labelSorter);
+        }
+        this._frames = [];
+        for (var i = 0; i < data.frames.length; ++i) {
+            var frameSet = data.frames[i];
+            atlas.getFrames(frameSet.name, frameSet.min, frameSet.max, frameSet.digits, this._frames);
+        }
+        data.fps ? this.framerate = data.fps : this._framerate && (this.framerate = this._framerate), 
+        this._scale = data.scale && data.scale > 0 ? 1 / data.scale : 1, this._bitmap.scaleX = this._bitmap.scaleY = this._scale, 
+        this._origin = data.origin ? new createjs.Point(data.origin.x * this._scale, data.origin.y * this._scale) : new createjs.Point();
+    }, p.copyFrom = function(other) {
+        this._frames = other._frames, this._labels = other._labels, this._origin = other._origin, 
+        this._framerate = other._framerate, this._duration = other._duration, this._scale = other._scale, 
+        this._bitmap.scaleX = this._bitmap.scaleY = this._scale;
+    }, p.destroy = function() {
+        this.removeAllChildren(), this._bitmap = null, this._frames = null, this._origin = null;
+    }, p._tick = function(props) {
+        this.advance(props && props.delta), s._tick.call(this, props);
+    }, p._goto = function(positionOrLabel) {
+        var pos = null;
+        if ("string" == typeof positionOrLabel) {
+            for (var labels = this._labels, i = 0, len = labels.length; len > i; ++i) if (labels[i].label == positionOrLabel) {
+                pos = labels[i].position;
+                break;
+            }
+        } else pos = positionOrLabel;
+        null !== pos && (this._prevPosition = pos, this._t = this._framerate > 0 ? pos / this._framerate : 0, 
+        this._updateTimeline());
+    }, p._updateTimeline = function() {
+        if (this._prevPosition < 0 ? this._prevPosition = 0 : this._prevPosition >= this._frames.length && (this._prevPosition = this._frames.length - 1), 
+        this.currentFrame = this._prevPosition, this._currentTexture != this._frames[this.currentFrame]) {
+            var tex = this._currentTexture = this._frames[this.currentFrame];
+            this._bitmap.image = tex.image, this._bitmap.sourceRect = tex.frame, this._bitmap.x = -this._origin.x + tex.offset.x * this._bitmap.scaleX, 
+            this._bitmap.y = -this._origin.y + tex.offset.y * this._bitmap.scaleY;
+        }
+    }, p._reset = function() {
+        this._prevPosition = 0, this._t = 0, this.currentFrame = 0;
+    }, namespace("cloudkid").BitmapMovieClip = BitmapMovieClip;
 }();
