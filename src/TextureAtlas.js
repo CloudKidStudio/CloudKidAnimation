@@ -2,7 +2,7 @@
 
 	/**
 	*  Handles a spritesheet.
-	*  @class cloudkid.TextureAtlas
+	*  @class TextureAtlas
 	*  @constructor
 	*  @param {Image|HTMLCanvasElement|Array} image The image that all textures pull from.
 	*       This can also be an array of images, if the TextureAtlas should be built from several spritesheets.
@@ -143,7 +143,8 @@
 
 	/**
 	*  A Texture - a specific portion of an image that can then be drawn by a Bitmap.
-	*  @class cloudkid.TextureAtlas.Texture
+	*  This class is hidden within TextureAtlas, and can't be manually created.
+	*  @class Texture
 	*/
 	var Texture = function(image, data)
 	{

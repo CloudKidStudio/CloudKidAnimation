@@ -1253,7 +1253,7 @@
 
 	/**
 	*  Handles a spritesheet.
-	*  @class cloudkid.TextureAtlas
+	*  @class TextureAtlas
 	*  @constructor
 	*  @param {Image|HTMLCanvasElement|Array} image The image that all textures pull from.
 	*       This can also be an array of images, if the TextureAtlas should be built from several spritesheets.
@@ -1394,7 +1394,8 @@
 
 	/**
 	*  A Texture - a specific portion of an image that can then be drawn by a Bitmap.
-	*  @class cloudkid.TextureAtlas.Texture
+	*  This class is hidden within TextureAtlas, and can't be manually created.
+	*  @class Texture
 	*/
 	var Texture = function(image, data)
 	{
@@ -1438,10 +1439,10 @@
 	*  The CreateJS Sprite class requires a spritesheet with equal sized and spaced frames. By using cloudkid.TextureAtlas,
 	*  you can use a much smaller spritesheet, sprites on screen with fewer extra transparent pixels, and use the same
 	*  API as MovieClip.
-	*  @class cloudkid.BitmapMovieClip
+	*  @class BitmapMovieClip
 	*  @extends createjs.Container
 	*  @constructor
-	*  @param {cloudkid.TextureAtlas} atlas=null The texture atlas to pull frames from.
+	*  @param {TextureAtlas} atlas=null The texture atlas to pull frames from.
 	*  @param {Object} data=null Initialization data
 	*   @param {int} [data.fps] Framerate to play the movieclip at. Omitting this will use the current framerate.
 	*   @param {Object} [data.labels] A dictionary of the labels in the movieclip to assist in playing animations.
@@ -1784,7 +1785,7 @@
 	 * Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()
 	 * for more information.
 	 * @method init
-	 * @param {cloudkid.TextureAtlas} atlas The texture atlas to pull frames from.
+	 * @param {TextureAtlas} atlas The texture atlas to pull frames from.
 	 * @param {Object} data Initialization data
 	 *  @param {int} [data.fps] Framerate to play the movieclip at. Omitting this will use the current framerate.
 	 *  @param {Object} [data.labels] A dictionary of the labels in the movieclip to assist in playing animations.
