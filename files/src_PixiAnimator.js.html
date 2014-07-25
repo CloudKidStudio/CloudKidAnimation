@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.2.1 API Documentation : src/PixiAnimator.js</title>  
+	<title>CloudKid Animation API v2.3.0 API Documentation : src/PixiAnimator.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.2.1</em>
+            <em>API Documentation for: 2.3.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -46,6 +46,12 @@
                 <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
                 <li><a href="../classes/CharacterController.html">CharacterController</a></li>
+            
+                <li><a href="../classes/cloudkid.BitmapMovieClip.html">cloudkid.BitmapMovieClip</a></li>
+            
+                <li><a href="../classes/cloudkid.TextureAtlas.html">cloudkid.TextureAtlas</a></li>
+            
+                <li><a href="../classes/cloudkid.TextureAtlas.Texture.html">cloudkid.TextureAtlas.Texture</a></li>
             
                 <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
@@ -303,7 +309,7 @@
 			clip.onComplete = this._onMovieClipDone.bind(this, t);
 			clip.gotoAndPlay(0);
 			if(startTime &gt; 0)
-				clip.update(startTime * t.speed);
+				clip.updateAnim(startTime * t.speed);
 		}
 		if(soundData)
 		{
@@ -318,14 +324,14 @@
 				t.soundStart = soundData.start &gt; 0 ? soundData.start : 0;//seconds
 				t.soundAlias = soundData.alias;
 			}
-			timeline.useCaptions = this.captions &amp;&amp; this.captions.hasCaption(timeline.soundAlias);
+			t.useCaptions = this.captions &amp;&amp; this.captions.hasCaption(t.soundAlias);
 
 			if(t.soundStart === 0)
 			{
-				t.soundInst = cloudkid.Sound.instance.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
+				t.soundInst = this.soundLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t));
 			}
-			else
-				cloudkid.Sound.instance.preloadSound(soundData.alias);
+			else if(this.soundLib.preloadSound)//if it can preload sound this way
+				this.soundLib.preloadSound(soundData.alias);
 		}
 		t.loop = loop;
 		t.time = startTime &gt; 0 ? startTime : 0;
@@ -496,6 +502,8 @@
 					{
 						this._timelines.splice(i, 1);
 						this._numAnims--;
+						if(t.useCaptions)
+							this.captions.stop();
 						if(t.callback)
 							t.callback();
 						this._repool(t);
@@ -509,6 +517,8 @@
 					{
 						this._timelines.splice(i, 1);
 						this._numAnims--;
+						if(t.useCaptions)
+							this.captions.stop();
 						if(t.callback)
 							t.callback();
 						this._repool(t);
@@ -552,6 +562,8 @@
 			if(this._timelines[i] === timeline)
 			{
 				var t = this._timelines[i];
+				if(t.useCaptions)
+					this.captions.stop();
 				t.clip.onComplete = null;
 				this._timelines.splice(i, 1);
 				if(--this._numAnims === 0)
@@ -666,7 +678,7 @@
 		this.soundAlias = null;
 
 		/**
-		*	A sound instance object from cloudkid.Sound, used for tracking sound position.
+		*	A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.
 		*	@property {Object} soundInst
 		*	@public
 		*/

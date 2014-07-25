@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid Animation API",
         "description": "CloudKid Animation API: A library for playing Animations",
-        "version": "2.2.1",
+        "version": "2.3.0",
         "logo": ""
     },
     "files": {
@@ -22,6 +22,15 @@
             "modules": {},
             "classes": {
                 "AnimatorTimeline": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/BitmapMovieClip.js": {
+            "name": "src/BitmapMovieClip.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.BitmapMovieClip": 1
             },
             "fors": {},
             "namespaces": {}
@@ -53,6 +62,16 @@
             },
             "fors": {},
             "namespaces": {}
+        },
+        "src/TextureAtlas.js": {
+            "name": "src/TextureAtlas.js",
+            "modules": {},
+            "classes": {
+                "cloudkid.TextureAtlas": 1,
+                "cloudkid.TextureAtlas.Texture": 1
+            },
+            "fors": {},
+            "namespaces": {}
         }
     },
     "modules": {
@@ -62,16 +81,19 @@
             "classes": {
                 "Animator": 1,
                 "AnimatorTimeline": 1,
+                "cloudkid.BitmapMovieClip": 1,
                 "CharacterClip": 1,
                 "CharacterController": 1,
                 "PixiAnimator": 1,
-                "PixiAnimator.AnimTimeline": 1
+                "PixiAnimator.AnimTimeline": 1,
+                "cloudkid.TextureAtlas": 1,
+                "cloudkid.TextureAtlas.Texture": 1
             },
             "fors": {},
             "namespaces": {},
             "tag": "module",
-            "file": "src/PixiAnimator.js",
-            "line": 487
+            "file": "src/TextureAtlas.js",
+            "line": 144
         }
     },
     "classes": {
@@ -104,6 +126,89 @@
             "line": 8,
             "description": "Animator Timeline is a class designed to provide\nbase animation functionality",
             "is_constructor": 1
+        },
+        "cloudkid.BitmapMovieClip": {
+            "name": "cloudkid.BitmapMovieClip",
+            "shortname": "cloudkid.BitmapMovieClip",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/BitmapMovieClip.js",
+            "line": 3,
+            "description": "A class similar to createjs.MovieClip, but made to play animations from a cloudkid.TextureAtlas.\nThe CreateJS Sprite class requires a spritesheet with equal sized and spaced frames. By using cloudkid.TextureAtlas,\nyou can use a much smaller spritesheet, sprites on screen with fewer extra transparent pixels, and use the same\nAPI as MovieClip.",
+            "extends": "createjs.Container",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "atlas=null",
+                    "description": "The texture atlas to pull frames from.",
+                    "type": "cloudkid.TextureAtlas"
+                },
+                {
+                    "name": "data=null",
+                    "description": "Initialization data",
+                    "type": "Object"
+                },
+                {
+                    "name": "data.fps",
+                    "description": "Framerate to play the movieclip at. Omitting this will use the current framerate.",
+                    "type": "Int",
+                    "optional": true
+                },
+                {
+                    "name": "data.labels",
+                    "description": "A dictionary of the labels in the movieclip to assist in playing animations.",
+                    "type": "Object",
+                    "optional": true
+                },
+                {
+                    "name": "[data.origin={x:0,",
+                    "description": "y:0}] The origin of the movieclip.",
+                    "type": "Object"
+                },
+                {
+                    "name": "data.frames",
+                    "description": "An array of frame sequences to pull from the texture atlas.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "data.frames.name",
+                    "description": "The name to use for the frame sequence. This should include a \"#\" to be replaced with the image number.",
+                    "type": "String",
+                    "optional": true
+                },
+                {
+                    "name": "data.frames.min",
+                    "description": "The first frame number in the frame sequence.",
+                    "type": "Int",
+                    "optional": true
+                },
+                {
+                    "name": "data.frames.max",
+                    "description": "The last frame number in the frame sequence.",
+                    "type": "Int",
+                    "optional": true
+                },
+                {
+                    "name": "data.frames.digits",
+                    "description": "The maximum number of digits in the names of the frames, e.g. myAnim0001 has 4 digits.",
+                    "type": "Int",
+                    "optional": true,
+                    "optdefault": "4"
+                },
+                {
+                    "name": "data.scale",
+                    "description": "The scale at which the art was exported, e.g. a scale of 1.4 means the art was increased\n        in size to 140% before exporting and should be scaled back down before drawing to the screen.\n\nFormat for data:\n\t{\n\t\tfps:30,\n\t\tlabels:\n\t\t{\n\t\t\tanimStart:0,\n\t\t\tanimStart_loop:15\n\t\t},\n\t\torigin:{ x: 20, y:30 },\n\t\tframes:\n\t\t[\n\t\t\t{\n\t\t\t\tname:\"myAnim#\",\n\t\t\t\tmin:1,\n\t\t\t\tmax:20,\n\t\t\t\tdigits:4\n\t\t\t}\n\t\t],\n\t\tscale:1\n\t}\n\n The object describes a 30 fps animation that is 20 frames long, and was originally myAnim0001.png->myAnim0020.png,\n with frame labels on the first and 16th frame. 'digits' is optional, and defaults to 4.",
+                    "type": "Number",
+                    "optional": true,
+                    "optdefault": "1"
+                }
+            ]
         },
         "CharacterClip": {
             "name": "CharacterClip",
@@ -171,7 +276,7 @@
             "module": "cloudkid",
             "namespace": "",
             "file": "src/PixiAnimator.js",
-            "line": 487,
+            "line": 493,
             "description": "[Pixi Only] Internal PixiAnimator class for keeping track of animations",
             "is_constructor": 1,
             "params": [
@@ -191,6 +296,47 @@
                     "type": "Int"
                 }
             ]
+        },
+        "cloudkid.TextureAtlas": {
+            "name": "cloudkid.TextureAtlas",
+            "shortname": "cloudkid.TextureAtlas",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/TextureAtlas.js",
+            "line": 3,
+            "description": "Handles a spritesheet.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "image",
+                    "description": "The image that all textures pull from.\n     This can also be an array of images, if the TextureAtlas should be built from several spritesheets.",
+                    "type": "Image|HTMLCanvasElement|Array"
+                },
+                {
+                    "name": "spritesheetData",
+                    "description": "The JSON object describing the frames in the atlas.\n     This is expected to fit the JSON Hash format as exported from TexturePacker.\n     This can also be an array of data objects, if the TextureAtlas should be built from several spritesheets.",
+                    "type": "Object|Array"
+                }
+            ]
+        },
+        "cloudkid.TextureAtlas.Texture": {
+            "name": "cloudkid.TextureAtlas.Texture",
+            "shortname": "cloudkid.TextureAtlas.Texture",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "cloudkid",
+            "namespace": "",
+            "file": "src/TextureAtlas.js",
+            "line": 144,
+            "description": "A Texture - a specific portion of an image that can then be drawn by a Bitmap."
         }
     },
     "classitems": [
@@ -296,6 +442,18 @@
         {
             "file": "src/Animator.js",
             "line": 90,
+            "description": "An empty object to avoid creating new objects in play()\nwhen an options object is not used for parameters.",
+            "itemtype": "property",
+            "name": "_optionsHelper",
+            "type": "Object",
+            "access": "private",
+            "tagname": "",
+            "class": "Animator",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 99,
             "description": "Sets the variables of the Animator to their defaults. Use when _timelines is null,\nif the Animator data was cleaned up but was needed again later.",
             "itemtype": "method",
             "name": "init",
@@ -305,7 +463,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 105,
+            "line": 114,
             "description": "Stops all animations and cleans up the variables used.",
             "itemtype": "method",
             "name": "destroy",
@@ -315,7 +473,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 120,
+            "line": 129,
             "description": "Play an animation for a frame label event",
             "itemtype": "method",
             "name": "play",
@@ -391,7 +549,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 199,
+            "line": 214,
             "description": "Play an animation for a frame label event, starting at a random frame within the animation",
             "itemtype": "method",
             "name": "playAtRandomFrame",
@@ -460,7 +618,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 220,
+            "line": 235,
             "description": "Creates the AnimatorTimeline for a given animation",
             "itemtype": "method",
             "name": "_makeTimeline",
@@ -508,7 +666,30 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 296,
+            "line": 321,
+            "description": "Determines if a given instance can be animated by Animator, to allow things that aren't\n\tMovieClips from EaselJS to be animated if they share the same API. Note - 'id' is a property with\n\ta unique value for each createjs.DisplayObject. If a custom object is made that does not inherit from DisplayObject,\n\tit needs to not have an id that is identical to anything from EaselJS.",
+            "itemtype": "method",
+            "name": "_canAnimate",
+            "params": [
+                {
+                    "name": "instance",
+                    "description": "The object to check for animation properties.",
+                    "type": "easeljs.MovieClip"
+                }
+            ],
+            "return": {
+                "description": "If the instance can be animated or not.",
+                "type": "Boolean"
+            },
+            "access": "private",
+            "tagname": "",
+            "static": 1,
+            "class": "Animator",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/Animator.js",
+            "line": 352,
             "description": "Checks if animation exists",
             "itemtype": "method",
             "name": "_makeTimeline",
@@ -536,7 +717,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 315,
+            "line": 385,
             "description": "Stop the animation.",
             "itemtype": "method",
             "name": "stop",
@@ -558,7 +739,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 341,
+            "line": 411,
             "description": "Stop all current Animator animations.\nThis is good for cleaning up all animation, as it doesn't do a callback on any of them.",
             "itemtype": "method",
             "name": "stopAll",
@@ -575,7 +756,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 367,
+            "line": 437,
             "description": "Remove a timeline from the stack",
             "itemtype": "method",
             "name": "_remove",
@@ -599,7 +780,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 417,
+            "line": 494,
             "description": "Pause all tweens which have been excuted by Animator.play()",
             "itemtype": "method",
             "name": "pause",
@@ -609,7 +790,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 438,
+            "line": 515,
             "description": "Resumes all tweens executed by the Animator.play()",
             "itemtype": "method",
             "name": "resume",
@@ -619,7 +800,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 460,
+            "line": 537,
             "description": "Pauses or unpauses all timelines that are children of the specified DisplayObjectContainer.",
             "itemtype": "method",
             "name": "pauseInGroup",
@@ -641,7 +822,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 482,
+            "line": 559,
             "description": "Get the timeline object for an instance",
             "itemtype": "method",
             "name": "getTimeline",
@@ -662,7 +843,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 501,
+            "line": 578,
             "description": "Whether the Animator class is currently paused.",
             "itemtype": "method",
             "name": "getPaused",
@@ -675,7 +856,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 512,
+            "line": 589,
             "description": "Start the updating",
             "itemtype": "method",
             "name": "_startUpdate",
@@ -687,7 +868,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 525,
+            "line": 602,
             "description": "Stop the updating",
             "itemtype": "method",
             "name": "_stopUpdate",
@@ -699,7 +880,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 538,
+            "line": 615,
             "description": "The update every frame",
             "itemtype": "method",
             "name": "",
@@ -718,7 +899,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 620,
+            "line": 705,
             "description": "The sound has been started",
             "itemtype": "method",
             "name": "onSoundStarted",
@@ -736,7 +917,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 632,
+            "line": 717,
             "description": "The sound is done",
             "itemtype": "method",
             "name": "onSoundDone",
@@ -754,7 +935,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 645,
+            "line": 730,
             "description": "Check to see if we have timeline",
             "itemtype": "method",
             "name": "_hasTimelines",
@@ -770,7 +951,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 659,
+            "line": 744,
             "description": "String representation of this class",
             "itemtype": "method",
             "name": "toString",
@@ -1014,6 +1195,475 @@
             "module": "cloudkid"
         },
         {
+            "file": "src/BitmapMovieClip.js",
+            "line": 63,
+            "description": "Indicates whether this BitmapMovieClip should loop when it reaches the end of its timeline.",
+            "itemtype": "property",
+            "name": "loop",
+            "type": "Boolean",
+            "default": "true",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 71,
+            "description": "The current frame of the movieclip.",
+            "itemtype": "property",
+            "name": "currentFrame",
+            "type": "Number",
+            "default": "0",
+            "readonly": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 80,
+            "description": "If true, the BitmapMovieClip's position will not advance when ticked.",
+            "itemtype": "property",
+            "name": "paused",
+            "type": "Boolean",
+            "default": "false",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 88,
+            "description": "If true, the BitmapMovieClip will advance its timeline during ticks. If false then it must be externally advanced.",
+            "itemtype": "property",
+            "name": "advanceDuringTicks",
+            "type": "Boolean",
+            "default": "true",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 96,
+            "description": "By default BitmapMovieClip instances advance one frame per tick. Specifying a framerate for the BitmapMovieClip\nwill cause it to advance based on elapsed time between ticks as appropriate to maintain the target\nframerate.\n\nFor example, if a BitmapMovieClip with a framerate of 10 is placed on a Stage being updated at 40fps, then the BitmapMovieClip will\nadvance roughly one frame every 4 ticks. This will not be exact, because the time between each tick will\nvary slightly between frames.\n\nThis feature is dependent on the tick event object (or an object with an appropriate \"delta\" property) being\npassed into {{#crossLink \"Stage/update\"}}{{/crossLink}}.",
+            "itemtype": "property",
+            "name": "framerate",
+            "type": "{Number}",
+            "default": "0",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 126,
+            "description": "When the BitmapMovieClip is framerate independent, this is the time elapsed from frame 0 in seconds.",
+            "itemtype": "property",
+            "name": "elapsedTime",
+            "type": "Number",
+            "default": "0",
+            "access": "public",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 144,
+            "description": "By default BitmapMovieClip instances advance one frame per tick. Specifying a framerate for the BitmapMovieClip\nwill cause it to advance based on elapsed time between ticks as appropriate to maintain the target\nframerate.",
+            "itemtype": "property",
+            "name": "_framerate",
+            "type": "{Number}",
+            "default": "0",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 155,
+            "description": "When the BitmapMovieClip is framerate independent, this is the total time in seconds for the animation.",
+            "itemtype": "property",
+            "name": "_duration",
+            "type": "Number",
+            "default": "0",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 164,
+            "description": "When the BitmapMovieClip is framerate independent, this is the time elapsed from frame 0 in seconds.",
+            "itemtype": "property",
+            "name": "_t",
+            "type": "Number",
+            "default": "0",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 173,
+            "itemtype": "property",
+            "name": "_prevPosition",
+            "type": "Number",
+            "default": "0",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 181,
+            "description": "The Bitmap used to render the current frame of the animation.",
+            "itemtype": "property",
+            "name": "_bitmap",
+            "type": "createjs.Bitmap",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 189,
+            "description": "An array of frame labels.",
+            "itemtype": "property",
+            "name": "_labels",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 197,
+            "description": "An array of textures.",
+            "itemtype": "property",
+            "name": "_frames",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 205,
+            "description": "The current texture.",
+            "itemtype": "property",
+            "name": "_currentTexture",
+            "type": "cloudkid.TextureAtlas.Texture",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 213,
+            "description": "The origin point of the BitmapMovieClip.",
+            "itemtype": "property",
+            "name": "_origin",
+            "type": "createjs.Point",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 221,
+            "description": "A scale to apply to the images in the BitmapMovieClip\nto restore normal size (if spritesheet was exported at a smaller or larger size).",
+            "itemtype": "property",
+            "name": "_scale",
+            "type": "Number",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 232,
+            "description": "Returns true or false indicating whether the display object would be visible if drawn to a canvas.\nThis does not account for whether it would be visible within the boundaries of the stage.\nNOTE: This method is mainly for internal use, though it may be useful for advanced uses.",
+            "itemtype": "method",
+            "name": "isVisible",
+            "return": {
+                "description": "Boolean indicating whether the display object would be visible if drawn to a canvas",
+                "type": "Boolean"
+            },
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 244,
+            "description": "Draws the display object into the specified context ignoring its visible, alpha, shadow, and transform.\nReturns true if the draw was handled (useful for overriding functionality).\nNOTE: This method is mainly for internal use, though it may be useful for advanced uses.",
+            "itemtype": "method",
+            "name": "draw",
+            "params": [
+                {
+                    "name": "ctx",
+                    "description": "The canvas 2D context object to draw into.",
+                    "type": "CanvasRenderingContext2D"
+                },
+                {
+                    "name": "ignoreCache",
+                    "description": "Indicates whether the draw operation should ignore any current cache.\nFor example, used for drawing the cache (to prevent it from simply drawing an existing cache back\ninto itself).",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 262,
+            "description": "Sets paused to false.",
+            "itemtype": "method",
+            "name": "play",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 270,
+            "description": "Sets paused to true.",
+            "itemtype": "method",
+            "name": "stop",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 278,
+            "description": "Advances this movie clip to the specified position or label and sets paused to false.",
+            "itemtype": "method",
+            "name": "gotoAndPlay",
+            "params": [
+                {
+                    "name": "positionOrLabel",
+                    "description": "The animation name or frame number to go to.",
+                    "type": "String|Number"
+                }
+            ],
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 288,
+            "description": "Advances this movie clip to the specified position or label and sets paused to true.",
+            "itemtype": "method",
+            "name": "gotoAndStop",
+            "params": [
+                {
+                    "name": "positionOrLabel",
+                    "description": "The animation or frame name to go to.",
+                    "type": "String|Number"
+                }
+            ],
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 298,
+            "description": "Advances the playhead. This occurs automatically each tick by default.",
+            "params": [
+                {
+                    "name": "time",
+                    "description": "The amount of time in ms to advance by. Only applicable if framerate is set.",
+                    "type": "Number",
+                    "optional": true
+                }
+            ],
+            "itemtype": "method",
+            "name": "advance",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 322,
+            "description": "Returns a sorted list of the labels defined on this BitmapMovieClip. Shortcut to TweenJS: Timeline.getLabels();",
+            "itemtype": "method",
+            "name": "getLabels",
+            "return": {
+                "description": "A sorted array of objects with label and position (aka frame) properties.",
+                "type": "Array[Object]"
+            },
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 331,
+            "description": "Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()\nfor more information.",
+            "itemtype": "method",
+            "name": "getCurrentLabel",
+            "return": {
+                "description": "The name of the current label or null if there is no label.",
+                "type": "String"
+            },
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 350,
+            "description": "Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()\nfor more information.",
+            "itemtype": "method",
+            "name": "init",
+            "params": [
+                {
+                    "name": "atlas",
+                    "description": "The texture atlas to pull frames from.",
+                    "type": "cloudkid.TextureAtlas"
+                },
+                {
+                    "name": "data",
+                    "description": "Initialization data",
+                    "type": "Object",
+                    "props": [
+                        {
+                            "name": "fps",
+                            "description": "Framerate to play the movieclip at. Omitting this will use the current framerate.",
+                            "type": "Int",
+                            "optional": true
+                        },
+                        {
+                            "name": "labels",
+                            "description": "A dictionary of the labels in the movieclip to assist in playing animations.",
+                            "type": "Object",
+                            "optional": true
+                        },
+                        {
+                            "name": "frames",
+                            "description": "An array of frame sequences to pull from the texture atlas.",
+                            "type": "Array",
+                            "optional": true,
+                            "props": [
+                                {
+                                    "name": "name",
+                                    "description": "The name to use for the frame sequence. This should include a \"#\" to be replaced with the image number.",
+                                    "type": "String",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "min",
+                                    "description": "The first frame number in the frame sequence.",
+                                    "type": "Int",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "max",
+                                    "description": "The last frame number in the frame sequence.",
+                                    "type": "Int",
+                                    "optional": true
+                                },
+                                {
+                                    "name": "digits",
+                                    "description": "The maximum number of digits in the names of the frames, e.g. myAnim0001 has 4 digits.\n\n Format for data:\n\t{\n\t\tfps:30,\n\t\tlabels:\n\t\t{\n\t\t\tanimStart:0,\n\t\t\tanimStart_loop:15\n\t\t},\n\t\torigin:{ x: 20, y:30 },\n\t\tframes:\n\t\t[\n\t\t\t{\n\t\t\t\tname:\"myAnim#\",\n\t\t\t\tmin:1,\n\t\t\t\tmax:20,\n\t\t\t\tdigits:4\n\t\t\t}\n\t\t]\n\t}\n\nThe object describes a 30 fps animation that is 20 frames long, and was originally myAnim0001.png->myAnim0020.png,\nwith frame labels on the first and 16th frame. 'digits' is optional, and defaults to 4.",
+                                    "type": "Int",
+                                    "optional": true,
+                                    "optdefault": "4"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "[data.origin={x:0,",
+                    "description": "y:0}] The origin of the movieclip.",
+                    "type": "Object"
+                }
+            ],
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 428,
+            "description": "Copies the labels, textures, origin, and framerate from another BitmapMovieClip.\nThe labels and textures are copied by reference, instead of a deep copy.",
+            "itemtype": "method",
+            "name": "copyFrom",
+            "params": [
+                {
+                    "name": "other",
+                    "description": "The movieclip to copy data from.",
+                    "type": "BitmapMovieClip"
+                }
+            ],
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 445,
+            "description": "Destroys the BitmapMovieClip, removing all children and nulling all reference variables.",
+            "itemtype": "method",
+            "name": "destroy",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 459,
+            "itemtype": "method",
+            "name": "_tick",
+            "params": [
+                {
+                    "name": "props",
+                    "description": "Properties to copy to the DisplayObject {{#crossLink \"DisplayObject/tick\"}}{{/crossLink}} event object.\nfunction.",
+                    "type": "Object"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 470,
+            "itemtype": "method",
+            "name": "_goto",
+            "params": [
+                {
+                    "name": "positionOrLabel",
+                    "description": "The animation name or frame number to go to.",
+                    "type": "String|Number"
+                }
+            ],
+            "access": "protected",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 500,
+            "itemtype": "method",
+            "name": "_updateTimeline",
+            "access": "protected",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/BitmapMovieClip.js",
+            "line": 520,
+            "itemtype": "method",
+            "name": "_reset",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.BitmapMovieClip",
+            "module": "cloudkid"
+        },
+        {
             "file": "src/CharacterClip.js",
             "line": 23,
             "description": "The event to play",
@@ -1057,12 +1707,18 @@
         {
             "file": "src/CharacterController.js",
             "line": 25,
+            "description": "The current stack of animations to play",
+            "itemtype": "property",
+            "name": "_animationStack",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
             "class": "CharacterController",
             "module": "cloudkid"
         },
         {
             "file": "src/CharacterController.js",
-            "line": 28,
+            "line": 33,
             "description": "The currently playing animation",
             "itemtype": "property",
             "name": "_currentAnimation",
@@ -1074,7 +1730,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 36,
+            "line": 41,
             "description": "Current number of loops for the current animation",
             "itemtype": "property",
             "name": "_loops",
@@ -1086,7 +1742,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 44,
+            "line": 49,
             "description": "If the current animation choreographies can't be interrupted",
             "itemtype": "property",
             "name": "_interruptable",
@@ -1098,7 +1754,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 52,
+            "line": 57,
             "description": "If frame dropping is allowed for this animation set",
             "itemtype": "property",
             "name": "_allowFrameDropping",
@@ -1110,7 +1766,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 60,
+            "line": 65,
             "description": "The current character",
             "itemtype": "property",
             "name": "_character",
@@ -1122,7 +1778,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 68,
+            "line": 73,
             "description": "Callback function for playing animation",
             "itemtype": "property",
             "name": "_callback",
@@ -1134,7 +1790,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 76,
+            "line": 81,
             "description": "If this instance has been destroyed",
             "itemtype": "property",
             "name": "_destroyed",
@@ -1146,7 +1802,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 84,
+            "line": 89,
             "description": "Initiliazes this Character controller",
             "itemtype": "method",
             "name": "initialize",
@@ -1155,7 +1811,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 94,
+            "line": 99,
             "description": "Set the current character, setting to null clears character",
             "itemtype": "method",
             "name": "setCharacter",
@@ -1171,7 +1827,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 111,
+            "line": 116,
             "description": "If we want to play a static frame",
             "itemtype": "method",
             "name": "gotoFrameAndStop",
@@ -1187,7 +1843,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 125,
+            "line": 130,
             "description": "Will play a sequence of animations",
             "itemtype": "method",
             "name": "playClips",
@@ -1223,7 +1879,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 168,
+            "line": 173,
             "description": "Start the next animation in the sequence",
             "itemtype": "method",
             "name": "startNext",
@@ -1232,7 +1888,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 196,
+            "line": 201,
             "description": "When the animation has completed playing",
             "itemtype": "method",
             "name": "_animationComplete",
@@ -1243,7 +1899,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 222,
+            "line": 227,
             "description": "Clear any animations for the current character",
             "itemtype": "method",
             "name": "clear",
@@ -1252,7 +1908,7 @@
         },
         {
             "file": "src/CharacterController.js",
-            "line": 240,
+            "line": 245,
             "description": "Don't use after this",
             "itemtype": "method",
             "name": "destroy",
@@ -1561,7 +2217,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 441,
+            "line": 445,
             "description": "Called when a movie clip is done playing, calls the AnimTimeline's\ncallback if it has one",
             "itemtype": "method",
             "name": "_onMovieClipDone",
@@ -1579,7 +2235,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 468,
+            "line": 474,
             "description": "Destroy this",
             "itemtype": "method",
             "name": "destroy",
@@ -1588,7 +2244,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 503,
+            "line": 509,
             "description": "Initialize the AnimTimeline",
             "itemtype": "method",
             "name": "init",
@@ -1618,7 +2274,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 514,
+            "line": 520,
             "description": "The clip for this AnimTimeLine",
             "itemtype": "property",
             "name": "clip",
@@ -1630,7 +2286,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 521,
+            "line": 527,
             "description": "Whether the clip is a PIXI.Spine",
             "itemtype": "property",
             "name": "isSpine",
@@ -1642,7 +2298,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 528,
+            "line": 534,
             "description": "The function to call when the clip is finished playing",
             "itemtype": "property",
             "name": "callback",
@@ -1654,7 +2310,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 535,
+            "line": 541,
             "description": "The speed at which the clip should be played",
             "itemtype": "property",
             "name": "speed",
@@ -1666,7 +2322,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 542,
+            "line": 548,
             "itemtype": "property",
             "name": "spineStates",
             "type": "Array",
@@ -1677,7 +2333,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 548,
+            "line": 554,
             "description": "Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played",
             "itemtype": "property",
             "name": "loop",
@@ -1689,7 +2345,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 555,
+            "line": 561,
             "description": "The position of the animation in seconds",
             "itemtype": "property",
             "name": "time",
@@ -1701,7 +2357,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 562,
+            "line": 568,
             "description": "Sound alias to sync to during the animation.",
             "itemtype": "property",
             "name": "soundAlias",
@@ -1713,8 +2369,8 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 569,
-            "description": "A sound instance object from cloudkid.Sound, used for tracking sound position.",
+            "line": 575,
+            "description": "A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.",
             "itemtype": "property",
             "name": "soundInst",
             "type": "Object",
@@ -1725,7 +2381,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 576,
+            "line": 582,
             "description": "If the timeline will, but has yet to, play a sound",
             "itemtype": "property",
             "name": "playSound",
@@ -1737,7 +2393,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 583,
+            "line": 589,
             "description": "The time (seconds) into the animation that the sound starts.",
             "itemtype": "property",
             "name": "soundStart",
@@ -1749,7 +2405,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 590,
+            "line": 596,
             "description": "The time (seconds) into the animation that the sound ends",
             "itemtype": "property",
             "name": "soundEnd",
@@ -1761,7 +2417,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 597,
+            "line": 603,
             "description": "If this timeline plays captions",
             "itemtype": "property",
             "name": "useCaptions",
@@ -1772,7 +2428,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 605,
+            "line": 611,
             "description": "If this animation is paused.",
             "itemtype": "property",
             "name": "_paused",
@@ -1784,7 +2440,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 615,
+            "line": 621,
             "description": "Sets and gets the animation's paused status.",
             "itemtype": "property",
             "name": "paused",
@@ -1793,84 +2449,233 @@
             "tagname": "",
             "class": "PixiAnimator.AnimTimeline",
             "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 15,
+            "description": "The an array of image elements (Image|HTMLCanvasElement) that frames in texture atlas use.",
+            "itemtype": "property",
+            "name": "_image",
+            "type": "Array",
+            "access": "private",
+            "tagname": "",
+            "class": "cloudkid.TextureAtlas",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 30,
+            "description": "The dictionary of Textures that this atlas consists of.",
+            "itemtype": "property",
+            "name": "frames",
+            "type": "Object",
+            "class": "cloudkid.TextureAtlas",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 58,
+            "description": "Handler when the skip button is pressed",
+            "itemtype": "method",
+            "name": "getFrame",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The frame name to get.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "The texture by that name, or null if it doesn't exist.",
+                "type": "cloudkid.TextureAtlas.Texture"
+            },
+            "class": "cloudkid.TextureAtlas",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 69,
+            "description": "Get an array of Textures that match a specific name.",
+            "itemtype": "method",
+            "name": "getFrames",
+            "params": [
+                {
+                    "name": "name",
+                    "description": "The base name of all frames to look for, like \"anim_#\" to search for an animation exported\n       as anim_0001.png (the \".png\" is dropped when the TextureAtlas is loaded).",
+                    "type": "String"
+                },
+                {
+                    "name": "numberMin",
+                    "description": "The number to start on while looking for frames. Flash generally starts at 1.",
+                    "type": "Int"
+                },
+                {
+                    "name": "numberMax",
+                    "description": "The number to go until while looking for frames. \n       If your animation runs from frame 0001 to frame 0014, numberMax would be 14.",
+                    "type": "Int"
+                },
+                {
+                    "name": "maxDigits",
+                    "description": "Maximum number of digits, like 4 for an animation exported as anim_0001.png",
+                    "type": "Int",
+                    "optional": true,
+                    "optdefault": "4"
+                },
+                {
+                    "name": "outArray",
+                    "description": "If already using an array, this can fill it instead of creating a new one.",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "An collection of cloudkid.TextureAtlas.Textures.",
+                "type": "Array"
+            },
+            "class": "cloudkid.TextureAtlas",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 150,
+            "description": "The image element that this texture references.",
+            "itemtype": "property",
+            "name": "image",
+            "type": "Image|HTMLCanvasElement",
+            "class": "cloudkid.TextureAtlas.Texture",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 156,
+            "description": "The frame rectangle within the image.",
+            "itemtype": "property",
+            "name": "frame",
+            "type": "createjs.Rectangle",
+            "class": "cloudkid.TextureAtlas.Texture",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 161,
+            "description": "If this texture has been trimmed.",
+            "itemtype": "property",
+            "name": "trimmed",
+            "type": "Boolean",
+            "class": "cloudkid.TextureAtlas.Texture",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 166,
+            "description": "The offset that the trimmed sprite should be placed at to restore it to the untrimmed position.",
+            "itemtype": "property",
+            "name": "offset",
+            "type": "createjs.Point",
+            "class": "cloudkid.TextureAtlas.Texture",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 171,
+            "description": "The width of the untrimmed texture.",
+            "itemtype": "property",
+            "name": "width",
+            "type": "Number",
+            "class": "cloudkid.TextureAtlas.Texture",
+            "module": "cloudkid"
+        },
+        {
+            "file": "src/TextureAtlas.js",
+            "line": 176,
+            "description": "The height of the untrimmed texture.",
+            "itemtype": "property",
+            "name": "height",
+            "type": "Number",
+            "class": "cloudkid.TextureAtlas.Texture",
+            "module": "cloudkid"
         }
     ],
     "warnings": [
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:90"
+            "line": " src/Animator.js:99"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:105"
+            "line": " src/Animator.js:114"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:120"
+            "line": " src/Animator.js:129"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:199"
+            "line": " src/Animator.js:214"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:220"
+            "line": " src/Animator.js:235"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:296"
+            "line": " src/Animator.js:321"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:315"
+            "line": " src/Animator.js:352"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:341"
+            "line": " src/Animator.js:385"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:367"
+            "line": " src/Animator.js:411"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:417"
+            "line": " src/Animator.js:437"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:438"
+            "line": " src/Animator.js:494"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:460"
+            "line": " src/Animator.js:515"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:482"
+            "line": " src/Animator.js:537"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:501"
+            "line": " src/Animator.js:559"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:512"
+            "line": " src/Animator.js:578"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:525"
+            "line": " src/Animator.js:589"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:538"
+            "line": " src/Animator.js:602"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:645"
+            "line": " src/Animator.js:615"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:659"
+            "line": " src/Animator.js:730"
+        },
+        {
+            "message": "replacing incorrect tag: function with method",
+            "line": " src/Animator.js:744"
         },
         {
             "message": "replacing incorrect tag: function with method",
@@ -1878,35 +2683,35 @@
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/CharacterController.js:84"
+            "line": " src/CharacterController.js:89"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/CharacterController.js:94"
+            "line": " src/CharacterController.js:99"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/CharacterController.js:111"
+            "line": " src/CharacterController.js:116"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/CharacterController.js:125"
+            "line": " src/CharacterController.js:130"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/CharacterController.js:168"
+            "line": " src/CharacterController.js:173"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/CharacterController.js:196"
+            "line": " src/CharacterController.js:201"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/CharacterController.js:222"
+            "line": " src/CharacterController.js:227"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/CharacterController.js:240"
+            "line": " src/CharacterController.js:245"
         },
         {
             "message": "replacing incorrect tag: function with method",
@@ -1946,23 +2751,19 @@
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:441"
+            "line": " src/PixiAnimator.js:445"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:468"
+            "line": " src/PixiAnimator.js:474"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:503"
+            "line": " src/PixiAnimator.js:509"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src/PixiAnimator.js:503"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/CharacterController.js:25"
+            "line": " src/PixiAnimator.js:509"
         }
     ]
 }

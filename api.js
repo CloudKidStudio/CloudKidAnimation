@@ -6,7 +6,10 @@ YUI.add("yuidoc-meta", function(Y) {
         "CharacterClip",
         "CharacterController",
         "PixiAnimator",
-        "PixiAnimator.AnimTimeline"
+        "PixiAnimator.AnimTimeline",
+        "cloudkid.BitmapMovieClip",
+        "cloudkid.TextureAtlas",
+        "cloudkid.TextureAtlas.Texture"
     ],
     "modules": [
         "cloudkid"

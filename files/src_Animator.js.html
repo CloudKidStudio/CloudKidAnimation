@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.2.1 API Documentation : src/Animator.js</title>  
+	<title>CloudKid Animation API v2.3.0 API Documentation : src/Animator.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.2.1</em>
+            <em>API Documentation for: 2.3.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -46,6 +46,12 @@
                 <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
                 <li><a href="../classes/CharacterController.html">CharacterController</a></li>
+            
+                <li><a href="../classes/cloudkid.BitmapMovieClip.html">cloudkid.BitmapMovieClip</a></li>
+            
+                <li><a href="../classes/cloudkid.TextureAtlas.html">cloudkid.TextureAtlas</a></li>
+            
+                <li><a href="../classes/cloudkid.TextureAtlas.Texture.html">cloudkid.TextureAtlas.Texture</a></li>
             
                 <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
@@ -185,6 +191,15 @@
 	* @private
 	*/
 	var _paused = false;
+
+	/**
+	* An empty object to avoid creating new objects in play()
+	* when an options object is not used for parameters.
+	* 
+	* @property {Object} _optionsHelper
+	* @private
+	*/
+	var _optionsHelper = {};
 	
 	/**
 	*	Sets the variables of the Animator to their defaults. Use when _timelines is null,
@@ -240,11 +255,11 @@
 		if (options &amp;&amp; typeof options == &quot;function&quot;)
 		{
 			onComplete = options;
-			options = {};
+			options = _optionsHelper;//use the helper instead of creating a new object
 		}
 		else if (!options)
 		{
-			options = {};
+			options = _optionsHelper;//use the helper instead of creating a new object
 		}
 
 		onComplete = options.onComplete || onComplete || null;
@@ -279,6 +294,12 @@
 			
 			_timelines.push(timeline);
 			_timelinesMap[instance.id] = timeline;
+
+			//If the sound doesn&#x27;t play immediately and we can preload it, we should do that
+			if(timeline.soundStart &gt; 0 &amp;&amp; Animator.audioLib.preloadSound)
+			{
+				Animator.soundLib.preloadSound(timeline.soundAlias);
+			}
 			
 			return timeline;
 		}
@@ -333,20 +354,23 @@
 	Animator._makeTimeline = function(instance, event, onComplete, onCompleteParams, speed, soundData)
 	{
 		var timeline = new AnimatorTimeline();
-		if(instance instanceof MovieClip === false)//not a movieclip
+		if(!Animator._canAnimate(instance))//not a movieclip
 		{
 			return timeline;
 		}
 		instance.advanceDuringTicks = false;//make sure the movieclip doesn&#x27;t play outside the control of Animator
-		if(!instance.getAnimFrameRate())//make sure the movieclip is framerate independent
+		var fps;
+		if(!instance.framerate)//make sure the movieclip is framerate independent
 		{
-			var fps = cloudkid.OS.instance.options.fps;
+			fps = cloudkid.OS.instance.options.fps;
 			if(!fps)
 				fps = cloudkid.OS.instance.fps;
 			if(!fps)
 				fps = 15;
 			instance.framerate = fps;
 		}
+		else
+			fps = instance.framerate;//we&#x27;ll want this for some math later
 		timeline.instance = instance;
 		timeline.event = event;
 		timeline.onComplete = onComplete;
@@ -367,29 +391,67 @@
 			}
 			timeline.useCaptions = Animator.captions &amp;&amp; Animator.captions.hasCaption(timeline.soundAlias);
 		}
-				
-		var startFrame = instance.timeline.resolve(event); 
-		var stopFrame = instance.timeline.resolve(event + &quot;_stop&quot;);
-		var stopLoopFrame = instance.timeline.resolve(event + &quot;_loop&quot;);
+		
+		//go through the list of labels (they are sorted by frame number)
+		var labels = instance.getLabels();
+		var stopLabel = event + &quot;_stop&quot;;
+		var loopLabel = event + &quot;_loop&quot;;
+		for(var i = 0, len = labels.length; i &lt; len; ++i)
+		{
+			var l = labels[i];
+			if(l.label == event)
+			{
+				timeline.firstFrame = l.position;
+			}
+			else if(l.label == stopLabel)
+			{
+				timeline.lastFrame = l.position;
+				break;
+			}
+			else if(l.label == loopLabel)
+			{
+				timeline.lastFrame = l.position;
+				timeline.isLooping = true;
+				break;
+			}
+		}
 
-		if (startFrame !== undefined)
-		{
-			timeline.firstFrame = startFrame;
-			timeline.startTime = startFrame / instance.getAnimFrameRate();
-		}
-		if (stopFrame !== undefined)
-		{
-			timeline.lastFrame = stopFrame;
-		}
-		else if (stopLoopFrame !== undefined)
-		{
-			timeline.lastFrame = stopLoopFrame;
-			timeline.isLooping = true;
-		}
 		timeline.length = timeline.lastFrame - timeline.firstFrame;
-		timeline.duration = timeline.length / instance.getAnimFrameRate();
+		timeline.startTime = timeline.firstFrame / fps;
+		timeline.duration = timeline.length / fps;
 		
 		return timeline;
+	};
+
+	/**
+	*   Determines if a given instance can be animated by Animator, to allow things that aren&#x27;t
+	*	MovieClips from EaselJS to be animated if they share the same API. Note - &#x27;id&#x27; is a property with
+	*	a unique value for each createjs.DisplayObject. If a custom object is made that does not inherit from DisplayObject,
+	*	it needs to not have an id that is identical to anything from EaselJS.
+	*   
+	*   @function _canAnimate
+	*   @param {easeljs.MovieClip} instance The object to check for animation properties.
+	*   @return {Boolean} If the instance can be animated or not.
+	*   @private
+	*   @static
+	*/
+	Animator._canAnimate = function(instance)
+	{
+		if(instance instanceof MovieClip)//all createjs.MovieClips are A-OK
+			return true;
+		if(instance.framerate !== undefined &amp;&amp;//property - calculate timing
+			instance.getLabels !== undefined &amp;&amp;//method - get framelabels
+			instance.elapsedTime !== undefined &amp;&amp;//property - set time passed
+			instance._tick !== undefined &amp;&amp;//method - update after setting elapsedTime
+			instance.gotoAndStop !== undefined &amp;&amp;//method - stop at end of anim
+			instance.play !== undefined &amp;&amp;//method - start playing
+			instance.id !== undefined)//property - used to avoid duplication of timelines
+			return true;
+		if(DEBUG)
+		{
+			Debug.error(&quot;Attempting to use Animator to play something that is not movieclip compatible: &quot; + instance);
+		}
+		return false;
 	};
 
 	/**
@@ -404,11 +466,25 @@
 	*/
 	Animator.instanceHasAnimation = function(instance, event)
 	{
-		var startFrame = instance.timeline.resolve(event); 
-		var stopFrame = instance.timeline.resolve(event + &quot;_stop&quot;);
-		var stopLoopFrame = instance.timeline.resolve(event + &quot;_loop&quot;);
+		var labels = instance.getLabels();
+		var startFrame = -1, stopFrame = -1;
+		var stopLabel = event + &quot;_stop&quot;;
+		var loopLabel = event + &quot;_loop&quot;;
+		for(var i = 0, len = labels.length; i &lt; len; ++i)
+		{
+			var l = labels[i];
+			if(l.label == event)
+			{
+				startFrame = l.position;
+			}
+			else if(l.label == stopLabel || l.label == loopLabel)
+			{
+				stopFrame = l.position;
+				break;
+			}
+		}
 
-		return startFrame !== undefined &amp;&amp; (stopFrame !== undefined || stopLoopFrame !== undefined);
+		return startFrame &gt;= 0 &amp;&amp; stopFrame &gt;= 0;
 	};
 	
 	/**
@@ -491,12 +567,19 @@
 		// Stop the animation
 		timeline.instance.stop();
 
-		if(timeline.soundInst)
+		//in most cases, if doOnComplete is true, it&#x27;s a natural stop and the audio can be allowed to continue
+		if(!doOnComplete &amp;&amp; timeline.soundInst)
 			timeline.soundInst.stop();//stop the sound from playing
 		
 		// Remove from the stack
 		_timelines.splice(index, 1);
 		delete _timelinesMap[timeline.instance.id];
+
+		//stop the captions, if relevant
+		if (timeline.useCaptions)
+		{
+			Animator.captions.stop();
+		}
 		
 		// Clear the timeline
 		timeline.instance = null;
@@ -665,6 +748,14 @@
 					if (t.useCaptions)
 					{
 						Animator.captions.seek(t.soundInst.position);
+					}
+					//if the sound goes beyond the animation, then stop the animation
+					//audio animations shouldn&#x27;t loop, because doing that properly is difficult
+					//letting the audio continue should be okay though
+					if(t.time &gt;= t.duration)
+					{
+						instance.gotoAndStop(t.lastFrame);
+						_removedTimelines.push(t);
 					}
 				}
 				//if sound is no longer valid, stop animation playback immediately

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.2.1 API Documentation : CharacterController</title>  
+	<title>CloudKid Animation API v2.3.0 API Documentation : CharacterController</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.2.1</em>
+            <em>API Documentation for: 2.3.0</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -46,6 +46,12 @@
                 <li><a href="../classes/CharacterClip.html">CharacterClip</a></li>
             
                 <li><a href="../classes/CharacterController.html">CharacterController</a></li>
+            
+                <li><a href="../classes/cloudkid.BitmapMovieClip.html">cloudkid.BitmapMovieClip</a></li>
+            
+                <li><a href="../classes/cloudkid.TextureAtlas.html">cloudkid.TextureAtlas</a></li>
+            
+                <li><a href="../classes/cloudkid.TextureAtlas.Texture.html">cloudkid.TextureAtlas.Texture</a></li>
             
                 <li><a href="../classes/PixiAnimator.html">PixiAnimator</a></li>
             
@@ -220,6 +226,13 @@ animate characters on a timeline</p>
                             </li>
                         
                             <li class="index-item property private">
+                                <a href="#property__animationStack">_animationStack</a>
+
+                                
+                                
+                            </li>
+                        
+                            <li class="index-item property private">
                                 <a href="#property__callback">_callback</a>
 
                                 
@@ -309,7 +322,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l196"><code>_animationComplete:196</code></a>
+        <a href="../files/src_CharacterController.js.html#l201"><code>_animationComplete:201</code></a>
         
         </p>
 
@@ -364,7 +377,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l222"><code>clear:222</code></a>
+        <a href="../files/src_CharacterController.js.html#l227"><code>clear:227</code></a>
         
         </p>
 
@@ -419,7 +432,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l240"><code>destroy:240</code></a>
+        <a href="../files/src_CharacterController.js.html#l245"><code>destroy:245</code></a>
         
         </p>
 
@@ -484,7 +497,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l111"><code>gotoFrameAndStop:111</code></a>
+        <a href="../files/src_CharacterController.js.html#l116"><code>gotoFrameAndStop:116</code></a>
         
         </p>
 
@@ -563,7 +576,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l84"><code>initialize:84</code></a>
+        <a href="../files/src_CharacterController.js.html#l89"><code>initialize:89</code></a>
         
         </p>
 
@@ -652,7 +665,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l125"><code>playClips:125</code></a>
+        <a href="../files/src_CharacterController.js.html#l130"><code>playClips:130</code></a>
         
         </p>
 
@@ -807,7 +820,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l94"><code>setCharacter:94</code></a>
+        <a href="../files/src_CharacterController.js.html#l99"><code>setCharacter:99</code></a>
         
         </p>
 
@@ -886,7 +899,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l168"><code>startNext:168</code></a>
+        <a href="../files/src_CharacterController.js.html#l173"><code>startNext:173</code></a>
         
         </p>
 
@@ -942,7 +955,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l52"><code>_allowFrameDropping:52</code></a>
+        <a href="../files/src_CharacterController.js.html#l57"><code>_allowFrameDropping:57</code></a>
         
         </p>
 
@@ -953,6 +966,53 @@ animate characters on a timeline</p>
 
     <div class="description">
         <p>If frame dropping is allowed for this animation set</p>
+
+    </div>
+
+    
+
+    
+
+    
+</div>
+
+                
+                    <div id="property__animationStack" class="property item private">
+    <h3 class="name"><code>_animationStack</code></h3>
+    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
+
+    
+
+    
+        <span class="flag private">private</span>
+    
+
+    
+
+    
+
+    <div class="meta">
+        
+            
+                
+                <p>
+                
+                Defined in
+                
+            
+        
+        
+        <a href="../files/src_CharacterController.js.html#l25"><code>_animationStack:25</code></a>
+        
+        </p>
+
+        
+
+        
+    </div>
+
+    <div class="description">
+        <p>The current stack of animations to play</p>
 
     </div>
 
@@ -989,7 +1049,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l68"><code>_callback:68</code></a>
+        <a href="../files/src_CharacterController.js.html#l73"><code>_callback:73</code></a>
         
         </p>
 
@@ -1036,7 +1096,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l60"><code>_character:60</code></a>
+        <a href="../files/src_CharacterController.js.html#l65"><code>_character:65</code></a>
         
         </p>
 
@@ -1083,7 +1143,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l28"><code>_currentAnimation:28</code></a>
+        <a href="../files/src_CharacterController.js.html#l33"><code>_currentAnimation:33</code></a>
         
         </p>
 
@@ -1130,7 +1190,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l76"><code>_destroyed:76</code></a>
+        <a href="../files/src_CharacterController.js.html#l81"><code>_destroyed:81</code></a>
         
         </p>
 
@@ -1177,7 +1237,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l44"><code>_interruptable:44</code></a>
+        <a href="../files/src_CharacterController.js.html#l49"><code>_interruptable:49</code></a>
         
         </p>
 
@@ -1224,7 +1284,7 @@ animate characters on a timeline</p>
             
         
         
-        <a href="../files/src_CharacterController.js.html#l36"><code>_loops:36</code></a>
+        <a href="../files/src_CharacterController.js.html#l41"><code>_loops:41</code></a>
         
         </p>
 
