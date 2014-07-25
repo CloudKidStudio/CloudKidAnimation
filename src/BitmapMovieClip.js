@@ -12,7 +12,7 @@
 	*  @param {Object} data=null Initialization data
 	*   @param {int} [data.fps] Framerate to play the movieclip at. Omitting this will use the current framerate.
 	*   @param {Object} [data.labels] A dictionary of the labels in the movieclip to assist in playing animations.
-	*   @param {Object} [data.origin={x:0, y:0}] The origin of the movieclip.
+	*   @param {Object} [data.origin={x:0,y:0}] The origin of the movieclip.
 	*   @param {Array} [data.frames] An array of frame sequences to pull from the texture atlas.
 	*   @param {String} [data.frames.name] The name to use for the frame sequence. This should include a "#" to be replaced with the image number.
 	*   @param {int} [data.frames.min] The first frame number in the frame sequence.
@@ -355,7 +355,7 @@
 	 * @param {Object} data Initialization data
 	 *  @param {int} [data.fps] Framerate to play the movieclip at. Omitting this will use the current framerate.
 	 *  @param {Object} [data.labels] A dictionary of the labels in the movieclip to assist in playing animations.
-	 *  @param {Object} [data.origin={x:0, y:0}] The origin of the movieclip.
+	 *  @param {Object} [data.origin={x:0,y:0}] The origin of the movieclip.
 	 *  @param {Array} [data.frames] An array of frame sequences to pull from the texture atlas.
 	 *  @param {String} [data.frames.name] The name to use for the frame sequence. This should include a "#" to be replaced with the image number.
 	 *  @param {int} [data.frames.min] The first frame number in the frame sequence.
