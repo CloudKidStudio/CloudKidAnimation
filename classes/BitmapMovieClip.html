@@ -792,7 +792,7 @@ API as MovieClip.</p>
             
         
         
-        <a href="../files/src_BitmapMovieClip.js.html#l470"><code>_goto:470</code></a>
+        <a href="../files/src_BitmapMovieClip.js.html#l472"><code>_goto:472</code></a>
         
         </p>
 
@@ -872,7 +872,7 @@ API as MovieClip.</p>
             
         
         
-        <a href="../files/src_BitmapMovieClip.js.html#l520"><code>_reset:520</code></a>
+        <a href="../files/src_BitmapMovieClip.js.html#l522"><code>_reset:522</code></a>
         
         </p>
 
@@ -938,7 +938,7 @@ API as MovieClip.</p>
             
         
         
-        <a href="../files/src_BitmapMovieClip.js.html#l459"><code>_tick:459</code></a>
+        <a href="../files/src_BitmapMovieClip.js.html#l461"><code>_tick:461</code></a>
         
         </p>
 
@@ -1019,7 +1019,7 @@ function.</p>
             
         
         
-        <a href="../files/src_BitmapMovieClip.js.html#l500"><code>_updateTimeline:500</code></a>
+        <a href="../files/src_BitmapMovieClip.js.html#l502"><code>_updateTimeline:502</code></a>
         
         </p>
 
@@ -1173,7 +1173,7 @@ function.</p>
             
         
         
-        <a href="../files/src_BitmapMovieClip.js.html#l428"><code>copyFrom:428</code></a>
+        <a href="../files/src_BitmapMovieClip.js.html#l430"><code>copyFrom:430</code></a>
         
         </p>
 
@@ -1253,7 +1253,7 @@ The labels and textures are copied by reference, instead of a deep copy.</p>
             
         
         
-        <a href="../files/src_BitmapMovieClip.js.html#l445"><code>destroy:445</code></a>
+        <a href="../files/src_BitmapMovieClip.js.html#l447"><code>destroy:447</code></a>
         
         </p>
 
@@ -1923,33 +1923,47 @@ for more information.</p>
 
                                             <div class="param-description">
                                                 The maximum number of digits in the names of the frames, e.g. myAnim0001 has 4 digits.
-
- Format for data:
-	{
-		fps:30,
-		labels:
-		{
-			animStart:0,
-			animStart_loop:15
-		},
-		origin:{ x: 20, y:30 },
-		frames:
-		[
-			{
-				name:"myAnim#",
-				min:1,
-				max:20,
-				digits:4
-			}
-		]
-	}
-
-The object describes a 30 fps animation that is 20 frames long, and was originally myAnim0001.png->myAnim0020.png,
-with frame labels on the first and 16th frame. 'digits' is optional, and defaults to 4.
                                             </div>
                                         </li>
                                         
                                     </ul>
+                                
+                            </li>
+                            
+                            <li class="param">
+                                
+                                    <code class="param-name optional">[scale=1]</code>
+                                    <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Number" class="crosslink external" target="_blank">Number</a></span>
+                                    <span class="flag optional" title="This parameter is optional.">optional</span>
+                                
+
+                                <div class="param-description">
+                                    <p>The scale at which the art was exported, e.g. a scale of 1.4 means the art was increased
+         in size to 140% before exporting and should be scaled back down before drawing to the screen.</p>
+<p> Format for data:
+    {
+        fps:30,
+        labels:
+        {
+            animStart:0,
+            animStart_loop:15
+        },
+        origin:{ x: 20, y:30 },
+        frames:
+        [
+            {
+                name:"myAnim#",
+                min:1,
+                max:20,
+                digits:4
+            }
+        ]
+    }</p>
+<p>The object describes a 30 fps animation that is 20 frames long, and was originally myAnim0001.png-&gt;myAnim0020.png,
+with frame labels on the first and 16th frame. &#39;digits&#39; is optional, and defaults to 4.</p>
+
+                                </div>
+
                                 
                             </li>
                             
