@@ -139,7 +139,7 @@
             "namespace": "",
             "file": "src/BitmapMovieClip.js",
             "line": 3,
-            "description": "A class similar to createjs.MovieClip, but made to play animations from a cloudkid.TextureAtlas.\nThe CreateJS Sprite class requires a spritesheet with equal sized and spaced frames. By using cloudkid.TextureAtlas,\nyou can use a much smaller spritesheet, sprites on screen with fewer extra transparent pixels, and use the same\nAPI as MovieClip.",
+            "description": "A class similar to createjs.MovieClip, but made to play animations from a cloudkid.TextureAtlas.\nThe CreateJS Sprite class requires a spritesheet with equal sized and spaced frames. By using cloudkid.TextureAtlas,\nyou can use a much smaller spritesheet, sprites on screen with fewer extra transparent pixels, and use the same\nAPI as MovieClip.\n\nSee \"Export BitmapMovieClip.jsfl\" in the library for a script that will export a selected MovieClip in the library\nwith all of the information (except data.scale) needed to reassemble the BitmapMovieClip.",
             "extends": "createjs.Container",
             "is_constructor": 1,
             "params": [
@@ -1198,7 +1198,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 63,
+            "line": 67,
             "description": "Indicates whether this BitmapMovieClip should loop when it reaches the end of its timeline.",
             "itemtype": "property",
             "name": "loop",
@@ -1209,7 +1209,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 71,
+            "line": 75,
             "description": "The current frame of the movieclip.",
             "itemtype": "property",
             "name": "currentFrame",
@@ -1221,7 +1221,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 80,
+            "line": 84,
             "description": "If true, the BitmapMovieClip's position will not advance when ticked.",
             "itemtype": "property",
             "name": "paused",
@@ -1232,7 +1232,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 88,
+            "line": 92,
             "description": "If true, the BitmapMovieClip will advance its timeline during ticks. If false then it must be externally advanced.",
             "itemtype": "property",
             "name": "advanceDuringTicks",
@@ -1243,7 +1243,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 96,
+            "line": 100,
             "description": "By default BitmapMovieClip instances advance one frame per tick. Specifying a framerate for the BitmapMovieClip\nwill cause it to advance based on elapsed time between ticks as appropriate to maintain the target\nframerate.\n\nFor example, if a BitmapMovieClip with a framerate of 10 is placed on a Stage being updated at 40fps, then the BitmapMovieClip will\nadvance roughly one frame every 4 ticks. This will not be exact, because the time between each tick will\nvary slightly between frames.\n\nThis feature is dependent on the tick event object (or an object with an appropriate \"delta\" property) being\npassed into {{#crossLink \"Stage/update\"}}{{/crossLink}}.",
             "itemtype": "property",
             "name": "framerate",
@@ -1254,7 +1254,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 126,
+            "line": 130,
             "description": "When the BitmapMovieClip is framerate independent, this is the time elapsed from frame 0 in seconds.",
             "itemtype": "property",
             "name": "elapsedTime",
@@ -1267,7 +1267,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 144,
+            "line": 148,
             "description": "By default BitmapMovieClip instances advance one frame per tick. Specifying a framerate for the BitmapMovieClip\nwill cause it to advance based on elapsed time between ticks as appropriate to maintain the target\nframerate.",
             "itemtype": "property",
             "name": "_framerate",
@@ -1278,7 +1278,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 155,
+            "line": 159,
             "description": "When the BitmapMovieClip is framerate independent, this is the total time in seconds for the animation.",
             "itemtype": "property",
             "name": "_duration",
@@ -1291,7 +1291,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 164,
+            "line": 168,
             "description": "When the BitmapMovieClip is framerate independent, this is the time elapsed from frame 0 in seconds.",
             "itemtype": "property",
             "name": "_t",
@@ -1304,7 +1304,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 173,
+            "line": 177,
             "itemtype": "property",
             "name": "_prevPosition",
             "type": "Number",
@@ -1316,7 +1316,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 181,
+            "line": 185,
             "description": "The Bitmap used to render the current frame of the animation.",
             "itemtype": "property",
             "name": "_bitmap",
@@ -1328,7 +1328,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 189,
+            "line": 193,
             "description": "An array of frame labels.",
             "itemtype": "property",
             "name": "_labels",
@@ -1340,7 +1340,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 197,
+            "line": 201,
             "description": "An array of textures.",
             "itemtype": "property",
             "name": "_frames",
@@ -1352,7 +1352,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 205,
+            "line": 209,
             "description": "The current texture.",
             "itemtype": "property",
             "name": "_currentTexture",
@@ -1364,7 +1364,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 213,
+            "line": 217,
             "description": "The origin point of the BitmapMovieClip.",
             "itemtype": "property",
             "name": "_origin",
@@ -1376,7 +1376,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 221,
+            "line": 225,
             "description": "A scale to apply to the images in the BitmapMovieClip\nto restore normal size (if spritesheet was exported at a smaller or larger size).",
             "itemtype": "property",
             "name": "_scale",
@@ -1388,7 +1388,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 232,
+            "line": 236,
             "description": "Returns true or false indicating whether the display object would be visible if drawn to a canvas.\nThis does not account for whether it would be visible within the boundaries of the stage.\nNOTE: This method is mainly for internal use, though it may be useful for advanced uses.",
             "itemtype": "method",
             "name": "isVisible",
@@ -1401,7 +1401,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 244,
+            "line": 248,
             "description": "Draws the display object into the specified context ignoring its visible, alpha, shadow, and transform.\nReturns true if the draw was handled (useful for overriding functionality).\nNOTE: This method is mainly for internal use, though it may be useful for advanced uses.",
             "itemtype": "method",
             "name": "draw",
@@ -1422,7 +1422,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 262,
+            "line": 266,
             "description": "Sets paused to false.",
             "itemtype": "method",
             "name": "play",
@@ -1431,7 +1431,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 270,
+            "line": 274,
             "description": "Sets paused to true.",
             "itemtype": "method",
             "name": "stop",
@@ -1440,7 +1440,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 278,
+            "line": 282,
             "description": "Advances this movie clip to the specified position or label and sets paused to false.",
             "itemtype": "method",
             "name": "gotoAndPlay",
@@ -1456,7 +1456,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 288,
+            "line": 292,
             "description": "Advances this movie clip to the specified position or label and sets paused to true.",
             "itemtype": "method",
             "name": "gotoAndStop",
@@ -1472,7 +1472,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 298,
+            "line": 302,
             "description": "Advances the playhead. This occurs automatically each tick by default.",
             "params": [
                 {
@@ -1489,7 +1489,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 322,
+            "line": 326,
             "description": "Returns a sorted list of the labels defined on this BitmapMovieClip. Shortcut to TweenJS: Timeline.getLabels();",
             "itemtype": "method",
             "name": "getLabels",
@@ -1502,7 +1502,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 331,
+            "line": 335,
             "description": "Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()\nfor more information.",
             "itemtype": "method",
             "name": "getCurrentLabel",
@@ -1515,7 +1515,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 350,
+            "line": 354,
             "description": "Returns the name of the label on or immediately before the current frame. See TweenJS: Timeline.getCurrentLabel()\nfor more information.",
             "itemtype": "method",
             "name": "init",
@@ -1597,7 +1597,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 430,
+            "line": 434,
             "description": "Copies the labels, textures, origin, and framerate from another BitmapMovieClip.\nThe labels and textures are copied by reference, instead of a deep copy.",
             "itemtype": "method",
             "name": "copyFrom",
@@ -1613,7 +1613,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 447,
+            "line": 451,
             "description": "Destroys the BitmapMovieClip, removing all children and nulling all reference variables.",
             "itemtype": "method",
             "name": "destroy",
@@ -1622,7 +1622,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 461,
+            "line": 465,
             "itemtype": "method",
             "name": "_tick",
             "params": [
@@ -1639,7 +1639,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 472,
+            "line": 476,
             "itemtype": "method",
             "name": "_goto",
             "params": [
@@ -1656,7 +1656,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 502,
+            "line": 506,
             "itemtype": "method",
             "name": "_updateTimeline",
             "access": "protected",
@@ -1666,7 +1666,7 @@
         },
         {
             "file": "src/BitmapMovieClip.js",
-            "line": 522,
+            "line": 526,
             "itemtype": "method",
             "name": "_reset",
             "access": "private",
