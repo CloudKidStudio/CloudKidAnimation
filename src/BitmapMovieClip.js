@@ -153,6 +153,7 @@
 	 * @property _framerate
 	 * @type {Number}
 	 * @default 0
+	 * @private
 	 **/
 	p._framerate = 0;
 
