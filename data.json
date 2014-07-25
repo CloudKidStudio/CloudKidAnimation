@@ -166,9 +166,11 @@
                     "optional": true
                 },
                 {
-                    "name": "[data.origin={x:0,",
-                    "description": "y:0}] The origin of the movieclip.",
-                    "type": "Object"
+                    "name": "data.origin",
+                    "description": "The origin of the movieclip.",
+                    "type": "Object",
+                    "optional": true,
+                    "optdefault": "{x:0,y:0}"
                 },
                 {
                     "name": "data.frames",
@@ -1541,6 +1543,13 @@
                             "optional": true
                         },
                         {
+                            "name": "origin",
+                            "description": "The origin of the movieclip.",
+                            "type": "Object",
+                            "optional": true,
+                            "optdefault": "{x:0,y:0}"
+                        },
+                        {
                             "name": "frames",
                             "description": "An array of frame sequences to pull from the texture atlas.",
                             "type": "Array",
@@ -1574,11 +1583,6 @@
                             ]
                         }
                     ]
-                },
-                {
-                    "name": "[data.origin={x:0,",
-                    "description": "y:0}] The origin of the movieclip.",
-                    "type": "Object"
                 }
             ],
             "class": "BitmapMovieClip",
