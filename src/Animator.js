@@ -693,7 +693,9 @@
 				}
 			}
 			instance.elapsedTime = t.startTime + t.time;
-			instance._tick();
+			//because the movieclip only checks the elapsed time here (advanceDuringTicks is false), 
+			//calling advance() with no parameters is fine
+			instance.advance();
 		}
 		for(i = 0; i < _removedTimelines.length; i++)
 		{

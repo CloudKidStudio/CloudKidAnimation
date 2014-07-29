@@ -871,7 +871,9 @@
 				}
 			}
 			instance.elapsedTime = t.startTime + t.time;
-			instance._tick();
+			//because the movieclip only checks the elapsed time here (advanceDuringTicks is false), 
+			//calling advance() with no parameters is fine
+			instance.advance();
 		}
 		for(i = 0; i < _removedTimelines.length; i++)
 		{
@@ -1439,6 +1441,10 @@
 	*  The CreateJS Sprite class requires a spritesheet with equal sized and spaced frames. By using cloudkid.TextureAtlas,
 	*  you can use a much smaller spritesheet, sprites on screen with fewer extra transparent pixels, and use the same
 	*  API as MovieClip.
+	*
+	*  See "Export BitmapMovieClip.jsfl" in the library for a script that will export a selected MovieClip in the library
+	*  with all of the information (except data.scale) needed to reassemble the BitmapMovieClip.
+	*
 	*  @class BitmapMovieClip
 	*  @extends createjs.Container
 	*  @constructor
@@ -1446,7 +1452,7 @@
 	*  @param {Object} data=null Initialization data
 	*   @param {int} [data.fps] Framerate to play the movieclip at. Omitting this will use the current framerate.
 	*   @param {Object} [data.labels] A dictionary of the labels in the movieclip to assist in playing animations.
-	*   @param {Object} [data.origin={x:0, y:0}] The origin of the movieclip.
+	*   @param {Object} [data.origin={x:0,y:0}] The origin of the movieclip.
 	*   @param {Array} [data.frames] An array of frame sequences to pull from the texture atlas.
 	*   @param {String} [data.frames.name] The name to use for the frame sequence. This should include a "#" to be replaced with the image number.
 	*   @param {int} [data.frames.min] The first frame number in the frame sequence.
@@ -1583,6 +1589,7 @@
 	 * @property _framerate
 	 * @type {Number}
 	 * @default 0
+	 * @private
 	 **/
 	p._framerate = 0;
 
@@ -1789,12 +1796,14 @@
 	 * @param {Object} data Initialization data
 	 *  @param {int} [data.fps] Framerate to play the movieclip at. Omitting this will use the current framerate.
 	 *  @param {Object} [data.labels] A dictionary of the labels in the movieclip to assist in playing animations.
-	 *  @param {Object} [data.origin={x:0, y:0}] The origin of the movieclip.
+	 *  @param {Object} [data.origin={x:0,y:0}] The origin of the movieclip.
 	 *  @param {Array} [data.frames] An array of frame sequences to pull from the texture atlas.
 	 *  @param {String} [data.frames.name] The name to use for the frame sequence. This should include a "#" to be replaced with the image number.
 	 *  @param {int} [data.frames.min] The first frame number in the frame sequence.
 	 *  @param {int} [data.frames.max] The last frame number in the frame sequence.
 	 *  @param {int} [data.frames.digits=4] The maximum number of digits in the names of the frames, e.g. myAnim0001 has 4 digits.
+	 *   @param {Number} [data.scale=1] The scale at which the art was exported, e.g. a scale of 1.4 means the art was increased
+	 *          in size to 140% before exporting and should be scaled back down before drawing to the screen.
 	 *
 	 *  Format for data:
 	 *	{

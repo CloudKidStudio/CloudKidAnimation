@@ -15,7 +15,7 @@
 }(), function(undefined) {
     "use strict";
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.3.0", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.3.1", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1, _optionsHelper = {};
     Animator.init = function() {
@@ -136,7 +136,7 @@
                     _removedTimelines.push(t))), t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
                     t.soundInst = Animator.audioLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)), 
                     t.useCaptions && (Animator.captions.isSlave = !0, Animator.captions.run(t.soundAlias)));
-                    instance.elapsedTime = t.startTime + t.time, instance._tick();
+                    instance.elapsedTime = t.startTime + t.time, instance.advance();
                 }
             }
             for (i = 0; i < _removedTimelines.length; i++) t = _removedTimelines[i], Animator._remove(t, !0);
