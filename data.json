@@ -2,7 +2,7 @@
     "project": {
         "name": "CloudKid Animation API",
         "description": "CloudKid Animation API: A library for playing Animations",
-        "version": "2.3.0",
+        "version": "2.3.1",
         "logo": ""
     },
     "files": {
@@ -278,7 +278,7 @@
             "module": "cloudkid",
             "namespace": "",
             "file": "src/PixiAnimator.js",
-            "line": 493,
+            "line": 501,
             "description": "[Pixi Only] Internal PixiAnimator class for keeping track of animations",
             "is_constructor": 1,
             "params": [
@@ -901,7 +901,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 705,
+            "line": 707,
             "description": "The sound has been started",
             "itemtype": "method",
             "name": "onSoundStarted",
@@ -919,7 +919,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 717,
+            "line": 719,
             "description": "The sound is done",
             "itemtype": "method",
             "name": "onSoundDone",
@@ -937,7 +937,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 730,
+            "line": 732,
             "description": "Check to see if we have timeline",
             "itemtype": "method",
             "name": "_hasTimelines",
@@ -953,7 +953,7 @@
         },
         {
             "file": "src/Animator.js",
-            "line": 744,
+            "line": 746,
             "description": "String representation of this class",
             "itemtype": "method",
             "name": "toString",
@@ -2062,8 +2062,8 @@
                 },
                 {
                     "name": "anim",
-                    "description": "The alias for the animation to play",
-                    "type": "String"
+                    "description": "Depending on the type of clip, this could be one of several things.\n\nIf animating a MovieClip, this should be the array of Textures that is the animation (or null to use the existing array on the clip).\n\nIf animating a Spine object:\n- If anim is a string it will play that single animation by name.\n- If anim is an array of strings it will play as a list of animations (only the last one can loop).\n- If anim is an array of objects (with anim, loop, and speed properties) then multiple animations will be played simultaneously.\n   When multiple animations play, animation stops when any non looping animation ends.",
+                    "type": "String|Array"
                 },
                 {
                     "name": "options",
@@ -2114,7 +2114,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 239,
+            "line": 247,
             "description": "Checks to see if a Spine animation includes a given animation alias",
             "itemtype": "method",
             "name": "instanceHasAnimation",
@@ -2139,7 +2139,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 254,
+            "line": 262,
             "description": "Checks to see if a Spine animation includes a given animation alias",
             "itemtype": "method",
             "name": "checkSpineForAnimation",
@@ -2164,7 +2164,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 267,
+            "line": 275,
             "description": "Stop a clip",
             "itemtype": "method",
             "name": "stop",
@@ -2185,7 +2185,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 294,
+            "line": 302,
             "description": "Stops all current animations",
             "itemtype": "method",
             "name": "stop",
@@ -2194,7 +2194,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 313,
+            "line": 321,
             "description": "Put an AnimTimeline back into the general pool after it's done playing\nor has been manually stopped",
             "itemtype": "method",
             "name": "_repool",
@@ -2212,7 +2212,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 332,
+            "line": 340,
             "description": "Update each frame",
             "itemtype": "method",
             "name": "_update",
@@ -2230,7 +2230,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 445,
+            "line": 453,
             "description": "Called when a movie clip is done playing, calls the AnimTimeline's\ncallback if it has one",
             "itemtype": "method",
             "name": "_onMovieClipDone",
@@ -2248,7 +2248,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 474,
+            "line": 482,
             "description": "Destroy this",
             "itemtype": "method",
             "name": "destroy",
@@ -2257,7 +2257,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 509,
+            "line": 517,
             "description": "Initialize the AnimTimeline",
             "itemtype": "method",
             "name": "init",
@@ -2287,7 +2287,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 520,
+            "line": 528,
             "description": "The clip for this AnimTimeLine",
             "itemtype": "property",
             "name": "clip",
@@ -2299,7 +2299,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 527,
+            "line": 535,
             "description": "Whether the clip is a PIXI.Spine",
             "itemtype": "property",
             "name": "isSpine",
@@ -2311,7 +2311,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 534,
+            "line": 542,
             "description": "The function to call when the clip is finished playing",
             "itemtype": "property",
             "name": "callback",
@@ -2323,7 +2323,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 541,
+            "line": 549,
             "description": "The speed at which the clip should be played",
             "itemtype": "property",
             "name": "speed",
@@ -2335,7 +2335,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 548,
+            "line": 556,
             "itemtype": "property",
             "name": "spineStates",
             "type": "Array",
@@ -2346,7 +2346,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 554,
+            "line": 562,
             "description": "Not used by PixiAnimator, but potentially useful for other code to keep track of what type of animation is being played",
             "itemtype": "property",
             "name": "loop",
@@ -2358,7 +2358,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 561,
+            "line": 569,
             "description": "The position of the animation in seconds",
             "itemtype": "property",
             "name": "time",
@@ -2370,7 +2370,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 568,
+            "line": 576,
             "description": "Sound alias to sync to during the animation.",
             "itemtype": "property",
             "name": "soundAlias",
@@ -2382,7 +2382,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 575,
+            "line": 583,
             "description": "A sound instance object from cloudkid.Sound or cloudkid.Audio, used for tracking sound position.",
             "itemtype": "property",
             "name": "soundInst",
@@ -2394,7 +2394,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 582,
+            "line": 590,
             "description": "If the timeline will, but has yet to, play a sound",
             "itemtype": "property",
             "name": "playSound",
@@ -2406,7 +2406,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 589,
+            "line": 597,
             "description": "The time (seconds) into the animation that the sound starts.",
             "itemtype": "property",
             "name": "soundStart",
@@ -2418,7 +2418,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 596,
+            "line": 604,
             "description": "The time (seconds) into the animation that the sound ends",
             "itemtype": "property",
             "name": "soundEnd",
@@ -2430,7 +2430,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 603,
+            "line": 611,
             "description": "If this timeline plays captions",
             "itemtype": "property",
             "name": "useCaptions",
@@ -2441,7 +2441,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 611,
+            "line": 619,
             "description": "If this animation is paused.",
             "itemtype": "property",
             "name": "_paused",
@@ -2453,7 +2453,7 @@
         },
         {
             "file": "src/PixiAnimator.js",
-            "line": 621,
+            "line": 629,
             "description": "Sets and gets the animation's paused status.",
             "itemtype": "property",
             "name": "paused",
@@ -2684,11 +2684,11 @@
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:730"
+            "line": " src/Animator.js:732"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/Animator.js:744"
+            "line": " src/Animator.js:746"
         },
         {
             "message": "replacing incorrect tag: function with method",
@@ -2732,51 +2732,51 @@
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:239"
+            "line": " src/PixiAnimator.js:247"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src/PixiAnimator.js:239"
+            "line": " src/PixiAnimator.js:247"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:254"
+            "line": " src/PixiAnimator.js:262"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src/PixiAnimator.js:254"
+            "line": " src/PixiAnimator.js:262"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:267"
+            "line": " src/PixiAnimator.js:275"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:294"
+            "line": " src/PixiAnimator.js:302"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:313"
+            "line": " src/PixiAnimator.js:321"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:332"
+            "line": " src/PixiAnimator.js:340"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:445"
+            "line": " src/PixiAnimator.js:453"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:474"
+            "line": " src/PixiAnimator.js:482"
         },
         {
             "message": "replacing incorrect tag: function with method",
-            "line": " src/PixiAnimator.js:509"
+            "line": " src/PixiAnimator.js:517"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " src/PixiAnimator.js:509"
+            "line": " src/PixiAnimator.js:517"
         }
     ]
 }

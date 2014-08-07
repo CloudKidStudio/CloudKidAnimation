@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.3.0 API Documentation : src/PixiAnimator.js</title>  
+	<title>CloudKid Animation API v2.3.1 API Documentation : src/PixiAnimator.js</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.3.0</em>
+            <em>API Documentation for: 2.3.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -210,7 +210,15 @@
 	* 
 	* @function play
 	* @param {PIXI.MovieClip|PIXI.Spine} clip The clip to play
-	* @param {String} anim The alias for the animation to play
+	* @param {String|Array} anim Depending on the type of clip, this could be one of several things.
+	*
+	* If animating a MovieClip, this should be the array of Textures that is the animation (or null to use the existing array on the clip).
+	*
+	* If animating a Spine object:
+	* - If anim is a string it will play that single animation by name.
+	* - If anim is an array of strings it will play as a list of animations (only the last one can loop).
+	* - If anim is an array of objects (with anim, loop, and speed properties) then multiple animations will be played simultaneously.
+	*    When multiple animations play, animation stops when any non looping animation ends.
 	* @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	* @param {function} [options.callback=null] The function to call once the animation has finished
 	* @param {bool} [options.loop=false] Whether the animation should loop

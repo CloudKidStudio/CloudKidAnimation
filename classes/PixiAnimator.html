@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
     <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
     <script src="http://yui.yahooapis.com/3.10.1/build/yui/yui-min.js"></script>
-	<title>CloudKid Animation API v2.3.0 API Documentation : PixiAnimator</title>  
+	<title>CloudKid Animation API v2.3.1 API Documentation : PixiAnimator</title>  
 </head>
 <body class="yui3-skin-sam">
 
@@ -19,7 +19,7 @@
             
         </div>
         <div class="yui3-u-1-4 version">
-            <em>API Documentation for: 2.3.0</em>
+            <em>API Documentation for: 2.3.1</em>
         </div>
     </div>
     <div id="bd" class="yui3-g">
@@ -359,7 +359,7 @@
             
         
         
-        <a href="../files/src_PixiAnimator.js.html#l445"><code>_onMovieClipDone:445</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l453"><code>_onMovieClipDone:453</code></a>
         
         </p>
 
@@ -450,7 +450,7 @@ callback if it has one</p>
             
         
         
-        <a href="../files/src_PixiAnimator.js.html#l313"><code>_repool:313</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l321"><code>_repool:321</code></a>
         
         </p>
 
@@ -541,7 +541,7 @@ or has been manually stopped</p>
             
         
         
-        <a href="../files/src_PixiAnimator.js.html#l332"><code>_update:332</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l340"><code>_update:340</code></a>
         
         </p>
 
@@ -640,7 +640,7 @@ or has been manually stopped</p>
             
         
         
-        <a href="../files/src_PixiAnimator.js.html#l254"><code>checkSpineForAnimation:254</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l262"><code>checkSpineForAnimation:262</code></a>
         
         </p>
 
@@ -749,7 +749,7 @@ or has been manually stopped</p>
             
         
         
-        <a href="../files/src_PixiAnimator.js.html#l474"><code>destroy:474</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l482"><code>destroy:482</code></a>
         
         </p>
 
@@ -881,7 +881,7 @@ or has been manually stopped</p>
             
         
         
-        <a href="../files/src_PixiAnimator.js.html#l239"><code>instanceHasAnimation:239</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l247"><code>instanceHasAnimation:247</code></a>
         
         </p>
 
@@ -1052,13 +1052,21 @@ or has been manually stopped</p>
                 <li class="param">
                     
                         <code class="param-name">anim</code>
-                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a></span>
+                        <span class="type"><a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/String" class="crosslink external" target="_blank">String</a> | <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array" class="crosslink external" target="_blank">Array</a></span>
                     
 
                     
 
                     <div class="param-description">
-                        <p>The alias for the animation to play</p>
+                        <p>Depending on the type of clip, this could be one of several things.</p>
+<p>If animating a MovieClip, this should be the array of Textures that is the animation (or null to use the existing array on the clip).</p>
+<p>If animating a Spine object:</p>
+<ul>
+<li>If anim is a string it will play that single animation by name.</li>
+<li>If anim is an array of strings it will play as a list of animations (only the last one can loop).</li>
+<li>If anim is an array of objects (with anim, loop, and speed properties) then multiple animations will be played simultaneously.
+ When multiple animations play, animation stops when any non looping animation ends.</li>
+</ul>
 
                     </div>
 
@@ -1220,7 +1228,7 @@ or has been manually stopped</p>
             
         
         
-        <a href="../files/src_PixiAnimator.js.html#l267"><code>stop:267</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l275"><code>stop:275</code></a>
         
         </p>
 
@@ -1315,7 +1323,7 @@ or has been manually stopped</p>
             
         
         
-        <a href="../files/src_PixiAnimator.js.html#l294"><code>stop:294</code></a>
+        <a href="../files/src_PixiAnimator.js.html#l302"><code>stop:302</code></a>
         
         </p>
 
