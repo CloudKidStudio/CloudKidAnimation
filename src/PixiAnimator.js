@@ -105,7 +105,15 @@
 	* 
 	* @function play
 	* @param {PIXI.MovieClip|PIXI.Spine} clip The clip to play
-	* @param {String} anim The alias for the animation to play
+	* @param {String|Array} anim Depending on the type of clip, this could be one of several things.
+	*
+	* If animating a MovieClip, this should be the array of Textures that is the animation (or null to use the existing array on the clip).
+	*
+	* If animating a Spine object:
+	* - If anim is a string it will play that single animation by name.
+	* - If anim is an array of strings it will play as a list of animations (only the last one can loop).
+	* - If anim is an array of objects (with anim, loop, and speed properties) then multiple animations will be played simultaneously.
+	*    When multiple animations play, animation stops when any non looping animation ends.
 	* @param {Object|function} [options] The object of optional parameters or onComplete callback function
 	* @param {function} [options.callback=null] The function to call once the animation has finished
 	* @param {bool} [options.loop=false] Whether the animation should loop
