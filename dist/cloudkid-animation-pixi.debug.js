@@ -78,7 +78,8 @@
                         this._onMovieClipDone(t);
                         continue;
                     }
-                    t.time = t.soundStart + .001 * t.soundInst.position, t.useCaptions && this.captions.seek(t.soundInst.position);
+                    var audioPos = .001 * t.soundInst.position;
+                    0 > audioPos && (audioPos = 0), t.time = t.soundStart + audioPos, t.useCaptions && this.captions.seek(t.soundInst.position);
                 } else t.time += delta, t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
                 t.soundInst = this.soundLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)), 
                 t.useCaptions && (this.captions.isSlave = !0, this.captions.run(t.soundAlias)));

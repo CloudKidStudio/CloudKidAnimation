@@ -357,7 +357,11 @@
 			{
 				if(t.soundInst.isValid)
 				{
-					t.time = t.soundStart + t.soundInst.position * 0.001;//convert sound position ms -> sec
+					//convert sound position ms -> sec
+					var audioPos = t.soundInst.position * 0.001;
+					if(audioPos < 0)
+						audioPos = 0;
+					t.time = t.soundStart + audioPos;
 					if (t.useCaptions)
 					{
 						this.captions.seek(t.soundInst.position);

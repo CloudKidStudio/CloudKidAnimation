@@ -15,7 +15,7 @@
 }(), function(undefined) {
     "use strict";
     var OS = cloudkid.OS, AnimatorTimeline = cloudkid.AnimatorTimeline, MovieClip = createjs.MovieClip, Animator = function() {};
-    Animator.VERSION = "2.3.1", Animator.debug = !1, Animator.soundLib = null, 
+    Animator.VERSION = "2.3.2", Animator.debug = !1, Animator.soundLib = null, 
     Animator.captions = null;
     var _timelines = [], _removedTimelines = [], _timelinesMap = {}, _paused = !1, _optionsHelper = {};
     Animator.init = function() {
@@ -129,13 +129,23 @@
                             _removedTimelines.push(t);
                             continue;
                         }
-                        t.time = t.soundStart + .001 * t.soundInst.position, t.useCaptions && Animator.captions.seek(t.soundInst.position), 
-                        t.time >= t.duration && (instance.gotoAndStop(t.lastFrame), _removedTimelines.push(t));
-                    } else t.time += delta * t.speed, t.time >= t.duration && (t.isLooping ? (t.time -= t.duration, 
-                    t.onComplete && t.onComplete.apply(null, t.onCompleteParams)) : (instance.gotoAndStop(t.lastFrame), 
-                    _removedTimelines.push(t))), t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, 
-                    t.soundInst = Animator.audioLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)), 
-                    t.useCaptions && (Animator.captions.isSlave = !0, Animator.captions.run(t.soundAlias)));
+                        var audioPos = .001 * t.soundInst.position;
+                        if (0 > audioPos && (audioPos = 0), t.time = t.soundStart + audioPos, t.useCaptions && Animator.captions.seek(t.soundInst.position), 
+                        t.time >= t.duration) {
+                            instance.gotoAndStop(t.lastFrame), _removedTimelines.push(t);
+                            continue;
+                        }
+                    } else {
+                        if (t.time += delta * t.speed, t.time >= t.duration) {
+                            if (!t.isLooping) {
+                                instance.gotoAndStop(t.lastFrame), _removedTimelines.push(t);
+                                continue;
+                            }
+                            t.time -= t.duration, t.onComplete && t.onComplete.apply(null, t.onCompleteParams);
+                        }
+                        t.playSound && t.time >= t.soundStart && (t.time = t.soundStart, t.soundInst = Animator.audioLib.play(t.soundAlias, onSoundDone.bind(this, t), onSoundStarted.bind(this, t)), 
+                        t.useCaptions && (Animator.captions.isSlave = !0, Animator.captions.run(t.soundAlias)));
+                    }
                     instance.elapsedTime = t.startTime + t.time, instance.advance();
                 }
             }
