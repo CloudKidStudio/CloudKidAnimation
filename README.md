@@ -3,6 +3,11 @@ CloudKid Animation
 
 Animation API for CreateJS or Pixi
 
+This project has been deprecated and replaced with:
+
+* [CreateJSDisplay](https://github.com/CloudKidStudio/CreateJSDisplay)
+* [PixiDisplay](https://github.com/CloudKidStudio/PixiDisplay)
+
 ##Documentation##
 
 http://cloudkidstudio.github.io/CloudKidAnimation/
